@@ -1,25 +1,25 @@
-import React from 'react';
-import logo from './logo.svg';
 import './App.css';
+import React, { Suspense } from "react";
+import { Route, Routes, BrowserRouter as Router } from "react-router-dom";
+import MainPage from './pages/Main/Main';
+import { Layout } from './components/Layout/Layout';
+import AdminPage from './pages/AdminPage/AdminPage';
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <Router>
+      <div className="App">
+        <Suspense fallback={<h1>Loading!</h1>}>
+          <Routes>
+            <Route path="/" element={<Layout />}>
+              <Route index element={<MainPage />} />
+              <Route path="/admin" element={<AdminPage />} />
+              {/* <Route path="/:pokemonId" element={<div />} /> */}
+            </Route>
+          </Routes>
+        </Suspense>
+      </div>
+    </Router>
   );
 }
 
