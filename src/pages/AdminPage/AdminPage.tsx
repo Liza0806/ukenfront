@@ -22,40 +22,40 @@ const AdminPage = () => {
   }
  
   
-const onChousePeriod = (id: string): EventType[] => {
+const onChousePeriod = (id: string)=> {
   const now = new Date();
-const events = groups.map(g=> {
-e
-})
-  switch (id) {
-    case 'today':
-      return events.filter(event => {
-        const eventDate = new Date(event.date);
-        return isSameDay(eventDate, now);
-      });
+// const events = groups.map(g=> {
 
-    case 'week':
-      return events.filter(event => {
-        const eventDate = new Date(event.date);
-        return isSameWeek(eventDate, now, { weekStartsOn: 1 });
-      });
+// })
+//   switch (id) {
+//     case 'today':
+//       return events.filter(event => {
+//         const eventDate = new Date(event.date);
+//         return isSameDay(eventDate, now);
+//       });
 
-    case 'month':
-      return events.filter(event => {
-        const eventDate = new Date(event.date);
-        return isSameMonth(eventDate, now);
-      });
+//     case 'week':
+//       return events.filter(event => {
+//         const eventDate = new Date(event.date);
+//         return isSameWeek(eventDate, now, { weekStartsOn: 1 });
+//       });
 
-    case 'lastMonth':
-      return events.filter(event => {
-        const eventDate = new Date(event.date);
-        const lastMonth = subMonths(now, 1);
-        return getMonth(eventDate) === getMonth(lastMonth) && getYear(eventDate) === getYear(lastMonth);
-      });
+//     case 'month':
+//       return events.filter(event => {
+//         const eventDate = new Date(event.date);
+//         return isSameMonth(eventDate, now);
+//       });
 
-    default:
-      return []; 
-  }
+//     case 'lastMonth':
+//       return events.filter(event => {
+//         const eventDate = new Date(event.date);
+//         const lastMonth = subMonths(now, 1);
+//         return getMonth(eventDate) === getMonth(lastMonth) && getYear(eventDate) === getYear(lastMonth);
+//       });
+
+//     default:
+//       return []; 
+//   }
 };
   const toggleSchedule = () => {
 
@@ -76,10 +76,10 @@ e
       )}
 <p onClick={toggleSchedule}>Schedule</p>
       <ul>
-        <li id='today' onClick={()=>onChousePeriod(id)}>Today</li>
+        {/* <li id='today' onClick={()=>onChousePeriod(id)}>Today</li>
         <li id='week' onClick={()=>onChousePeriod(id)}>Week</li>
         <li id='month' onClick={()=>onChousePeriod(id)}>Month</li>
-        <li id='lastMonth'onClick={()=>onChousePeriod(id)}>Last month</li>
+        <li id='lastMonth'onClick={()=>onChousePeriod(id)}>Last month</li> */}
       </ul>
     </div>
   );
