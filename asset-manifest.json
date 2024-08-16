@@ -1,0 +1,19 @@
+{
+  "files": {
+    "main.css": "/ukenfront/static/css/main.f855e6bc.css",
+    "main.js": "/ukenfront/static/js/main.dfc933af.js",
+    "static/js/234.30540ec9.chunk.js": "/ukenfront/static/js/234.30540ec9.chunk.js",
+    "static/js/659.ecbfcdd4.chunk.js": "/ukenfront/static/js/659.ecbfcdd4.chunk.js",
+    "static/js/453.39aeeae6.chunk.js": "/ukenfront/static/js/453.39aeeae6.chunk.js",
+    "index.html": "/ukenfront/index.html",
+    "main.f855e6bc.css.map": "/ukenfront/static/css/main.f855e6bc.css.map",
+    "main.dfc933af.js.map": "/ukenfront/static/js/main.dfc933af.js.map",
+    "234.30540ec9.chunk.js.map": "/ukenfront/static/js/234.30540ec9.chunk.js.map",
+    "659.ecbfcdd4.chunk.js.map": "/ukenfront/static/js/659.ecbfcdd4.chunk.js.map",
+    "453.39aeeae6.chunk.js.map": "/ukenfront/static/js/453.39aeeae6.chunk.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.f855e6bc.css",
+    "static/js/main.dfc933af.js"
+  ]
+}
