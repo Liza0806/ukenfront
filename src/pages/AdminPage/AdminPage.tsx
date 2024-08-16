@@ -76,6 +76,7 @@ const onChousePeriod = (id: string)=> {
       )}
 <p onClick={toggleSchedule}>Schedule</p>
       <ul>
+        
         {/* <li id='today' onClick={()=>onChousePeriod(id)}>Today</li>
         <li id='week' onClick={()=>onChousePeriod(id)}>Week</li>
         <li id='month' onClick={()=>onChousePeriod(id)}>Month</li>
