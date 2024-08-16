@@ -8,7 +8,6 @@ const store = configureStore({
         visits: visitsReducer
     }
 })
-
 export default store;
 
 export type RootState = ReturnType<typeof store.getState>
