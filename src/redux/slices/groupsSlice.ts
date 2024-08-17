@@ -1,43 +1,10 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { getAllGroups } from "../api/groupsApi";
 import { fetchAllGroups } from "../thunks/thunks";
+import { GroupStateType, GroupType } from "../types/types";
 
 
-type PaymentType = {
-  dailyPayment: number;
-  monthlyPayment: number;
-};
-type ScheduleType = {
-  day: string;
-  time: string;
-};
-
-type ParticipantType = {
-  id: string;
-  name: string;
-};
-
-export type EventType = {
-  date: Date;
-  isCancelled: boolean;
-  participants: ParticipantType[];
-  _id: string;
-};
-export type GroupType = {
-  _id: string, 
-  title: string,
-  coachId: string,
-  payment: PaymentType;
-  schedule: ScheduleType;
-  events: EventType;
-};
-
-type StateType = {
-    isLoading: boolean,
-    error: string | undefined,
-    groups: GroupType[];
-}
-const initialState: StateType = {
+const initialState: GroupStateType = {
     isLoading: false,
     error: undefined,
     groups: []

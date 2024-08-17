@@ -1,11 +1,11 @@
 import { configureStore } from "@reduxjs/toolkit";
 import groupReducer from '../slices/groupsSlice';
-import visitsReducer from '../slices/visitsSlise'
+import eventReducer from '../slices/eventsSlice'
 
 const store = configureStore({
     reducer: {
         groups: groupReducer,
-        visits: visitsReducer
+        events: eventReducer
     }
 })
 export default store;

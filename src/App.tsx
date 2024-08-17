@@ -3,6 +3,7 @@ import React, { Suspense, lazy } from "react";
 import { Route, Routes, BrowserRouter } from "react-router-dom";
 import { Layout } from './components/Layout/Layout';
 import { GroupPage } from './pages/GroupPage/GroupPage';
+import { EventDetailPage } from './pages/EventDetailPage/EventDetailPage';
 
 
 // Динамическая загрузка компонентов
@@ -19,6 +20,7 @@ function App() {
               <Route index element={<MainPage />} />
               <Route path="/admin" element={<AdminPage />} />
               <Route path="/groups" element={<GroupPage/>} />
+              <Route path="/events/:id" element={<EventDetailPage />} />
             </Route>
           </Routes>
         </Suspense>
