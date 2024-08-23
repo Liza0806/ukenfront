@@ -1,10 +1,6 @@
 import { fetchAllEvents } from '../thunks/thunks';
 import { EventTypeDB } from '../types/types';
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-// import { getAllGroups } from "../api/groupsApi";
-// import { fetchAllGroups } from "../thunks/thunks";
-
-
 
 type EventStateType = {
     isLoading: boolean,
