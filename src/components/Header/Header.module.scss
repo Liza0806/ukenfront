@@ -1,0 +1,119 @@
+@import "../../styles/variables.scss";
+
+.header {
+  background-color: $color-background;
+  height: $header-height-mobile;
+  color: $color-secondary;
+  display: flex;
+  width: 100%;
+  justify-content: space-around;
+  align-items: center;
+ 
+
+  .logo {
+    font-size: $font-size-medium;
+    color: $color-primary;
+  }
+  .link {
+    color: $color-secondary;
+    text-decoration: none;
+    margin: 0 $margin-base;
+  }
+  .ctaButton {
+    background-color: $color-primary;
+    color: $color-secondary;
+  
+    text-decoration: none;
+    border-radius: 5px;
+  }
+  .navList {
+    list-style: none;
+    padding: 0;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    li {
+      margin: 0 10px;
+    }
+  }
+
+  // Бургер меню
+  .burger {
+    display: none;
+    cursor: pointer;
+    flex-direction: column;
+    gap: 5px;
+
+    .line {
+      width: 30px;
+      height: 3px;
+      background-color: $color-secondary;
+      transition: 0.3s;
+    }
+  }
+  .nav {
+    display: flex;
+
+    @media (max-width: 768px) {
+      display: none;
+    }
+  }
+
+  // Открытое состояние бургер меню
+ 
+  
+  @media (max-width: 768px) {
+ 
+      height: $header-height-mobile;
+      
+    .burger {
+      display: flex;
+    }
+
+    .nav {
+      display: none;
+    }
+    .nav.open {
+        display: flex;
+    
+        position: absolute;
+        z-index: 999;
+        justify-content: center;
+        align-items: center;
+        top: $header-height-mobile;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background-color: rgba($color-background, 0.9);
+        width: 100vw;
+        height: calc(100vh - $header-height-mobile); 
+        box-shadow: 0 4px 6px rgba($color-background, 0.1);
+        padding: 0;
+    
+        .navList {
+            display: flex;
+            flex-direction: column;
+          justify-content: space-around;
+          align-items: center;
+        }
+    
+        .link {
+          font-size: $font-size-medium;
+          font-weight: 800;
+          display: block;
+          margin: 10px 0;
+    
+          &:hover,
+          &:focus {
+            color: $color-primary;
+            transform: scale(1.05);
+          }
+    
+          &:focus {
+            outline: none;
+          }
+        }
+      }
+  }
+}

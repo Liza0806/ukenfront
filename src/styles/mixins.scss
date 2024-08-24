@@ -1,0 +1,8 @@
+// Миксин для создания кнопок
+@mixin button-style($background, $color) {
+    background-color: $background;
+    color: $color;
+    padding: 10px 20px;
+    text-decoration: none;
+    border-radius: 5px;
+  }
