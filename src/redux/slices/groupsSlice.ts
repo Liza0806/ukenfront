@@ -1,5 +1,4 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { getAllGroups } from "../api/groupsApi";
 import { fetchAllGroups } from "../thunks/thunks";
 import { GroupStateType, GroupType } from "../types/types";
 
