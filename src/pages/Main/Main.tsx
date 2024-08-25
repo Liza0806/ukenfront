@@ -1,3 +1,5 @@
+import { About } from "../../components/About/About";
+import { Coach } from "../../components/Coach/Coach";
 import { Hero } from "../../components/Hero/Hero";
 
 const MainPage = () => {
@@ -5,6 +7,8 @@ const MainPage = () => {
     return (
         <div>
             <Hero/>
+            <About/>
+            <Coach/>
         </div>
     );
 };

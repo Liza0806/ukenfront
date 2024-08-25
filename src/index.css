@@ -1,8 +1,5 @@
 @import url('https://fonts.googleapis.com/css2?family=Josefin Sans:wght@800&family=Open+Sans:wght@400;600;800&display=swap');
-h1, h2, h3, header {
-  font-family: 'Poppins', sans-serif;
-  font-weight: 800; 
-}
+
 body {
   margin: 0;
   font-family: 'Open Sans', sans-serif;
@@ -10,4 +7,88 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
+h1, h2, h3, header {
+    font-family: 'Poppins', sans-serif;
+    font-weight: 800; 
+  }
+/* Reset CSS */
 
+*,
+*::before,
+*::after {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html {
+    line-height: 1.15; /* Improve text rendering */
+    -webkit-text-size-adjust: 100%; /* Prevent font scaling in Safari */
+}
+
+body {
+    margin: 0;
+    font-family: sans-serif; /* You can set a default font */
+}
+
+main {
+    display: block;
+}
+
+h1, h2, h3, h4, h5, h6 {
+    font-size: inherit;
+    font-weight: normal;
+}
+
+p {
+    margin: 0;
+}
+
+a {
+    text-decoration: none;
+    color: inherit;
+}
+
+ul, ol {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+img {
+    max-width: 100%;
+    height: auto;
+    display: block;
+}
+
+button, input, textarea {
+    font-family: inherit;
+    font-size: inherit;
+    border: none;
+    background: none;
+}
+
+table {
+    border-collapse: collapse;
+    border-spacing: 0;
+}
+
+blockquote, q {
+    quotes: none;
+}
+
+blockquote::before, blockquote::after,
+q::before, q::after {
+    content: '';
+}
+
+hr {
+    border: none;
+    height: 1px;
+    background: #ddd;
+}
+
+/* Optional - Ensure box-sizing is inherited */
+html {
+    box-sizing: border-box;
+}

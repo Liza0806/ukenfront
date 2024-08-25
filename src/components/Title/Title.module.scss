@@ -1,0 +1,35 @@
+@import "../../styles/variables.scss";
+
+.large {
+    font-size: 4rem;
+    margin-bottom: 1rem;
+    font-weight: bold;
+    text-transform: uppercase;
+}
+
+.medium {
+    font-size: 3rem;
+    margin-bottom: 1rem;
+    font-weight: bold;
+    text-transform: uppercase;
+}
+
+.small {
+    font-size: 2rem;
+    margin-bottom: 1rem;
+    font-weight: bold;
+    text-transform: uppercase;
+}
+
+/* Define styles for the allowed color values */
+.orange {
+   color: $color-primary;
+}
+
+.white {
+    color: $color-secondary;
+}
+
+.grey {
+    color: $color-background;
+}

@@ -1,0 +1,26 @@
+@import "../../styles/variables.scss";
+
+.large {
+    font-size: 1.5rem;
+}
+
+.medium {
+    font-size: 1rem;
+}
+
+.small {
+    font-size: 0.5rem;
+}
+
+/* Define styles for the allowed color values */
+.orange {
+   color: $color-primary;
+}
+
+.white {
+    color: $color-secondary;
+}
+
+.grey {
+    color: $color-background;
+}
