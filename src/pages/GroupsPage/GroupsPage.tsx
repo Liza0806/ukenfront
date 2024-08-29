@@ -3,6 +3,7 @@ import { useAppDispatch, useAppSelector } from "../../redux/hooks/hooks";
 import { fetchAllGroups } from "../../redux/thunks/thunks";
 import { GroupType } from "../../redux/types/types";
 import { GroupInfo } from "../../components/GroupInfo/GroupInfo";
+import AddGroupForm from "../../components/AddGroupForm/AddGroupForm";
 
 const GroupsPage = () => {
   const isFirstRender = useRef(true);
@@ -29,7 +30,6 @@ const GroupsPage = () => {
   };
   return (
     <>
-      {" "}
       <p>Groups</p>
       <ul>
         {groups.map((group) => (
@@ -39,6 +39,7 @@ const GroupsPage = () => {
           </li>
         ))}
       </ul>
+      <AddGroupForm/>
     </>
   );
 };

@@ -1,5 +1,5 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { fetchAllGroups } from "../thunks/thunks";
+import { addGroupTh, fetchAllGroups } from "../thunks/thunks";
 import { GroupStateType, GroupType } from "../types/types";
 
 const initialState: GroupStateType = {
@@ -30,7 +30,20 @@ const groupsSlice = createSlice({
         state.isLoading = false;
         //state.error = action.payload
         console.log(action.payload, "error");
-      });
+      })
+      .addCase(addGroupTh.pending,(state) => {
+        state.isLoading = true;
+        console.log("pending");
+  })
+  .addCase(addGroupTh.fulfilled, (state, action) => {
+    state.isLoading = false;
+    state.groups.push(action.payload.data);  // Добавляем новую группу в массив
+  })
+  .addCase(addGroupTh.rejected, (state, action) => {
+    state.isLoading = false;
+    //state.error = action.payload
+    console.log(action.payload, "error");
+  })
   },
 });
 
