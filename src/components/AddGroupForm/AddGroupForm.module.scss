@@ -1,0 +1,28 @@
+@import "../../styles/variables.scss";
+
+.addGroupForm {
+    display: flex;
+    flex-direction: column;
+    width: 50%;
+    margin: auto;
+    border: 1px solid $color-primary;
+    gap: 1rem; 
+
+ >div {
+display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        gap: 1rem; 
+
+ }
+    .paymentsWrapper{
+        border: 1px solid $color-primary; 
+        gap: 1rem; 
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        width: 100%;
+    }
+}

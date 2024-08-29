@@ -27,7 +27,13 @@ export type ParticipantType = {
 export type GroupType = {
   _id: string;
   title: string;
-  coachId: string;
+  coachId?: string;
+  payment: PaymentType[];
+  schedule: ScheduleType[];
+};
+export type AddGroupType = {
+  title: string;
+  coachId?: string;
   payment: PaymentType[];
   schedule: ScheduleType[];
 };

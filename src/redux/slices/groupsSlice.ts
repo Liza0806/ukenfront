@@ -31,13 +31,15 @@ const groupsSlice = createSlice({
         //state.error = action.payload
         console.log(action.payload, "error");
       })
-      .addCase(addGroupTh.pending,(state) => {
+      .addCase(addGroupTh.pending, (state) => {
         state.isLoading = true;
         console.log("pending");
   })
   .addCase(addGroupTh.fulfilled, (state, action) => {
+
     state.isLoading = false;
-    state.groups.push(action.payload.data);  // Добавляем новую группу в массив
+    console.log(action, 'slice')
+
   })
   .addCase(addGroupTh.rejected, (state, action) => {
     state.isLoading = false;

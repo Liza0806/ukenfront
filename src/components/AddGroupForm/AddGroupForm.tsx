@@ -1,24 +1,26 @@
-import React, { useState } from 'react';
-import { GroupType, ScheduleType } from '../../redux/types/types';
-import { useAppDispatch } from '../../redux/hooks/hooks';
-import { addGroupTh } from '../../redux/thunks/thunks';
+import React, { useState } from "react";
+import { AddGroupType, GroupType, ScheduleType } from "../../redux/types/types";
+import { useAppDispatch } from "../../redux/hooks/hooks";
+import { addGroupTh } from "../../redux/thunks/thunks";
+import cls from "./AddGroupForm.module.scss";
+import { Button, ButtonColor, ButtonSize } from "../Button/Button";
 
 const validDays = [
-    "sunday",
-    "monday",
-    "tuesday",
-    "wednesday",
-    "thursday",
-    "friday",
-    "saturday",
-  ];
+  "sunday",
+  "monday",
+  "tuesday",
+  "wednesday",
+  "thursday",
+  "friday",
+  "saturday",
+];
 const AddGroupForm: React.FC = () => {
-  const [group, setGroup] = useState<GroupType>({
-    _id: '',
-    title: '',
-    coachId: '',
+    const  [showModal, setShowModal]  = useState(false);
+  const [group, setGroup] = useState<AddGroupType>({
+    title: "",
+    coachId: "",
     payment: [{ dailyPayment: 0, monthlyPayment: 0 }],
-    schedule: [{ day: '', time: '' }],
+    schedule: [{ day: "", time: "" }],
   });
 
   const dispatch = useAppDispatch();
@@ -31,7 +33,10 @@ const AddGroupForm: React.FC = () => {
     }));
   };
 
-  const handlePaymentChange = (index: number, e: React.ChangeEvent<HTMLInputElement>) => {
+  const handlePaymentChange = (
+    index: number,
+    e: React.ChangeEvent<HTMLInputElement>
+  ) => {
     const { name, value } = e.target;
     const newPayments = [...group.payment];
     newPayments[index] = { ...newPayments[index], [name]: parseFloat(value) };
@@ -41,7 +46,12 @@ const AddGroupForm: React.FC = () => {
     }));
   };
 
-  const handleScheduleChange = (index: number, e: React.ChangeEvent<HTMLInputElement> | React.ChangeEvent<HTMLSelectElement>) => {
+  const handleScheduleChange = (
+    index: number,
+    e:
+      | React.ChangeEvent<HTMLInputElement>
+      | React.ChangeEvent<HTMLSelectElement>
+  ) => {
     const { name, value } = e.target;
     const newSchedule = [...group.schedule];
     newSchedule[index] = { ...newSchedule[index], [name]: value };
@@ -51,39 +61,28 @@ const AddGroupForm: React.FC = () => {
     }));
   };
 
-  const addPayment = () => {
-    setGroup((prevGroup) => ({
-      ...prevGroup,
-      payment: [...prevGroup.payment, { dailyPayment: 0, monthlyPayment: 0 }],
-    }));
-  };
-
   const addSchedule = () => {
     setGroup((prevGroup) => ({
       ...prevGroup,
-      schedule: [...prevGroup.schedule, { day: '', time: '' }],
+      schedule: [...prevGroup.schedule, { day: "", time: "" }],
     }));
   };
 
   const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();  
+    e.preventDefault();
     dispatch(addGroupTh({ group }));
-    console.log(group);
+    console.log(group, "handleSubmit");
   };
 
   return (
-    <form onSubmit={handleSubmit}>
-      <div>
-        <label>ID группы:</label>
-        <input
-          type="text"
-          name="_id"
-          value={group._id}
-          onChange={handleChange}
-          required
-        />
-      </div>
-      <div>
+    <form onSubmit={handleSubmit} className={cls.addGroupForm}>
+        <Button onClick={()=>setShowModal(!showModal)}>
+Добавить группу
+        </Button>
+      { showModal && <div >
+
+
+        <div>
         <label>Название группы:</label>
         <input
           type="text"
@@ -94,38 +93,29 @@ const AddGroupForm: React.FC = () => {
         />
       </div>
       <div>
-        <label>ID тренера:</label>
-        <input
-          type="text"
-          name="coachId"
-          value={group.coachId}
-          onChange={handleChange}
-          required
-        />
-      </div>
-      <div>
         <label>Платежи:</label>
         {group.payment.map((pay, index) => (
-          <div key={index}>
+          <div key={index} className={cls.paymentsWrapper}>
+            <label>Ежедневный платеж</label>
             <input
               type="number"
               name="dailyPayment"
               placeholder="Ежедневный платеж"
-              value={pay.dailyPayment}
+              value=""
               onChange={(e) => handlePaymentChange(index, e)}
               required
             />
+            <label>Ежемесячный платеж</label>
             <input
               type="number"
               name="monthlyPayment"
               placeholder="Ежемесячный платеж"
-              value={pay.monthlyPayment}
+              value=""
               onChange={(e) => handlePaymentChange(index, e)}
               required
             />
           </div>
         ))}
-        <button type="button" onClick={addPayment}>Добавить платеж</button>
       </div>
       <div>
         <label>Расписание:</label>
@@ -137,9 +127,11 @@ const AddGroupForm: React.FC = () => {
               onChange={(e) => handleScheduleChange(index, e)}
               required
             >
-            <option value="">Выберите день</option>
+              <option value="">Выберите день</option>
               {validDays.map((day) => (
-                <option key={day} value={day}>{day}</option>
+                <option key={day} value={day}>
+                  {day}
+                </option>
               ))}
             </select>
             <input
@@ -152,9 +144,14 @@ const AddGroupForm: React.FC = () => {
             />
           </div>
         ))}
-        <button type="button" onClick={addSchedule}>Добавить расписание</button>
-      </div>
-      <button type="submit">Добавить группу</button>
+        <button type="button" onClick={addSchedule}>
+          Добавить расписание
+        </button>
+        <Button size={ButtonSize.BIG} color={ButtonColor.PRIMARY}>Добавить группу</Button>
+        </div>
+  
+      </div>}
+
     </form>
   );
 };

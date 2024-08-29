@@ -8,9 +8,11 @@ $font-family-primary: 'Josefin Sans', sans-serif;
 $font-family-secondary: 'Open Sans', sans-serif;
 
 // Размеры
-$font-size-base: 16px;
-$font-size-medium: 24px;
-$font-size-big: 32px;
+$font-size-base: 1rem;      // 16px / 16 = 1rem
+$font-size-medium: 1.5rem;  
+$font-size-big: 2rem; 
+
+
 
 $header-height-mobile: 80px;
 // Отступы

@@ -1,0 +1,35 @@
+
+@import "../../styles/variables.scss";
+
+button {
+    cursor: pointer;
+    background-color: $color-primary;
+    padding: 6px 15px;
+}
+
+.secondary {
+    background-color: $color-secondary;  
+}
+
+.outline {
+    border: 1px solid $color-primary;
+    background-color: $color-secondary;
+    background: none;
+}
+
+
+.size_base {
+    font-size: $font-size-base;
+}
+
+.size_medium {
+    font-size: $font-size-medium;
+}
+
+.size_big {
+    font-size: $font-size-big;
+}
+
+.disabled {
+    opacity: 0.5;
+}

@@ -1,4 +1,4 @@
-import { ApiResponse, GroupStateType, GroupType } from './../types/types';
+import { AddGroupType, ApiResponse, GroupStateType, GroupType } from './../types/types';
 import axios from "axios";
 import { Request, Response } from 'express'; 
 export const getAllGroups = async () => {
@@ -14,8 +14,8 @@ export const getAllGroups = async () => {
     }
   };
 
-  export const addGroup = async (group: GroupType): Promise<ApiResponse>  => {
-    
+  export const addGroup = async (group: AddGroupType): Promise<ApiResponse>  => {
+    console.log('addGroup, API', group)
     try {
       const response = await axios.post<ApiResponse>(
         `https://ukenback.vercel.app/groups/`,  group
