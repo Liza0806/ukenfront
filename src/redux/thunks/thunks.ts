@@ -1,8 +1,8 @@
-import { AddGroupArgs, AddGroupType, ApiResponse, GroupType } from './../types/types';
+import { AddGroupType, ApiResponse } from './../types/types';
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import { addGroup, getAllGroups } from "../api/groupsApi";
 import { getAllEvents } from "../api/eventsApi";
-import { group } from "console";
+
 
 export const fetchAllGroups = createAsyncThunk(
   "groups/fetchAllGroups",
@@ -27,17 +27,24 @@ export const fetchAllEvents = createAsyncThunk(
 );
 
 
-export const addGroupTh = createAsyncThunk<ApiResponse, { group: AddGroupType }>(
+export const addGroupTh = createAsyncThunk
+<ApiResponse, 
+{ group: AddGroupType },
+{ rejectValue: string }
+>(
   "groups/addGroup",
   async ({ group }, thunkAPI) =>  {
     try {
-      console.log('addGroup, TH', group)
+  //    console.log('addGroup, TH', group)
       const response = await addGroup(group); 
     if (!response) {
-      return thunkAPI.rejectWithValue("error");
+        return thunkAPI.rejectWithValue("No response from server");
+    }
+    if (response.status >= 400) {
+      return thunkAPI.rejectWithValue(response.data);
     }
     return response;
   } catch (error) {
-    return thunkAPI.rejectWithValue("error");
+      return thunkAPI.rejectWithValue("error");
   }}
 )

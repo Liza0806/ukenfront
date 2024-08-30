@@ -7,12 +7,13 @@ export interface AddGroupArgs {
 export interface ApiResponse {
   success: boolean;
   message?: string;
-  data?: any; // Замените any на тип данных, который вы ожидаете от API
+  data: string; 
+  status: number
 }
 
 export type PaymentType = {
-  dailyPayment: number;
-  monthlyPayment: number;
+  dailyPayment: number | undefined;
+  monthlyPayment: number | undefined;
 };
 export type ScheduleType = {
   day: string;

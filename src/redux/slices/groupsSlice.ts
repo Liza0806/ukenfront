@@ -43,7 +43,7 @@ const groupsSlice = createSlice({
   })
   .addCase(addGroupTh.rejected, (state, action) => {
     state.isLoading = false;
-    //state.error = action.payload
+    state.error = action.payload;
     console.log(action.payload, "error");
   })
   },

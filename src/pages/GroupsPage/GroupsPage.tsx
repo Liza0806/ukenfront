@@ -39,7 +39,7 @@ const GroupsPage = () => {
           </li>
         ))}
       </ul>
-      <AddGroupForm/>
+      <AddGroupForm groups={groups}/>
     </>
   );
 };

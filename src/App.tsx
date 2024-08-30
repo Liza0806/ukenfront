@@ -2,6 +2,9 @@ import "./App.css";
 import React, { Suspense, lazy } from "react";
 import { Route, Routes, BrowserRouter } from "react-router-dom";
 import { Layout } from "./components/Layout/Layout";
+import 'react-toastify/dist/ReactToastify.css';
+import { ToastContainer } from "react-toastify";
+
 
 // Динамическая загрузка компонентов
 const MainPage = lazy(() => import("./pages/Main/Main"));
@@ -31,6 +34,7 @@ function App() {
           </Routes>
         </Suspense>
       </BrowserRouter>
+      <ToastContainer />
     </div>
   );
 }

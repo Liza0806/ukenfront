@@ -1,4 +1,4 @@
-import { AddGroupType, ApiResponse, GroupStateType, GroupType } from './../types/types';
+import { AddGroupType, ApiResponse } from './../types/types';
 import axios from "axios";
 import { Request, Response } from 'express'; 
 export const getAllGroups = async () => {
