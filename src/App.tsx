@@ -6,11 +6,12 @@ import 'react-toastify/dist/ReactToastify.css';
 import { ToastContainer } from "react-toastify";
 
 
+
 // Динамическая загрузка компонентов
 const MainPage = lazy(() => import("./pages/Main/Main"));
 const AdminPage = lazy(() => import("./pages/AdminPage/AdminPage"));
 const EventsPage = lazy(() => import("./pages/EventsPage/EventsPage"));
-const EventDetailPage = lazy(() => import("./pages/EventDetailPage/EventDetailPage"));
+const OneTrainingPage = lazy(() => import("./pages/OneTrainingPage/OneTrainingPage"));
 const PaymentPage = lazy(() => import("./pages/PaymentPage/PaymentPage"));
 const GroupsPage = lazy(() => import("./pages/GroupsPage/GroupsPage"));
 
@@ -26,7 +27,7 @@ function App() {
               {/* Админ-панель и её дочерние маршруты */}
               <Route path="/admin" element={<AdminPage />}>
                 <Route path="events" element={<EventsPage />} />
-                <Route path="events/:id" element={<EventDetailPage />} />
+                <Route path="events/:id" element={<OneTrainingPage />} />
                 <Route path="payment" element={<PaymentPage />} />
                 <Route path="groups" element={<GroupsPage />} />
               </Route>

@@ -30,7 +30,7 @@ const EventsPage = () => {
         endDate.setHours(startDate.getHours() + 1);
 
         return {
-          title: e.group,
+          title: e.groupTitle,
           start: startDate,
           end: endDate,
           allDay: false,

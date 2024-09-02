@@ -1,3 +1,4 @@
+import { error, group } from 'console';
 /// GROUP
 
 export interface AddGroupArgs {
@@ -12,9 +13,10 @@ export interface ApiResponse {
 }
 
 export type PaymentType = {
-  dailyPayment: number | undefined;
-  monthlyPayment: number | undefined;
-};
+  dailyPayment: number;
+  monthlyPayment: number;
+}
+  
 export type ScheduleType = {
   day: string;
   time: string;
@@ -32,6 +34,7 @@ export type GroupType = {
   payment: PaymentType[];
   schedule: ScheduleType[];
 };
+
 export type AddGroupType = {
   title: string;
   coachId?: string;
@@ -67,10 +70,17 @@ export type EventTypeDB = {
   isCancelled: boolean;
   participants: ParticipantType[];
   _id: string;
-  group: string;
+  groupTitle: string;
+  groupId: string;
 };
 
 //// USER
+export type UserStateType = {
+  isLoading: boolean;
+  error: string | undefined;
+  users: User[];
+}
+
 
 export interface Visit {
   date: Date;
@@ -79,6 +89,7 @@ export interface Visit {
 }
 
 export interface User {
+  _id: string;
   name: string;
   password: string;
   phone?: string; // Опциональное поле, так как оно не является обязательным в Mongoose модели

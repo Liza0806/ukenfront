@@ -1,10 +1,16 @@
-import React, { useState } from "react";
+import React, { useEffect, useReducer } from "react";
 import { useAppDispatch } from "../../redux/hooks/hooks";
 import { addGroupTh, fetchAllGroups } from "../../redux/thunks/thunks";
-import cls from "./AddGroupForm.module.scss";
 import { Button, ButtonColor, ButtonSize } from "../Button/Button";
-import { GroupType, ScheduleType } from "../../redux/types/types";
+import { initialState, reducer } from "./formReducer";
 import { toast } from "react-toastify";
+import { ScheduleType } from "../../redux/types/types";
+import { group } from "console";
+import GroupFormFields from "../GroupFormFields/GroupFormFields";
+
+interface AddGroupFormProps {
+  groups: any[]; // Замените any на конкретный тип
+}
 
 const validDays = [
   "sunday",
@@ -16,190 +22,150 @@ const validDays = [
   "saturday",
 ];
 
-interface AddGroupFormProps {
-  groups: GroupType[];
-}
+const AddGroupForm: React.FC<AddGroupFormProps> = ({ groups }) => {
+  const [state, dispatch] = useReducer(reducer, initialState);
+  const appDispatch = useAppDispatch();
 
-const AddGroupForm = ({ groups }: AddGroupFormProps) => {
-  const [showModal, setShowModal] = useState(false);
-  const [title, setTitle] = useState("");
-  const [dailyPayment, setDailyPayment] = useState(0);
-  const [monthlyPayment, setMonthlyPayment] = useState(0);
-  const [schedule, setSchedule] = useState<ScheduleType[]>([]);
-  const [error, setError] = useState<string | null>(null);
-
-  const dispatch = useAppDispatch();
-
-  React.useEffect(() => {
-    if (error) {
-      toast.error(error);
+  useEffect(() => {
+    if (
+      state.title.trim() &&
+      (state.dailyPayment || state.monthlyPayment) &&
+      state.schedule.length !== 0
+    ) {
+      dispatch({ type: "SET_DISABLE", payload: false });
+    } else {
+      dispatch({ type: "SET_DISABLE", payload: true });
     }
-  }, [error]);
+  }, [state.title, state.dailyPayment, state.monthlyPayment, state.schedule]);
 
-  const addSchedule = () => {
-    setSchedule((prevSchedule) => [...prevSchedule, { day: "", time: "" }]);
+  useEffect(() => {
+    if (state.error) {
+      toast.error(state.error);
+    }
+  }, [state.error]);
+
+  const validateForm = () => {
+    if (!state.title.trim()) {
+      dispatch({
+        type: "SET_ERROR",
+        payload: "Название группы не может быть пустым",
+      });
+      return false;
+    }
+    if (!state.dailyPayment && !state.monthlyPayment) {
+      dispatch({
+        type: "SET_ERROR",
+        payload: "Укажите хотя бы один тип платежа",
+      });
+      return false;
+    }
+    if (state.schedule.length === 0) {
+      dispatch({
+        type: "SET_ERROR",
+        payload: "Добавьте хотя бы одно занятие в расписание",
+      });
+      return false;
+    }
+    for (let sched of state.schedule) {
+      if (!sched.day || !sched.time) {
+        dispatch({
+          type: "SET_ERROR",
+          payload: "Заполните все поля расписания",
+        });
+        return false;
+      }
+      if (isTimeOccupied(sched.day, sched.time)) {
+        dispatch({
+          type: "SET_ERROR",
+          payload: "Время занято другим занятием",
+        });
+        return false;
+      }
+    }
+    if (isGroupExists(state.title)) {
+      dispatch({
+        type: "SET_ERROR",
+        payload: "Группа с таким названием уже существует",
+      });
+      return false;
+    }
+    dispatch({ type: "SET_ERROR", payload: null });
+    return true;
   };
+
+  const isGroupExists = (groupTitle: string) => {
+    return groups.some((group) => group.title === groupTitle);
+  };
+
+  const isTimeOccupied = (day: string, time: string) => {
+    return groups.some((group) =>
+      group.schedule.some(
+        (sched: ScheduleType) => sched.day === day && sched.time === time
+      )
+    );
+  };
+
+  const handleSubmit = async () => {
+    if (validateForm()) {
+      try {
+        const group = {
+          title: state.title,
+          coachId: "Костя",
+          payment: [
+            {
+              dailyPayment: state.dailyPayment,
+              monthlyPayment: state.monthlyPayment,
+            },
+          ],
+          schedule: state.schedule,
+        };
+        console.log(group, "группа в handleSubmit");
+        await appDispatch(addGroupTh({ group }));
+        dispatch({ type: "RESET_FORM" });
+        toast.success("Группа успешно добавлена");
+        appDispatch(fetchAllGroups());
+      } catch (error) {
+        toast.error("Ошибка при добавлении группы");
+      }
+    }
+  };
+
   const handleScheduleChange = (
     index: number,
     field: string,
     value: string
   ) => {
-    setSchedule((prevSchedule) => {
-      const newSchedule = [...prevSchedule];
-      newSchedule[index] = { ...newSchedule[index], [field]: value };
-
-      if (isInvalidTime(newSchedule[index])) {
-        setError("Время занято");
-      } else {
-        setError(null);
-      }
-
-      return newSchedule;
-    });
+    dispatch({ type: "UPDATE_SCHEDULE", payload: { index, field, value } });
   };
 
-  const isGroupExists = (groupTitle: string) =>
-    groups.some((group) => group.title === groupTitle);
-
-  const isInvalidTime = ({ day, time }: { day: string; time: string }) => {
-    const theSameTime = groups.some((group: GroupType) =>
-      group.schedule.some(
-        (schedule: ScheduleType) =>
-          schedule.day === day && schedule.time === time
-      )
-    );
-
-    if (theSameTime) {
-      setError("Время занято");
-    }
-
-    return theSameTime;
+  const addSchedule = () => {
+    dispatch({ type: "ADD_SCHEDULE" });
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-
-    if (isGroupExists(title)) {
-      setError("Группа с таким названием уже существует");
-      console.log("группа с таким названием уже есть");
-      return;
-    }
-    const group = {
-      title,
-      coachId: "Костя",
-      payment: [{ dailyPayment, monthlyPayment }],
-      schedule,
-    };
-    dispatch(addGroupTh({ group }))
-    .unwrap()
-    .then(() => {
-      dispatch(fetchAllGroups()); // Fetch all groups after adding a new one
-      toast.success("Группа добавлена успешно");
-    })
-    .catch((err) => {
-      setError("Ошибка при добавлении группы");
-      console.error(err);
-    });
-
-    setError(null);
-    setShowModal(false)
-    toast.success("Группа добавлена успешно");
-    console.log(group, "handleSubmit");
+  const removeScheduleItem = (index: number) => {
+    dispatch({ type: "REMOVE_SCHEDULE_ITEM", payload: index });
   };
 
   return (
-    <form onSubmit={handleSubmit} className={cls.addGroupForm}>
-      {!showModal && (
-        <Button onClick={() => setShowModal(!showModal)}>
-          Добавить группу
-        </Button>
-      )}
-      {showModal && (
-        <div>
-          <div>
-            <label>Название группы:</label>
-            <input
-              type="text"
-              name="title"
-              value={title}
-              onChange={(e) => setTitle(e.target.value)}
-              required
-            />
-          </div>
-          <div>
-            <label>Тренер:</label>
-            <input type="text" name="title" value="Костя" required />
-          </div>
-          <div>
-            <label>Платежи:</label>
-            <div className={cls.paymentsWrapper}>
-              <label>Ежедневный платеж</label>
-              <input
-                type="number"
-                name="dailyPayment"
-                placeholder="Ежедневный платеж"
-                value={dailyPayment}
-                onChange={(e) => setDailyPayment(Number(e.target.value))}
-                required
-              />
-              <label>Ежемесячный платеж</label>
-              <input
-                type="number"
-                name="monthlyPayment"
-                placeholder="Ежемесячный платеж"
-                value={monthlyPayment}
-                onChange={(e) => setMonthlyPayment(Number(e.target.value))}
-                required
-              />
-            </div>
-          </div>
-
-          <div>
-            <label>Расписание:</label>
-            {schedule.map((sched, index) => (
-              <div key={index}>
-                <select
-                  name="day"
-                  value={sched.day}
-                  onChange={(e) =>
-                    handleScheduleChange(index, "day", e.target.value)
-                  }
-                  required
-                >
-                  <option value="">Выберите день</option>
-                  {validDays.map((day) => (
-                    <option key={day} value={day}>
-                      {day}
-                    </option>
-                  ))}
-                </select>
-                <input
-                  type="text"
-                  name="time"
-                  placeholder="Время"
-                  value={sched.time}
-                  onChange={(e) =>
-                    handleScheduleChange(index, "time", e.target.value)
-                  }
-                  required
-                />
-              </div>
-            ))}
-            <Button size={ButtonSize.BASE} type="button" onClick={addSchedule}>
-              Добавить занятие
-            </Button>
-          </div>
-
-          <Button
-            size={ButtonSize.BIG}
-            color={ButtonColor.PRIMARY}
-            type="submit"
-          >
-            Добавить группу
-          </Button>
-        </div>
-      )}
-    </form>
+    <div>
+      <h2>Добавить группу</h2>
+      <GroupFormFields
+        state={state}
+        handleScheduleChange={handleScheduleChange}
+        addSchedule={addSchedule}
+        removeScheduleItem={removeScheduleItem}
+        validDays={validDays}
+        dispatch={dispatch}
+      />
+      <Button
+        size={ButtonSize.BASE}
+        color={ButtonColor.PRIMARY}
+        onClick={handleSubmit}
+        disabled={state.disable}
+      >
+        Добавить группу
+      </Button>
+    </div>
   );
 };
 
