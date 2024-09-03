@@ -33,6 +33,7 @@ export type GroupType = {
   coachId?: string;
   payment: PaymentType[];
   schedule: ScheduleType[];
+  participants: ParticipantType[];
 };
 
 export type AddGroupType = {
@@ -40,6 +41,7 @@ export type AddGroupType = {
   coachId?: string;
   payment: PaymentType[];
   schedule: ScheduleType[];
+  participants: ParticipantType[];
 };
 
 export type GroupStateType = {

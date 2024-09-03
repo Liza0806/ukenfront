@@ -4,6 +4,7 @@ import { fetchAllGroups } from "../../redux/thunks/thunks";
 import { GroupType } from "../../redux/types/types";
 import { GroupInfo } from "../../components/GroupInfo/GroupInfo";
 import AddGroupForm from "../../components/AddGroupForm/AddGroupForm";
+import { GroupPage } from "../../components/OneGroupInformation/GroupPage";
 
 const GroupsPage = () => {
   const isFirstRender = useRef(true);
@@ -35,7 +36,7 @@ const GroupsPage = () => {
         {groups.map((group) => (
           <li key={group._id} onClick={() => toggleGroupVisibility(group._id)}>
             {group.title}
-            {visibleGroups[group._id] && <GroupInfo id={group._id} />}
+            {visibleGroups[group._id] && <GroupPage groupData={group} />}
           </li>
         ))}
       </ul>

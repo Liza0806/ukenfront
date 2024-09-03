@@ -4,12 +4,12 @@ import { addGroupTh, fetchAllGroups } from "../../redux/thunks/thunks";
 import { Button, ButtonColor, ButtonSize } from "../Button/Button";
 import { initialState, reducer } from "./formReducer";
 import { toast } from "react-toastify";
-import { ScheduleType } from "../../redux/types/types";
+import { GroupType, ScheduleType } from "../../redux/types/types";
 import { group } from "console";
 import GroupFormFields from "../GroupFormFields/GroupFormFields";
 
 interface AddGroupFormProps {
-  groups: any[]; // Замените any на конкретный тип
+  groups: GroupType[]; // Замените any на конкретный тип
 }
 
 const validDays = [
@@ -118,6 +118,7 @@ const AddGroupForm: React.FC<AddGroupFormProps> = ({ groups }) => {
             },
           ],
           schedule: state.schedule,
+          participants: [],
         };
         console.log(group, "группа в handleSubmit");
         await appDispatch(addGroupTh({ group }));

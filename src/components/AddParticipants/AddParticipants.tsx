@@ -1,29 +1,30 @@
 import React, { useEffect, useState } from "react";
 import { useAppDispatch, useAppSelector } from "../../redux/hooks/hooks";
-import { fetchUsersByName, updateEventParticipants } from "../../redux/thunks/thunks";
+import {
+  fetchUsersByName,
+  updateEventParticipants,
+} from "../../redux/thunks/thunks";
 import { useLocation, useNavigate } from "react-router-dom";
 import { ParticipantType } from "../../redux/types/types";
 import { clearUsers } from "../../redux/slices/userSlice";
-
+import { toast } from "react-toastify";
 
 interface FindUsersProps {
-    eventId: string;
-    participants: ParticipantType[];
-  }
+  eventId: string;
+  participants: ParticipantType[];
+  addParticipants: (_id: string, name: string) => void;
+}
 
-  export const FindUsers: React.FC<FindUsersProps> = ({ eventId, participants }) => {
+export const FindUsers: React.FC<FindUsersProps> = ({ addParticipants }) => {
   const [username, setUsername] = useState<string>("");
   const dispatch = useAppDispatch();
   const location = useLocation();
   const navigate = useNavigate();
 
-
-
   const { users, isLoading, error } = useAppSelector((state) => state.users);
   useEffect(() => {
     const params = new URLSearchParams(location.search);
-    
-    // Если в поиске есть username, устанавливаем его в state
+
     const queryName = params.get("name");
     if (queryName) {
       setUsername(queryName);
@@ -53,15 +54,6 @@ interface FindUsersProps {
       dispatch(fetchUsersByName(username));
     }
   };
-const addParticipantHandler = (_id: string, name:string, eventId: string) => {
-   
-    const newParticipants = [...participants, { _id, name }];
-    console.log('addParticipantHandler', newParticipants, eventId)
-dispatch(updateEventParticipants( {eventId, participants: newParticipants}))
-dispatch(clearUsers())
-setUsername('')
-}
-
 
   return (
     <div>
@@ -76,7 +68,12 @@ setUsername('')
       {users.length > 0 && (
         <ul>
           {users.map((user) => (
-            <li key={user._id} onClick={()=>addParticipantHandler(user._id, user.name, eventId)}>{user.name}</li>
+            <li
+              key={user._id}
+              onClick={() => addParticipants(user._id, user.name)}
+            >
+              {user.name}
+            </li>
           ))}
         </ul>
       )}
