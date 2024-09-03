@@ -1,4 +1,4 @@
-import { AddGroupType, ApiResponse } from './../types/types';
+import { AddGroupType, ApiResponse, ParticipantType } from './../types/types';
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import { addGroup, getAllGroups } from "../api/groupsApi";
 import { getAllEvents } from "../api/eventsApi";
@@ -56,7 +56,7 @@ export const fetchUsersByName = createAsyncThunk(
 
 interface UpdateEventParticipantsPayload {
   eventId: string;
-  participants: { _id: string; name: string };
+  participants: ParticipantType[];
 }
 
 // Функция для отправки PUT-запроса на сервер

@@ -2,13 +2,16 @@ import React, { useEffect, useState } from "react";
 import { useAppDispatch, useAppSelector } from "../../redux/hooks/hooks";
 import { fetchUsersByName, updateEventParticipants } from "../../redux/thunks/thunks";
 import { useLocation, useNavigate } from "react-router-dom";
+import { ParticipantType } from "../../redux/types/types";
+import { clearUsers } from "../../redux/slices/userSlice";
 
 
 interface FindUsersProps {
     eventId: string;
+    participants: ParticipantType[];
   }
 
-  export const FindUsers: React.FC<FindUsersProps> = ({ eventId }) => {
+  export const FindUsers: React.FC<FindUsersProps> = ({ eventId, participants }) => {
   const [username, setUsername] = useState<string>("");
   const dispatch = useAppDispatch();
   const location = useLocation();
@@ -17,7 +20,6 @@ interface FindUsersProps {
 
 
   const { users, isLoading, error } = useAppSelector((state) => state.users);
-
   useEffect(() => {
     const params = new URLSearchParams(location.search);
     
@@ -53,10 +55,14 @@ interface FindUsersProps {
   };
 const addParticipantHandler = (_id: string, name:string, eventId: string) => {
    
-    const newParticipants = { _id, name };
-    console.log('addParticipantHandler',newParticipants, eventId)
+    const newParticipants = [...participants, { _id, name }];
+    console.log('addParticipantHandler', newParticipants, eventId)
 dispatch(updateEventParticipants( {eventId, participants: newParticipants}))
+dispatch(clearUsers())
+setUsername('')
 }
+
+
   return (
     <div>
       <label>

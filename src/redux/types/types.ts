@@ -23,7 +23,7 @@ export type ScheduleType = {
 };
 
 export type ParticipantType = {
-  id: string;
+  _id: string;
   name: string;
 };
 
