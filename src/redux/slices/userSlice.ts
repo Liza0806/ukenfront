@@ -6,6 +6,7 @@ const initialState: UserStateType = {
   isLoading: false,
   error: undefined,
   users: [],
+  
 };
 
 const usersSlice = createSlice({
@@ -32,6 +33,21 @@ const usersSlice = createSlice({
           console.log(action.payload, "fulfilled");
         })
         .addCase(fetchUsersByName.rejected, (state, action) => {
+          state.isLoading = false;
+          state.error = action.payload as string;
+          console.log(action.payload, "error");
+        })
+        .addCase(fetchAllUsers.pending, (state) => {
+          state.isLoading = true;
+          state.error = undefined;
+          console.log("pending");
+        })
+        .addCase(fetchAllUsers.fulfilled, (state, action: PayloadAction<User[]>) => {
+          state.isLoading = false;
+          state.users = action.payload;
+          console.log(action.payload, "fulfilled");
+        })
+        .addCase(fetchAllUsers.rejected, (state, action) => {
           state.isLoading = false;
           state.error = action.payload as string;
           console.log(action.payload, "error");

@@ -13,7 +13,7 @@ const OneTrainingPage: React.FC = () => {
   const [event, setEvent] = useState<EventTypeDB | null>(null);
   const dispatch = useAppDispatch();
   const location = useLocation();
-
+  let participants: ParticipantType[] = event?.participants? [...event?.participants] : [];
   useEffect(() => {
     const fetchedEvent = location.state?.event as EventTypeDB;
 
@@ -30,39 +30,55 @@ const OneTrainingPage: React.FC = () => {
   if (!event) {
     return <div>Event not found</div>;
   }
-  const { date, groupTitle, groupId, participants } = event;
+  const { date, groupTitle, groupId } = event;
 
   const deleteParticipantHandler = (_id: string, eventId: string) => {
     const newParticipants = participants.filter(
       (participant) => participant._id !== _id
     );
+    participants = newParticipants
     dispatch(
-      updateEventParticipants({ eventId, participants: newParticipants })
+      updateEventParticipants({ eventId, participants: participants })
     );
     toast.success("Боец удален!");
   };
 
   const isParticipantExistInEvent = (
-    participants: ParticipantType[],
     id: string
   ) => {
     return participants.find((p) => p._id === id);
   };
 
   const addParticipantHandler = (_id: string, name: string) => {
-    if (isParticipantExistInEvent(participants, _id)) {
-      toast.error("Этот бoец уже идет на трениpовку");
+    if (isParticipantExistInEvent(_id)) {
+      toast.error("Этот боец уже идет на тренировку");
       return;
-    }
-    const newParticipants = [...participants, { _id, name }];
-    const eventId = event._id;
-    dispatch(
-      updateEventParticipants({ eventId, participants: newParticipants })
-    );
-    dispatch(clearUsers());
+    } else{
+    participants.push({_id: _id, name: name})
     toast.success("Боец добавлен!");
-  };
 
+  }
+    // const newParticipants: ParticipantType[] = [...participants, { _id, name }];
+    // const eventId = event._id;
+
+   // dispatch(updateEventParticipants({ eventId, participants: newParticipants }));
+    
+  //   setEvent((prevEvent) => {
+  //     if (!prevEvent) return prevEvent;
+
+  //     const updatedParticipants = [...prevEvent.participants, { _id, name }];
+  //     return { ...prevEvent, participants: updatedParticipants };
+  //  }
+  // );
+
+  //   dispatch(clearUsers());
+  };
+  const updateParticicpantsInterface = (participants: ParticipantType[]) => {
+    setEvent((prevEvent) => {
+          if (!prevEvent) return prevEvent;
+          return { ...prevEvent, participants: participants };
+       })
+  }
   return (
     <div className={cls.trainingPage}>
       <h1>Training Details</h1>
@@ -96,9 +112,11 @@ const OneTrainingPage: React.FC = () => {
         )}
         <FindUsers
           eventId={event._id}
-          participants={event.participants}
+          participants={participants}
           addParticipants={addParticipantHandler}
+          updateParticicpantsInterface={updateParticicpantsInterface}
         />
+      
       </div>
     </div>
   );

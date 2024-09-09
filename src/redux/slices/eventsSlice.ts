@@ -41,6 +41,7 @@ const eventsSlice = createSlice({
 //state.error = action.payload
         console.log(action.payload, 'error')
     })
+    
 }});
 
 export const { setEvents, setCurrentEvent } = eventsSlice.actions;

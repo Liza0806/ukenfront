@@ -5,7 +5,7 @@ export const getAllUsers = async () => {
       const response = await axios.get(
         `https://ukenback.vercel.app/users/`
       );
-      console.log(response.data, "response.data");
+      console.log(response.data, "response.data in getAllUsers");
       localStorage.setItem('users', JSON.stringify(response.data))
       return response.data;
     } catch (error) {

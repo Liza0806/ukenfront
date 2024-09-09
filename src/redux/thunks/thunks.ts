@@ -22,7 +22,9 @@ export const fetchAllEvents = createAsyncThunk(
   async (thunkAPI) => {
     const response = await getAllEvents();
     if (!response) {
+      console.log('fetchAllEvents')
       return "error";
+   
     }
     return response;
   }
@@ -42,9 +44,7 @@ export const fetchAllUsers = createAsyncThunk(
 export const fetchUsersByName = createAsyncThunk(
   "users/fetchUsersByName",
   async (username: string, thunkAPI) => {
-    console.log('fetchUsersByName1')
     try {
-      console.log('fetchUsersByName try')
       const response = await getUsersByName(username);
       return response;
     } catch (error) {
@@ -68,6 +68,7 @@ export const updateEventParticipants = createAsyncThunk(
         `https://ukenback.vercel.app/events/${eventId}`,
         { participants }
       );
+      console.log(response.data)
       return response.data;
     } catch (error: any) {
       return thunkAPI.rejectWithValue(error.response.data);
