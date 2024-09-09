@@ -6,19 +6,23 @@ type EventStateType = {
     isLoading: boolean,
     error: string | undefined,
     events: EventTypeDB[];
+    currentEvent?: EventTypeDB | undefined;
 }
 const initialState: EventStateType = {
     isLoading: false,
     error: undefined,
-    events: []
-
+    events: [],
+    currentEvent: undefined
 }
 const eventsSlice = createSlice({
   name: "events",
   initialState,
   reducers: {
-    getEvents(state, action :PayloadAction<EventTypeDB[]>){
+    setEvents(state, action :PayloadAction<EventTypeDB[]>){
         state.events = action.payload
+    },
+    setCurrentEvent(state, action: PayloadAction<EventTypeDB>){
+        state.currentEvent = action.payload
     }
   },
   extraReducers: (builder) => {
@@ -39,5 +43,5 @@ const eventsSlice = createSlice({
     })
 }});
 
-export const { getEvents } = eventsSlice.actions;
+export const { setEvents, setCurrentEvent } = eventsSlice.actions;
 export default eventsSlice.reducer;

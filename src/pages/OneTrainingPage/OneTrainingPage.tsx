@@ -1,25 +1,35 @@
 import React, { useEffect, useState } from "react";
 import moment from "moment";
 import cls from "./OneTrainingPage.module.scss";
-import { useParams } from "react-router-dom";
-import { useAppDispatch, useAppSelector } from "../../redux/hooks/hooks";
+import { useAppDispatch } from "../../redux/hooks/hooks";
 import { FindUsers } from "../../components/AddParticipants/AddParticipants";
 import { updateEventParticipants } from "../../redux/thunks/thunks";
 import { toast } from "react-toastify";
 import { clearUsers } from "../../redux/slices/userSlice";
-import { ParticipantType } from "../../redux/types/types";
+import { EventTypeDB, ParticipantType } from "../../redux/types/types";
+import { useLocation } from "react-router-dom";
 
 const OneTrainingPage: React.FC = () => {
-  const { id } = useParams<{ id: string }>();
-
-  const events = useAppSelector((state) => state.events.events);
+  const [event, setEvent] = useState<EventTypeDB | null>(null);
   const dispatch = useAppDispatch();
-  const event = events.find((e) => e._id === id);
+  const location = useLocation();
+
+  useEffect(() => {
+    const fetchedEvent = location.state?.event as EventTypeDB;
+
+    if (fetchedEvent) {
+      setEvent(fetchedEvent);
+    } else {
+      const selectedEvent = localStorage.getItem("selectedEvent");
+      if (selectedEvent) {
+        setEvent(JSON.parse(selectedEvent));
+      }
+    }
+  }, [location.state]);
 
   if (!event) {
     return <div>Event not found</div>;
   }
-
   const { date, groupTitle, groupId, participants } = event;
 
   const deleteParticipantHandler = (_id: string, eventId: string) => {
@@ -29,6 +39,7 @@ const OneTrainingPage: React.FC = () => {
     dispatch(
       updateEventParticipants({ eventId, participants: newParticipants })
     );
+    toast.success("Боец удален!");
   };
 
   const isParticipantExistInEvent = (

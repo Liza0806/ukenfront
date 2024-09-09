@@ -1,53 +1,47 @@
-import { useEffect, useMemo, useRef } from "react";
+import { memo, useEffect, useMemo } from "react";
 import { useNavigate } from "react-router-dom";
 import { useAppDispatch, useAppSelector } from "../../redux/hooks/hooks";
 import { fetchAllEvents } from "../../redux/thunks/thunks";
 import { EventTypeDB } from "../../redux/types/types";
-import {
-  EventTypeForCalendar,
-  MyCalendar,
-} from "../../components/Calendar/Calendar";
 
-const EventsPage = () => {
-  const isFirstRender = useRef(true);
+import { setCurrentEvent, setEvents } from "../../redux/slices/eventsSlice";
+import MyCalendar from "../../components/Calendar/Calendar";
+
+const EventsPage = memo(() => {
   const navigate = useNavigate();
-
-  const dispatch = useAppDispatch();
-  useEffect(() => {
-    if (isFirstRender.current) {
-      isFirstRender.current = false;
-      dispatch(fetchAllEvents());
-    }
-  }, [dispatch, isFirstRender]);
-
-  const events: EventTypeDB[] = useAppSelector((state) => state.events.events);
-
-  const eventsForCalendar = useMemo(
-    () =>
-      events.map((e) => {
-        const startDate = new Date(e.date);
-        const endDate = new Date(startDate);
-        endDate.setHours(startDate.getHours() + 1);
-
-        return {
-          title: e.groupTitle,
-          start: startDate,
-          end: endDate,
-          allDay: false,
-          id: e._id,
-        };
-      }),
-    [events]
+  const eventsFromState: EventTypeDB[] = useAppSelector(
+    (state) => state.events.events
   );
+  const dispatch = useAppDispatch();
 
-  const handleEventClick = (event: EventTypeForCalendar) => {
+  useEffect(() => {
+    const cachedEvents = localStorage.getItem("events");
+    if (!cachedEvents) {
+      dispatch(fetchAllEvents()).then(() => {
+        if (eventsFromState.length > 0) {
+          localStorage.setItem("events", JSON.stringify(eventsFromState));
+        }
+      });
+    } else {
+      if (!eventsFromState.length) {
+        dispatch(setEvents(JSON.parse(cachedEvents)));
+      }
+    }
+  }, [dispatch, eventsFromState]);
+
+  const handleEventClick = (event: EventTypeDB) => {
     console.log("Event clicked:", event);
-    navigate(`${event.id}`);
+    dispatch(setCurrentEvent(event));
+    localStorage.setItem("currentEvent", JSON.stringify(event));
+    navigate(`${event._id}`);
   };
 
   return (
-    <MyCalendar events={eventsForCalendar} onEventClick={handleEventClick} />
+    <>
+      {" "}
+      <MyCalendar events={eventsFromState} onEventClick={handleEventClick} />
+    </>
   );
-};
+});
 
 export default EventsPage;
