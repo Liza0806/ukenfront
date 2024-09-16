@@ -1,128 +1,96 @@
-// import {
-//   Calendar,
-//   dateFnsLocalizer } from "react-big-calendar";
-// import format from "date-fns/format";
-// import parse from "date-fns/parse";
-// import startOfWeek from "date-fns/startOfWeek";
-// import getDay from "date-fns/getDay";
-// import enUS from "date-fns/locale/en-US";
-// import "react-big-calendar/lib/css/react-big-calendar.css";
-// import { ParticipantType } from "../../redux/types/types";
-
-// export interface EventTypeForCalendar {
-//   title: string;
-//   start: Date;
-//   end: Date;
-//   allDay?: boolean;
-//   id: string | number;
-//   participants: ParticipantType[];
-//   groupId: string
-// }
-
-// const locales = {
-//   "en-US": enUS,
-// };
-
-// const localizer = dateFnsLocalizer({
-//   format,
-//   parse,
-//   startOfWeek,
-//   getDay,
-//   locales,
-// });
-
-// interface MyCalendarProps {
-//   eventsForCalendar: EventTypeForCalendar[];
-//   onEventClick?: (event: EventTypeForCalendar) => void;
-// }
-
-// export const MyCalendar: React.FC<MyCalendarProps> = ({
-//   eventsForCalendar,
-//   onEventClick,
-// }) => {
-//   debugger
-//   const handleSelectEvent = (event: EventTypeForCalendar) => {
-//     if (onEventClick) {
-//       onEventClick(event);
-//     }
-//   };
-
-//   return (
-//     <div>
-//       <Calendar
-//         localizer={localizer}
-//         events={eventsForCalendar}
-//         startAccessor="start"
-//         endAccessor="end"
-//         style={{ height: 800 }}
-//         onSelectEvent={handleSelectEvent}
-//       />
-//     </div>
-//   );
-// };
-import React from "react";
+import React, { useEffect, useState } from "react";
 import {
   startOfMonth,
   endOfMonth,
   eachDayOfInterval,
   format,
   isSameDay,
+  subMonths,
 } from "date-fns";
 import { useNavigate } from "react-router-dom";
-
-// Импортируй EventTypeDB из нужного файла
-// import './Calendar.css'; // CSS файл для стилизации
 import { EventTypeDB } from "../../redux/types/types";
+import { useAppDispatch, useAppSelector } from "../../redux/hooks/hooks";
+import { fetchAllEvents } from "../../redux/thunks/thunks";
+import { ru as ruLocale } from "date-fns/locale";
 
-interface CalendarProps {
-  events: EventTypeDB[];
-  onEventClick?: (event: EventTypeDB) => void;
-}
-
-const MyCalendar: React.FC<CalendarProps> = ({ events, onEventClick }) => {
+const MyCalendar: React.FC = () => {
   const navigate = useNavigate();
+  const dispatch = useAppDispatch();
+  const [dif, setDif] = useState(0);
+  const [startDate, setStartDate] = useState<Date>(new Date());
+  const [daysOfMonth, setDaysOfMonth] = useState<Date[]>([]);
+  const [month, setMonth] = useState<string>("");
 
-  const currentDate = new Date();
-  const startDate = startOfMonth(currentDate);
-  const endDate = endOfMonth(currentDate);
-  const daysOfMonth = eachDayOfInterval({ start: startDate, end: endDate });
+  const events = useAppSelector((state) => state.events.events);
+
+  // Фетчим ивенты при первом рендере
+  useEffect(() => {
+    dispatch(fetchAllEvents());
+  }, [dispatch]);
+
+  useEffect(() => {
+    const newStartDate = startOfMonth(subMonths(new Date(), dif));
+    const newEndDate = endOfMonth(newStartDate);
+    const newDaysOfMonth = eachDayOfInterval({
+      start: newStartDate,
+      end: newEndDate,
+    });
+    setStartDate(newStartDate);
+    setDaysOfMonth(newDaysOfMonth);
+    setMonth(newStartDate.toLocaleString("ru-RU", { month: "long" }));
+  }, [dif]);
 
   const getEventsForDay = (day: Date) => {
     return events.filter((event) => isSameDay(new Date(event.date), day));
   };
 
   const handleSelectEvent = (event: EventTypeDB) => {
-    if (onEventClick) {
-      onEventClick(event);
-    }
     localStorage.setItem("selectedEvent", JSON.stringify(event));
     navigate(`/admin/events/${event._id}`, { state: { event } });
   };
+
+  const lastMonth = () => {
+    setDif((prev) => prev + 1);
+  };
+
+  const nextMonth = () => {
+    setDif((prev) => prev - 1);
+  };
+
   return (
     <div className="calendar">
       <div className="calendar-header">
-        <button>Предыдущий месяц</button>
-        <h2>{format(currentDate, "MMMM yyyy")}</h2>
-        <button>Следующий месяц</button>
+        <button onClick={lastMonth}>Предыдущий месяц</button>
+        <h2>{month}</h2>
+        <button onClick={nextMonth}>Следующий месяц</button>
       </div>
       <div className="calendar-grid">
-        {daysOfMonth.map((day) => (
-          <div key={day.toString()} className="calendar-day">
-            <div className="date">{format(day, "d")}</div>
-            <div className="events">
-              {getEventsForDay(day).map((event) => (
-                <div
-                  key={event._id}
-                  className="event"
-                  onClick={() => handleSelectEvent(event)}
-                >
-                  <strong>{event.groupTitle}</strong>
-                  <p>Участников: {event.participants.length}</p>
-                </div>
-              ))}
+        {daysOfMonth.map((day) => {
+          const eventsForDay = getEventsForDay(day);
+          return (
+            <div key={day.toString()} className="calendar-day">
+              <div className="date">
+                {format(day, "d MMMM", { locale: ruLocale })}
+              </div>
+              <div className="events">
+                {eventsForDay.length > 0 ? (
+                  eventsForDay.map((event) => (
+                    <div
+                      key={event._id}
+                      className="event"
+                      onClick={() => handleSelectEvent(event)}
+                    >
+                      <strong>{event.groupTitle}</strong>
+                      <p>Участников: {event.participants.length}</p>
+                    </div>
+                  ))
+                ) : (
+                  <p>Тренировок нет</p>
+                )}
+              </div>
             </div>
-          </div>
-        ))}
+          );
+        })}
       </div>
     </div>
   );

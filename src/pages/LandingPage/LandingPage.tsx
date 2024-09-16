@@ -2,7 +2,7 @@ import { About } from "../../components/About/About";
 import { Coach } from "../../components/Coach/Coach";
 import { Hero } from "../../components/Hero/Hero";
 
-const MainPage = () => {
+const LandingPage = () => {
     
     return (
         <div>
@@ -13,4 +13,4 @@ const MainPage = () => {
     );
 };
 
-export default MainPage;
+export default LandingPage;

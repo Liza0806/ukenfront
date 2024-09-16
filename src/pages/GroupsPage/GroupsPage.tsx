@@ -2,7 +2,6 @@ import { useEffect, useRef, useState } from "react";
 import { useAppDispatch, useAppSelector } from "../../redux/hooks/hooks";
 import { fetchAllGroups } from "../../redux/thunks/thunks";
 import { GroupType } from "../../redux/types/types";
-import { GroupInfo } from "../../components/GroupInfo/GroupInfo";
 import AddGroupForm from "../../components/AddGroupForm/AddGroupForm";
 import { GroupPage } from "../../components/OneGroupInformation/GroupPage";
 

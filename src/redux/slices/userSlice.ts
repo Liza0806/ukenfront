@@ -20,39 +20,7 @@ const usersSlice = createSlice({
         state.users = [];
       },
     },
-    extraReducers: (builder) => {
-      builder
-        .addCase(fetchUsersByName.pending, (state) => {
-          state.isLoading = true;
-          state.error = undefined;
-          console.log("pending");
-        })
-        .addCase(fetchUsersByName.fulfilled, (state, action: PayloadAction<User[]>) => {
-          state.isLoading = false;
-          state.users = action.payload;
-          console.log(action.payload, "fulfilled");
-        })
-        .addCase(fetchUsersByName.rejected, (state, action) => {
-          state.isLoading = false;
-          state.error = action.payload as string;
-          console.log(action.payload, "error");
-        })
-        .addCase(fetchAllUsers.pending, (state) => {
-          state.isLoading = true;
-          state.error = undefined;
-          console.log("pending");
-        })
-        .addCase(fetchAllUsers.fulfilled, (state, action: PayloadAction<User[]>) => {
-          state.isLoading = false;
-          state.users = action.payload;
-          console.log(action.payload, "fulfilled");
-        })
-        .addCase(fetchAllUsers.rejected, (state, action) => {
-          state.isLoading = false;
-          state.error = action.payload as string;
-          console.log(action.payload, "error");
-        });
-    }
+
   });
   
   export const { getUsers, clearUsers } = usersSlice.actions;

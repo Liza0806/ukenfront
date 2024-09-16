@@ -1,10 +1,9 @@
-import { AddGroupType, ApiResponse, ParticipantType } from './../types/types';
+import { AddGroupType, ApiResponse, EventTypeDB } from "./../types/types";
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import { addGroup, getAllGroups } from "../api/groupsApi";
-import { getAllEvents } from "../api/eventsApi";
-import { getAllUsers, getUsersByName } from '../api/usersApi';
-import axios from 'axios';
-
+import { getAllEvents, getEventById } from "../api/eventsApi";
+import { getAllUsers, getUsersByName } from "../api/usersApi";
+import axios from "axios";
 
 export const fetchAllGroups = createAsyncThunk(
   "groups/fetchAllGroups",
@@ -22,17 +21,32 @@ export const fetchAllEvents = createAsyncThunk(
   async (thunkAPI) => {
     const response = await getAllEvents();
     if (!response) {
-      console.log('fetchAllEvents')
+      console.log("fetchAllEvents");
       return "error";
-   
     }
     return response;
   }
 );
 
+export const fetchEventById = createAsyncThunk(
+  "events/fetchAllEvents",
+  async (id: string, thunkAPI) => {
+    try {
+      const response = await getEventById(id);
+      if (!response) {
+        console.log("fetchEventById");
+        return "error";
+      }
+      return response;
+    } catch (error) {
+      console.error(error);
+    }
+  }
+);
+
 export const fetchAllUsers = createAsyncThunk(
   "users/fetchAllUsers",
-  async (thunkAPI) => {
+  async () => {
     const response = await getAllUsers();
     if (!response) {
       return "error";
@@ -48,27 +62,26 @@ export const fetchUsersByName = createAsyncThunk(
       const response = await getUsersByName(username);
       return response;
     } catch (error) {
-      console.log('fetchUsersByName catch')
+      console.log("fetchUsersByName catch");
       return thunkAPI.rejectWithValue("Failed to fetch users");
     }
   }
 );
 
 interface UpdateEventParticipantsPayload {
-  eventId: string;
-  participants: ParticipantType[];
+  event: EventTypeDB;
 }
 
 // Функция для отправки PUT-запроса на сервер
-export const updateEventParticipants = createAsyncThunk(
-  'events/updateParticipants',
-  async ({ eventId, participants }: UpdateEventParticipantsPayload, thunkAPI) => {
+export const updateEvent = createAsyncThunk(
+  "events/updateEvent",
+  async ({ event }: UpdateEventParticipantsPayload, thunkAPI) => {
     try {
       const response = await axios.put(
-        `https://ukenback.vercel.app/events/${eventId}`,
-        { participants }
+        `https://ukenback.vercel.app/events/${event._id}`,
+        event
       );
-      console.log(response.data)
+      console.log(response.data);
       return response.data;
     } catch (error: any) {
       return thunkAPI.rejectWithValue(error.response.data);
@@ -76,33 +89,30 @@ export const updateEventParticipants = createAsyncThunk(
   }
 );
 
+export const addGroupTh = createAsyncThunk<
+  ApiResponse,
+  { group: AddGroupType },
+  { rejectValue: string }
+>("groups/addGroup", async ({ group }, thunkAPI) => {
+  console.log("старт санка");
 
-export const addGroupTh = createAsyncThunk
-<ApiResponse, 
-{ group: AddGroupType },
-{ rejectValue: string }
->(
-  "groups/addGroup",
-  async ({ group }, thunkAPI) =>  {
-    console.log('старт санка')
-
-    try {
-     console.log('addGroup, TH', group)
-      const response = await addGroup(group); 
+  try {
+    console.log("addGroup, TH", group);
+    const response = await addGroup(group);
     if (!response) {
-      console.log('в санке не респонс')
+      console.log("в санке не респонс");
 
-        return thunkAPI.rejectWithValue("No response from server");
+      return thunkAPI.rejectWithValue("No response from server");
     }
     if (response.status >= 400) {
-      console.log('в санке статус 400 и меньше')
+      console.log("в санке статус 400 и меньше");
 
       return thunkAPI.rejectWithValue(response.data);
     }
     return response;
   } catch (error) {
-    console.log('кетч у санка')
+    console.log("кетч у санка");
 
-      return thunkAPI.rejectWithValue("error");
-  }}
-)
+    return thunkAPI.rejectWithValue("error");
+  }
+});
