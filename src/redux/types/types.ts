@@ -62,11 +62,6 @@ export type validDays =
 
 /// EVENT
 
-export interface Participant {
-  id: string;
-  name: string;
-}
-
 export type EventTypeDB = {
   date: Date;
   isCancelled: boolean;

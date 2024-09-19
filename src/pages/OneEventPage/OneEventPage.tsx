@@ -109,16 +109,10 @@ const OneEventPage: React.FC = () => {
       </div>
       <div className={cls.participants}>
         <h4>Участники:</h4>
-        <ul>
-          {event.participants.map((participant) => (
-            <li key={participant._id}>
-              {participant.name}{" "}
-              <button onClick={() => handleDeleteUser(participant._id)}>
-                X
-              </button>
-            </li>
-          ))}
-        </ul>
+        <UserList
+          users={event.participants} //
+          deleteUser={handleDeleteUser}
+        />{" "}
       </div>
       {users.length !== 0 && <FindUsers handleFindUsers={findUsers} />}
       {noUsersFound && <div>noUsersFound</div>}
