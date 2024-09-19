@@ -10,6 +10,8 @@ import { FindUsers } from "../../components/FindUsers/FindUsers";
 import { unwrapResult } from "@reduxjs/toolkit";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
+import { SetStateAction } from "react";
+import { uk } from 'date-fns/locale';
 
 const OneEventPage: React.FC = () => {
   const { id } = useParams<string>();
@@ -19,18 +21,16 @@ const OneEventPage: React.FC = () => {
   const [noUsersFound, setNoUsersFound] = useState(false);
   const [showUpdateEvent, setShowUpdateEvent] = useState(false);
   const dispatch = useAppDispatch();
-  const [showCalendar, setShowCalendar] = useState(true)
-// Предположим, что event может быть null, так что используем условную проверку
-const [selectDate, setSelectDate] = useState<Date | null>(null);
+  const [showCalendar, setShowCalendar] = useState(false);
 
-// Убедитесь, что event не null перед обновлением состояния
-useEffect(() => {
-  if (event && event.date) {
-    setSelectDate(event.date);
-  }
-}, [event]);
-
-
+  type EventUp = {
+    date: React.SetStateAction<EventTypeDB> | null;
+    isCancelled: boolean;
+    participants: ParticipantType[];
+    _id: string;
+    groupTitle: string;
+    groupId: string;
+}
 
   useEffect(() => {
     if (id) {
@@ -39,8 +39,13 @@ useEffect(() => {
         .catch((error) => console.error(error));
     }
   }, [id]);
+
+  useEffect(() => {
+    // Обновление даты происходит напрямую через event.date
+  }, [event]);
+
   if (!event) {
-    return <div> loading ...</div>;
+    return <div>Загрузка...</div>;
   }
 
   const handleDeleteUser = (id: string) => {
@@ -88,7 +93,7 @@ useEffect(() => {
 
   const findUsers = (params: string) => {
     const newUsersN = users.filter((user) =>
-      user.name.toLowerCase().includes(params)
+      user.name.toLowerCase().includes(params.toLowerCase())
     );
     if (newUsersN.length === 0) {
       setNoUsersFound(true);
@@ -107,36 +112,49 @@ useEffect(() => {
     getUsers();
   };
 
-  
-  
+  const updateEventDate = (newDate: EventUp) => {
+    if (event) {
+      // Создаем новый объект с обновленным значением даты
+      const updatedEvent = { ...event, date: newDate };
+      setEvent(updatedEvent);
+    }
+  };
+
+  const handleDateChange = (date: Date | null) => {
+    updateEventDate(date);
+    
+  }; 
+
   return (
     <div className={cls.trainingContainer}>
       <div className={cls.header}>
         <h3 className={cls.title}>{event.groupTitle}</h3>
-       
     
-        <p className={cls.date} onClick={()=>{setShowCalendar(!showCalendar)}}> 
-          {new Date(selectDate).toLocaleString("ru-RU", {
+        <p className={cls.date} onClick={() => setShowCalendar(!showCalendar)}>
+          {event.date ? new Date(event.date).toLocaleString("uk-UA", {
             day: "numeric",
             month: "long",
             year: "numeric",
             hour: "2-digit",
             minute: "2-digit",
-          })}
+          }) : "Выберите дату"}
         </p>
-     
+    
         {showCalendar && (
-        <DatePicker
-          selected={selectDate}
-          onChange={(date: any) => {
-            setSelectDate(date);
-            setShowCalendar(false); // Скрыть календарь после выбора даты
-          }}
-          dateFormat="dd MMMM yyyy"
-          inline
-        />
-      )}
-     
+         <div><DatePicker
+           selected={event.date ? new Date(event.date) : null}
+           onChange={handleDateChange}
+           showTimeSelect
+           timeIntervals={1}
+           timeFormat="HH:mm" 
+           dateFormat="Pp"
+           inline
+           locale={uk}
+         />
+         <button type="button" onClick={()=>{setShowCalendar(false),  setShowUpdateEvent(true)}}
+         >Змінити</button>
+        </div>
+        )}
       </div>
       <div className={cls.participants}>
         <h4>Участники:</h4>
@@ -152,7 +170,7 @@ useEffect(() => {
         </ul>
       </div>
       {users.length !== 0 && <FindUsers handleFindUsers={findUsers} />}
-      {noUsersFound && <div>noUsersFound</div>}
+      {noUsersFound && <div>Пользователи не найдены</div>}
       {users.length !== 0 && !noUsersFound && (
         <UserList
           users={usersN.length > 0 ? usersN : users}
@@ -160,11 +178,11 @@ useEffect(() => {
         />
       )}
       {!users.length && (
-        <button onClick={getUsers}>Показать возможных бойцов</button>
+        <button onClick={getUsers}>Показать возможных пользователей</button>
       )}
       <hr />
       {showUpdateEvent && (
-        <button onClick={() => submitEvent(event)}>обновить встречу</button>
+        <button onClick={() => submitEvent(event)}>Обновить событие</button>
       )}
     </div>
   );
