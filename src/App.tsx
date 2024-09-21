@@ -23,12 +23,12 @@ function App() {
               <Route index element={<LandingPage />} />
               
               {/* Админ-панель и её дочерние маршруты */}
-              <Route path="/admin" element={<AdminPage />}>
+            
                 <Route path="events" element={<EventsPage />} />
                 <Route path="events/:id" element={<OneEventPage />} />
                 <Route path="payment" element={<PaymentPage />} />
                 <Route path="groups" element={<GroupsPage />} />
-              </Route>
+          
             </Route>
           </Routes>
         </Suspense>
