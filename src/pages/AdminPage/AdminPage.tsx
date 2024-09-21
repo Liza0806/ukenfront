@@ -4,7 +4,7 @@ import { Outlet } from "react-router-dom";
 
 const AdminPage: React.FC = () => {
   return (
-    <div>
+    <div >
       Admin Page
       <ul>
         <li>
