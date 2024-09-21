@@ -5,7 +5,7 @@ $orange: #ff9900;
 $dark-gray: #1a1a1a;
 
 .trainingContainer {
-  background-color: rgba(0, 0, 0, 0.5); /* Прозрачный черный фон */
+  background-color: rgba(0, 0, 0, 0.8); /* Прозрачный черный фон */
   padding: 20px;
   border-radius: 10px; /* Закругленные углы */
   box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.2); /* Тень для красоты */
@@ -91,7 +91,7 @@ $dark-gray: #1a1a1a;
         padding: 12px 16px; // Отступы для элементов списка
         background-color: $orange;
         margin-bottom: 5px;
-        background-color: rgba(255, 255, 255, 0.1); // Легкий фон для выделения
+        background-color: rgba(248, 128, 7, 0.916); // Легкий фон для выделения
         border-radius: 5px; // Скругляем углы
         color: inherit; // Унаследовать цвет текста
         font-size: inherit; // Унаследовать размер шрифта
