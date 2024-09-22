@@ -111,30 +111,7 @@ $dark-gray: #1a1a1a;
       color: inherit; // Унаследовать цвет текста
     }
 
-  button {
-  background-color: transparent; // Прозрачный фон для кнопки
-  margin-left: auto; // Придвинуть кнопку к правому краю
-  border: none; // Убираем рамку
-  color: red; // Цвет текста кнопки
-  cursor: pointer; // Курсор указатель
-  font-size: inherit; // Унаследовать размер шрифта
-  transition: color 0.3s, transform 0.2s; // Плавный переход цвета и трансформации
-  position: relative; // Для эффекта тени
-
-  &:hover {
-    color: darkred; // Цвет кнопки при наведении
-    transform: scale(1.1); // Увеличение при наведении
-  }
-
-  &:active {
-    transform: scale(0.9); // Уменьшение при нажатии
-  }
-
-  &:focus {
-    outline: none; // Убираем стандартное выделение
-    box-shadow: 0 0 5px rgba(255, 102, 0, 0.7); // Подсветка при фокусе
-  }
-}
+ 
     }
   }
 }
@@ -175,17 +152,17 @@ $dark-gray: #1a1a1a;
   transition: background-color 0.3s, transform 0.2s;
 }
 
-.buttonOpen :hover {
+.buttonOpen:hover {
   background-color: #cc5200; /* Более темный оттенок при наведении */
   transform: scale(1.05); /* Легкое увеличение при наведении */
 }
 
-.buttonOpen :active {
+.buttonOpen:active {
   background-color: #b34700; /* Цвет при нажатии */
   transform: scale(0.98); /* Легкое уменьшение при клике */
 }
 
-.buttonOpen :focus {
+.buttonOpen:focus {
   outline: none;
   box-shadow: 0px 0px 5px 2px rgba(255, 102, 0, 0.7); /* Подсветка при фокусе */
 }
