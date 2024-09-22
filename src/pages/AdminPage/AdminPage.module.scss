@@ -1,0 +1,33 @@
+
+  
+    h1 {
+      text-align: center;
+      color: white;
+    }
+  
+    ul {
+      list-style-type: none;  // Убираем стандартные маркеры списка
+      margin: 0;
+      padding: 0;
+      position: absolute;
+      right: 0;  // Располагаем элементы справа
+      top: 0;    // Располагаем элементы сверху
+      display: flex;
+      flex-direction: column;  // Вертикальное расположение элементов
+      align-items: flex-end;   // Выравнивание элементов по правому краю
+  
+      li {
+        margin-bottom: 10px;
+        color: white;
+  
+        a {
+          color: white;  // Цвет текста ссылок
+          text-decoration: none;
+  
+          &:hover {
+            text-decoration: underline;  // Подчеркивание при наведении
+          }
+        }
+      }
+    }
+  

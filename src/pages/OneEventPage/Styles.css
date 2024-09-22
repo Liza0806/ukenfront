@@ -1,0 +1,82 @@
+.react-datepicker {
+    background-color: #333333; /* Черный фон календаря */
+    color: #e8580a; /* Белый текст */
+}
+
+.react-datepicker__current-month {
+    color: #0c0c0c; /* Белый текст для месяца */
+}
+
+.react-datepicker__day-name{
+    color: #171717
+}
+.react-datepicker__day,
+.react-datepicker__time-name {
+    color: #eee8e8; /* Белый цвет текста */
+}
+
+.react-datepicker__day--today {
+    border-color: #ffa500; /* Оранжевая рамка для сегодняшнего дня */
+}
+
+.react-datepicker__day--selected {
+    background-color: #ffa500; /* Оранжевый цвет для выбранной даты */
+    color: #ffffff;
+}
+
+/* Скроллбар для списка времени */
+.react-datepicker__time-container .react-datepicker__time-list {
+    scrollbar-color: #ffa500 #333333; /* Оранжевые ползунки */
+    scrollbar-width: thin; /* Тонкие ползунки */
+}
+
+.react-datepicker__time-container .react-datepicker__time-list::-webkit-scrollbar {
+    width: 8px;
+}
+
+.react-datepicker__time-container .react-datepicker__time-list::-webkit-scrollbar-thumb {
+    background-color: #ffa500; /* Оранжевый цвет ползунка */
+    border-radius: 10px;
+}
+
+.react-datepicker__time-container .react-datepicker__time-list::-webkit-scrollbar-track {
+    background-color: #333333; /* Темный трек ползунка */
+}
+.react-datepicker__day:hover {
+    background-color: #ffa500; /* Цвет фона при наведении */
+    color: #ffffff; /* Цвет текста при наведении */
+}
+.react-datepicker {
+    margin: 0 auto; /* Горизонтальное выравнивание */
+}
+
+.react-datepicker__time-container {
+    background-color: #333333; /* Черный фон контейнера времени */
+    color: #e8580a; /* Цвет текста для времени */
+}
+
+.react-datepicker__time-name {
+    color: #ecebeb; /* Цвет текста для названия времени */
+    font-weight: bold; /* Жирный текст для выделения */
+}
+
+.react-datepicker__time-list {
+    max-height: 200px; /* Ограничение высоты списка времени */
+    overflow-y: auto; /* Прокрутка по вертикали */
+}
+
+.react-datepicker__time-list-item {
+    padding: 10px; /* Отступы для элементов списка времени */
+    cursor: pointer; /* Курсор указателя при наведении */
+    transition: background-color 0.2s ease; /* Плавный переход цвета фона */
+}
+
+.react-datepicker__time-list-item:hover {
+    background-color: #ffa500; /* Цвет фона при наведении на элемент списка */
+    color: #ffffff; /* Цвет текста при наведении */
+}
+
+.react-datepicker__time-list-item--selected {
+    background-color: #ffa500; /* Оранжевый цвет для выбранного времени */
+    color: #ffffff; /* Белый цвет текста для выбранного времени */
+}

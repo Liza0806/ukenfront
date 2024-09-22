@@ -1,0 +1,29 @@
+.container {
+    position: fixed; /* Или absolute, если нужно */
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100vh; /* Занимает всю высоту экрана */
+    background-size: cover;
+    background-position: center;
+    color: white;
+    z-index: -1; /* Убедитесь, что контейнер находится под другими элементами */
+    
+    display: flex; /* Включаем Flexbox */
+  
+    justify-content: center; /* Горизонтальное центрирование */
+}
+  .heroOverlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5); /* Dark overlay for readability */
+  }
+  
+  .heroContent {
+    position: relative;
+    text-align: center;
+    z-index: 1;
+  }

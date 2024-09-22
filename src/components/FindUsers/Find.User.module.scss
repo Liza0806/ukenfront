@@ -1,0 +1,44 @@
+label {
+    display: flex;
+    flex-direction: row; // Элементы располагаются в ряд
+    align-items: center; // Выравнивание по центру по вертикали
+    font-family: 'Arial', sans-serif;
+    font-size: 16px;
+    color: #333;
+    margin-bottom: 15px;
+   
+
+  
+    .title {
+        height: auto;
+        width: 150px;
+        margin-left: 130px;
+        margin-right: 3px;
+        margin-top: 26px;
+        font-size: 1.25rem;  // Увеличиваем размер шрифта
+        font-weight: bold;   // Жирный шрифт
+        color: white;        // Цвет текста белый
+        margin-bottom: 15px; // Отступ снизу
+        text-align: left;    // Выравнивание текста влево
+        text-transform: uppercase; // Преобразуем текст в верхний регистр
+      }
+
+    input[type="text"] {
+      margin-top: 8px;
+      padding: 10px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+      font-size: 14px;
+      transition: border-color 0.3s ease;
+      height: auto;
+      width: 400px;
+      margin-right: 280px;
+      color: #f9f7f7; // Цвет текста в поле ввода
+  
+      &:focus {
+        border-color: #007bff;
+        outline: none;
+        box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
+      }
+    }
+  }

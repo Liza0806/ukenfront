@@ -1,5 +1,9 @@
 import React, { useEffect, useState } from "react";
-import cls from "./OneEventPage.module.scss";
+import DatePicker from "react-datepicker";
+
+import "react-datepicker/dist/react-datepicker.css";
+import "./Styles.css"
+import cls from './OneEventPage.module.scss'
 import { useParams } from "react-router-dom";
 import { useAppDispatch } from "../../redux/hooks/hooks";
 import { fetchAllUsers, updateEvent } from "../../redux/thunks/thunks";
@@ -8,6 +12,11 @@ import { getEventById } from "../../redux/api/eventsApi";
 import { UserList } from "../../components/UserList/UserList";
 import { FindUsers } from "../../components/FindUsers/FindUsers";
 import { unwrapResult } from "@reduxjs/toolkit";
+import { uk } from 'date-fns/locale';
+import { Container } from "../../components/Container/Container";
+
+
+
 
 const OneEventPage: React.FC = () => {
   const { id } = useParams<string>();
@@ -18,7 +27,9 @@ const OneEventPage: React.FC = () => {
   const [showUpdateEvent, setShowUpdateEvent] = useState(false);
   
   const dispatch = useAppDispatch();
-
+  const [showCalendar, setShowCalendar] = useState(false);
+  const [showTimer, setShowTimer] = useState(false);
+  
   useEffect(() => {
     if (id) {
       getEventById(id)
@@ -26,8 +37,9 @@ const OneEventPage: React.FC = () => {
         .catch((error) => console.error(error));
     }
   }, [id]);
+
   if (!event) {
-    return <div> loading ...</div>;
+    return <div>Загрузка...</div>;
   }
 
   const handleDeleteUser = (id: string) => {
@@ -75,7 +87,7 @@ const OneEventPage: React.FC = () => {
 
   const findUsers = (params: string) => {
     const newUsersN = users.filter((user) =>
-      user.name.toLowerCase().includes(params)
+      user.name.toLowerCase().includes(params.toLowerCase())
     );
     if (newUsersN.length === 0) {
       setNoUsersFound(true);
@@ -94,44 +106,106 @@ const OneEventPage: React.FC = () => {
     getUsers(); // фетчим заново всех участников, чтобы пришли обновленные данные
   };
 
+  const updateEventDate = (newDate: Date) => {
+    if (event) {
+      // Создаем новый объект с обновленным значением даты
+      const updatedEvent = { ...event, date: newDate };
+      setEvent(updatedEvent);
+    }
+  };
+
+  const handleDateChange = (date: Date | null) => {
+    if (date) {
+      updateEventDate(date);
+    }
+  }; 
+
   return (
-    <div className={cls.trainingContainer}>
-      <div className={cls.header}>
-        <h3 className={cls.title}>{event.groupTitle}</h3>
-        <p className={cls.date}>
-          {new Date(event.date).toLocaleString("ru-RU", {
-            day: "numeric",
-            month: "long",
-            year: "numeric",
-            hour: "2-digit",
-            minute: "2-digit",
-          })}
-        </p>
-      </div>
-      <div className={cls.participants}>
+    <Container>  
+      <div className={cls.trainingContainer}>
+        <div className={cls.header}>
+          <h3 className={cls.title}>Група: {event.groupTitle}</h3>
+        </div>
+        <div className={cls.date}>
+          <span className={cls.text}>Тренування відбудеться</span>
+          <p onClick={() => setShowCalendar(!showCalendar)}>
+            {new Date(event.date).toLocaleString("uk-UA", {
+              day: "numeric",
+              month: "long",
+              year: "numeric",
+            })}
+          </p>
+          <p onClick={() => setShowTimer(!showTimer)}>
+            {new Date(event.date).toLocaleString("uk-UA", {
+              hour: "2-digit",
+              minute: "2-digit",
+            })}
+          </p>
+        </div>
+
+        {showCalendar && (
+          <div className={cls.modalOverlay} onClick={() => setShowCalendar(false)}>
+            <div className={cls.modalContent} onClick={(e) => e.stopPropagation()}>
+              <DatePicker
+                selected={event.date ? new Date(event.date) : null}
+                onChange={handleDateChange}
+                dateFormat="Pp"
+                inline
+                locale={uk}
+              />
+            </div>
+          </div>
+        )}
+
+        {showTimer && (
+          <div className={cls.modalOverlay} onClick={() => setShowTimer(false)}>
+            <div className={cls.modalContent} onClick={(e) => e.stopPropagation()}>
+              <DatePicker
+                selected={event.date ? new Date(event.date) : null}
+                onChange={handleDateChange}
+                showTimeSelect
+                showTimeSelectOnly
+                timeIntervals={1}
+                timeFormat="HH:mm"
+                dateFormat="HH:mm"
+                inline
+                locale={uk}
+              />
+            </div>
+          </div>
+        )}
+         
+         <div className={cls.participants}>
         <h4>Участники:</h4>
         <UserList
           users={event.participants} //
           deleteUser={handleDeleteUser}
         />
       </div>
-      {users.length !== 0 && <FindUsers handleFindUsers={findUsers} />}
-      {noUsersFound && <div>noUsersFound</div>}
-      {users.length !== 0 && !noUsersFound && (
-        <UserList
-          users={usersN.length > 0 ? usersN : users}
-          addUsers={handleAddUser}
-        />
-      )}
-      {!users.length && (
-        <button onClick={getUsers}>Показать возможных бойцов</button>
-      )}
-      <hr />
-      {showUpdateEvent && (
-        <button onClick={() => submitEvent(event)}>обновить встречу</button>
-      )}
-    </div>
+
+        {users.length !== 0 && <FindUsers handleFindUsers={findUsers} />}
+        {noUsersFound && <div>Пользователи не найдены</div>}
+        
+        {users.length !== 0 && !noUsersFound && (
+          <UserList
+            users={usersN.length > 0 ? usersN : users}
+            addUsers={handleAddUser}
+          />
+        )}
+        
+        {!users.length && (
+          <button type="button" className={cls.buttonOpen} onClick={getUsers}>Додати</button>
+        )}
+
+        <hr />
+
+        {showUpdateEvent && (
+          <button className={cls.buttonOpen} onClick={() => submitEvent(event)}>Обновити подію</button>
+        )}
+      </div>
+    </Container>
   );
 };
+
 
 export default OneEventPage;

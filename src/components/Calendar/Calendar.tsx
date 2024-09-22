@@ -46,7 +46,7 @@ const MyCalendar: React.FC = () => {
 
   const handleSelectEvent = (event: EventTypeDB) => {
     localStorage.setItem("selectedEvent", JSON.stringify(event));
-    navigate(`/admin/events/${event._id}`, { state: { event } });
+    navigate(`/events/${event._id}`, { state: { event } });
   };
 
   const lastMonth = () => {

@@ -1,5 +1,6 @@
 import React, { ChangeEvent, useState } from "react";
 import { ParticipantType } from "../../redux/types/types";
+import style from './Find.User.module.scss'
 
 interface FindUsersProps {
   handleAddUser?: (participant: ParticipantType) => void;
@@ -20,9 +21,9 @@ export const FindUsers: React.FC<FindUsersProps> = ({ handleFindUsers }) => {
   };
 
   return (
-    <label>
-      Type name:
-      <input type="text" value={username} onChange={handleChange} />
+    <label className={style.label}>
+     <p className={style.title}>Можливі Учасники:</p> 
+      <input className={style.imput} type="text" value={username} onChange={handleChange} />
     </label>
   );
 };
