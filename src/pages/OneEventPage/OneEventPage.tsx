@@ -30,16 +30,6 @@ const OneEventPage: React.FC = () => {
   const [showCalendar, setShowCalendar] = useState(false);
   const [showTimer, setShowTimer] = useState(false);
   
-
-  type EventUp = {
-    date: Date; // Здесь используйте тип Date
-    isCancelled: boolean;
-    participants: ParticipantType[];
-    _id: string;
-    groupTitle: string;
-    groupId: string;
-  };
-
   useEffect(() => {
     if (id) {
       getEventById(id)
@@ -47,10 +37,6 @@ const OneEventPage: React.FC = () => {
         .catch((error) => console.error(error));
     }
   }, [id]);
-
-  useEffect(() => {
-    // Обновление даты происходит напрямую через event.date
-  }, [event]);
 
   if (!event) {
     return <div>Загрузка...</div>;
@@ -189,17 +175,13 @@ const OneEventPage: React.FC = () => {
           </div>
         )}
          
-        <div className={cls.participants}>
-        <h4 className={cls.participantsTitle}>Учасники:</h4>
-          <ul>
-            {event.participants.map((participant) => (
-              <li key={participant._id}>
-                {participant.name}
-                <button onClick={() => handleDeleteUser(participant._id)}>X</button>
-              </li>
-            ))}
-          </ul>
-        </div>
+         <div className={cls.participants}>
+        <h4>Участники:</h4>
+        <UserList
+          users={event.participants} //
+          deleteUser={handleDeleteUser}
+        />
+      </div>
 
         {users.length !== 0 && <FindUsers handleFindUsers={findUsers} />}
         {noUsersFound && <div>Пользователи не найдены</div>}
