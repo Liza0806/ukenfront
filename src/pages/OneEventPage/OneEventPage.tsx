@@ -25,6 +25,7 @@ const OneEventPage: React.FC = () => {
   const [usersN, setUsersN] = useState<User[]>([]);
   const [noUsersFound, setNoUsersFound] = useState(false);
   const [showUpdateEvent, setShowUpdateEvent] = useState(false);
+  
   const dispatch = useAppDispatch();
   const [showCalendar, setShowCalendar] = useState(false);
   const [showTimer, setShowTimer] = useState(false);
@@ -114,9 +115,9 @@ const OneEventPage: React.FC = () => {
   };
 
   const submitEvent = (event: EventTypeDB) => {
-    dispatch(updateEvent({ event }));
-    setShowUpdateEvent(false);
-    getUsers();
+    dispatch(updateEvent({ event })); // тут шлем на бекенд обновленный ивент
+    setShowUpdateEvent(false); // тут я скрывала кнопку "обновить"
+    getUsers(); // фетчим заново всех участников, чтобы пришли обновленные данные
   };
 
   const updateEventDate = (newDate: Date) => {

@@ -59,39 +59,44 @@ const MyCalendar: React.FC = () => {
 
   return (
     <div className="calendar">
-      <div className="calendar-header">
-        <button onClick={lastMonth}>Предыдущий месяц</button>
-        <h2>{month}</h2>
-        <button onClick={nextMonth}>Следующий месяц</button>
-      </div>
-      <div className="calendar-grid">
-        {daysOfMonth.map((day) => {
-          const eventsForDay = getEventsForDay(day);
-          return (
-            <div key={day.toString()} className="calendar-day">
-              <div className="date">
-                {format(day, "d MMMM", { locale: ruLocale })}
-              </div>
-              <div className="events">
-                {eventsForDay.length > 0 ? (
-                  eventsForDay.map((event) => (
-                    <div
-                      key={event._id}
-                      className="event"
-                      onClick={() => handleSelectEvent(event)}
-                    >
-                      <strong>{event.groupTitle}</strong>
-                      <p>Участников: {event.participants.length}</p>
-                    </div>
-                  ))
-                ) : (
-                  <p>Тренировок нет</p>
-                )}
-              </div>
-            </div>
-          );
-        })}
-      </div>
+      {events.length === 0 && <div>Загрузка тренировок... </div>}
+      {events.length > 0 && (
+        <div>
+          <div className="calendar-header">
+            <button onClick={lastMonth}>Предыдущий месяц</button>
+            <h2>{month}</h2>
+            <button onClick={nextMonth}>Следующий месяц</button>
+          </div>
+          <div className="calendar-grid">
+            {daysOfMonth.map((day) => {
+              const eventsForDay = getEventsForDay(day);
+              return (
+                <div key={day.toString()} className="calendar-day">
+                  <div className="date">
+                    {format(day, "d MMMM", { locale: ruLocale })}
+                  </div>
+                  <div className="events">
+                    {eventsForDay.length > 0 ? (
+                      eventsForDay.map((event) => (
+                        <div
+                          key={event._id}
+                          className="event"
+                          onClick={() => handleSelectEvent(event)}
+                        >
+                          <strong>{event.groupTitle}</strong>
+                          <p>Участников: {event.participants.length}</p>
+                        </div>
+                      ))
+                    ) : (
+                      <p>Тренировок нет</p>
+                    )}
+                  </div>
+                </div>
+              );
+            })}
+          </div>
+        </div>
+      )}
     </div>
   );
 };
