@@ -1,4 +1,4 @@
-import './calendar.css'
+import cls from './Calendar.module.scss'
 import React, { useEffect, useState } from "react";
 import {
   startOfMonth,
@@ -13,10 +13,6 @@ import { EventTypeDB } from "../../redux/types/types";
 import { useAppDispatch, useAppSelector } from "../../redux/hooks/hooks";
 import { fetchAllEvents } from "../../redux/thunks/thunks";
 import { uk } from "date-fns/locale";
-import { Container } from "../../components/Container/Container";
-import containerImage from '../../assets/Dyzayn-bez-nazvanyia-4.jpg';
-import IconButton from '@mui/material/IconButton';
-import DeleteIcon from '@mui/icons-material/Delete';
 import ArrowCircleLeftIcon from '@mui/icons-material/ArrowCircleLeft';
 import ArrowCircleRightIcon from '@mui/icons-material/ArrowCircleRight';
 
@@ -67,31 +63,31 @@ const MyCalendar: React.FC = () => {
 
   return (
    
-      <div className="calendar">
+      <div className={cls.calendar}>
       {events.length === 0 && <div>Завантаження тренувань... </div>}
       {events.length > 0 && (
-        <div className='joincalendar'>
-          <div className="calendar-header">
+        <div className={cls.joincalendar}>
+          <div className={cls.calendarHeader}>
             
             
              <ArrowCircleLeftIcon  onClick={lastMonth} style={{ color: 'black',   fontSize: '36px', cursor: 'pointer'}} fontSize="inherit" />
              <h2>{month}</h2>
              <ArrowCircleRightIcon onClick={nextMonth} style={{ color: 'black',   fontSize: '36px', cursor: 'pointer'}} fontSize="inherit" />
           </div>
-          <div className="calendar-grid">
+          <div className={cls.calendarGrid}>
             {daysOfMonth.map((day) => {
               const eventsForDay = getEventsForDay(day);
               return (
-                <div key={day.toString()} className="calendar-day">
-                  <div className="date">
+                <div key={day.toString()} className={cls.calendarDay}>
+                  <div className={cls.date}>
                     {format(day, "d MMMM", { locale: uk })}
                   </div>
-                  <div className="events">
+                  <div className={cls.events}>
                     {eventsForDay.length > 0 ? (
                       eventsForDay.map((event) => (
                         <div 
                           key={event._id}
-                          className="event"
+                          className={cls.event}
                           onClick={() => handleSelectEvent(event)}
                         >
                           <strong>{event.groupTitle}</strong>
