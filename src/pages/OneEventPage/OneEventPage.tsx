@@ -14,6 +14,7 @@ import { FindUsers } from "../../components/FindUsers/FindUsers";
 import { unwrapResult } from "@reduxjs/toolkit";
 import { uk } from 'date-fns/locale';
 import { Container } from "../../components/Container/Container";
+import containerImage from '../../assets/PhoneForPagIvent.jpg';
 
 
 
@@ -121,7 +122,7 @@ const OneEventPage: React.FC = () => {
   }; 
 
   return (
-    <Container>  
+    <Container isCentre={true} containerImage = {containerImage}>  
       <div className={cls.trainingContainer}>
         <div className={cls.header}>
           <h3 className={cls.title}>Група: {event.groupTitle}</h3>
