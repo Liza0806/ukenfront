@@ -1,3 +1,4 @@
+import './calendar.css'
 import React, { useEffect, useState } from "react";
 import {
   startOfMonth,
@@ -11,7 +12,14 @@ import { useNavigate } from "react-router-dom";
 import { EventTypeDB } from "../../redux/types/types";
 import { useAppDispatch, useAppSelector } from "../../redux/hooks/hooks";
 import { fetchAllEvents } from "../../redux/thunks/thunks";
-import { ru as ruLocale } from "date-fns/locale";
+import { uk } from "date-fns/locale";
+import { Container } from "../../components/Container/Container";
+import containerImage from '../../assets/Dyzayn-bez-nazvanyia-4.jpg';
+import IconButton from '@mui/material/IconButton';
+import DeleteIcon from '@mui/icons-material/Delete';
+import ArrowCircleLeftIcon from '@mui/icons-material/ArrowCircleLeft';
+import ArrowCircleRightIcon from '@mui/icons-material/ArrowCircleRight';
+
 
 const MyCalendar: React.FC = () => {
   const navigate = useNavigate();
@@ -37,7 +45,7 @@ const MyCalendar: React.FC = () => {
     });
     setStartDate(newStartDate);
     setDaysOfMonth(newDaysOfMonth);
-    setMonth(newStartDate.toLocaleString("ru-RU", { month: "long" }));
+    setMonth(newStartDate.toLocaleString("uk-UA", { month: "long" }));
   }, [dif]);
 
   const getEventsForDay = (day: Date) => {
@@ -58,14 +66,17 @@ const MyCalendar: React.FC = () => {
   };
 
   return (
-    <div className="calendar">
-      {events.length === 0 && <div>Загрузка тренировок... </div>}
+   
+      <div className="calendar">
+      {events.length === 0 && <div>Завантаження тренувань... </div>}
       {events.length > 0 && (
-        <div>
+        <div className='joincalendar'>
           <div className="calendar-header">
-            <button onClick={lastMonth}>Предыдущий месяц</button>
-            <h2>{month}</h2>
-            <button onClick={nextMonth}>Следующий месяц</button>
+            
+            
+             <ArrowCircleLeftIcon  onClick={lastMonth} style={{ color: 'black',   fontSize: '36px', cursor: 'pointer'}} fontSize="inherit" />
+             <h2>{month}</h2>
+             <ArrowCircleRightIcon onClick={nextMonth} style={{ color: 'black',   fontSize: '36px', cursor: 'pointer'}} fontSize="inherit" />
           </div>
           <div className="calendar-grid">
             {daysOfMonth.map((day) => {
@@ -73,22 +84,22 @@ const MyCalendar: React.FC = () => {
               return (
                 <div key={day.toString()} className="calendar-day">
                   <div className="date">
-                    {format(day, "d MMMM", { locale: ruLocale })}
+                    {format(day, "d MMMM", { locale: uk })}
                   </div>
                   <div className="events">
                     {eventsForDay.length > 0 ? (
                       eventsForDay.map((event) => (
-                        <div
+                        <div 
                           key={event._id}
                           className="event"
                           onClick={() => handleSelectEvent(event)}
                         >
                           <strong>{event.groupTitle}</strong>
-                          <p>Участников: {event.participants.length}</p>
+                          <p> {event.participants.length}</p>
                         </div>
                       ))
                     ) : (
-                      <p>Тренировок нет</p>
+                      <p>Тренувань немає</p>
                     )}
                   </div>
                 </div>
@@ -98,6 +109,7 @@ const MyCalendar: React.FC = () => {
         </div>
       )}
     </div>
+
   );
 };
 

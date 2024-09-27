@@ -17,7 +17,7 @@ export const UserList: React.FC<UserListProps> = ({ users, addUsers, deleteUser 
         <li key={user._id}>
           {user.name}
           {addUsers && <IconButton onClick={() => addUsers(user)}><AddCircleOutlineIcon color="primary" fontSize="inherit" /></IconButton>}
-          {deleteUser && <button onClick={() => deleteUser(user._id)}>Xsadsda</button>}
+          {deleteUser && <button onClick={() => deleteUser(user._id)}>X</button>}
     
         </li>
       ))}

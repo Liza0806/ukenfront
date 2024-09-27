@@ -1,0 +1,147 @@
+/* Основные стили календаря */
+.calendar {
+  font-family: 'Arial', sans-serif;
+  padding: 0;
+  max-width: auto;
+  margin: 0 auto;
+  max-height: auto;
+  background: linear-gradient(to bottom right, rgba(0, 102, 204, 1), rgba(255, 102, 0, 1));
+
+}
+
+.joincalendar {
+  background-color: rgba(0, 0, 0, 0.5); /* Лёгкая прозрачность фона ячейки */
+}
+
+/* Заголовок календаря (Навигация по месяцам) */
+.calendar-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  
+}
+
+.calendar-header h2 {
+  font-size: 24px;
+  font-weight: bold;
+  color: #fff;
+}
+
+.calendar-header button {
+  background-color: #3a3a3a;
+  color: #fff;
+  border: none;
+  padding: 10px 20px;
+  cursor: pointer;
+  border-radius: 5px;
+}
+
+.calendar-header button:hover {
+  background-color: #4a4a4a;
+}
+
+/* Сетка календаря */
+.calendar-grid {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  margin-top: 10px;
+  border-radius: 10px; /* Заокругленные края */
+  width: auto;
+  overflow: hidden; /* Скрытие частей элементов, выходящих за пределы */
+  padding: 10px; /* Добавьте отступы для пространства внутри сетки */
+}
+
+.calendar-day .date {
+  color: rgba(255, 255, 255, 0.3); /* Светло-белый цвет с прозрачностью */
+  font-size: 14px; /* Небольшой размер шрифта */
+  font-family: 'Roboto', 'Arial', sans-serif;
+  text-align: center; /* Центрирование текста */
+  padding: 5px 0; /* Отступы сверху и снизу */
+  text-transform: lowercase; /* Для того, чтобы месяцы отображались строчными буквами, как на изображении */
+  margin-bottom: 0;
+  border-radius: 100px;
+}
+
+.calendar-day {
+  border: 1px solid  rgba(110, 106, 103, 0.1); /* Тонкая граница для ячеек календаря */
+
+  height: 120px; /* Высота ячейки */
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  position: relative;
+}
+
+/* Ограничение высоты блока событий, добавление прокрутки */
+.calendar-day .events {
+  max-height: 100px; /* Ограничение высоты блока событий */
+  overflow-y: auto; /* Добавление вертикальной прокрутки при избытке контента */
+  padding-right: 5px; /* Добавление небольшого отступа для прокрутки */
+}
+
+.calendar-day .events::-webkit-scrollbar {
+  width: 5px; /* Ширина полосы прокрутки */
+}
+
+.calendar-day .events::-webkit-scrollbar-thumb {
+  background-color: rgb(248, 117, 30); /* Цвет полосы прокрутки */
+  border-radius: 10px;
+}
+
+/* Стили событий */
+.event {
+  background-color: rgba(16, 16, 15, 0.5); /* Цвет блока события */
+  color: #fff;
+  padding: 2px;
+  margin-bottom: 1px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  display: flex;
+}
+
+.event:hover {
+  background-color: rgb(248, 117, 30);
+}
+
+.event strong {
+  font-size: 14px;
+}
+
+.event p {
+  font-size: 12px;
+  margin-top: 5px;
+  margin-left: auto;
+}
+
+/* Стиль для дней без событий */
+.calendar-day p {
+  color: #666;
+  font-size: 12px;
+  margin-top: 2px;
+}
+
+/* Стили для выделенной текущей даты */
+.calendar-day.current {
+  background-color: #00b33c; /* Зеленый фон для текущего дня */
+}
+
+/* Медиазапросы для адаптивности */
+@media (max-width: 768px) {
+  .calendar-grid {
+    grid-template-columns: repeat(4, 1fr);
+  }
+}
+
+@media (max-width: 480px) {
+  .calendar-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .calendar-header h2 {
+    font-size: 18px;
+  }
+
+  .calendar-header button {
+    padding: 8px 15px;
+  }
+}

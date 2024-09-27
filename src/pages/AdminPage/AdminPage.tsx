@@ -5,16 +5,16 @@ import { Outlet } from "react-router-dom";
 const AdminPage: React.FC = () => {
   return (
     <div >
-      Admin Page
+      СТОРІНКА АДМІНІСТРАЦІЇ
       <ul>
         <li>
-          <NavLink to="groups">Groups</NavLink>
+          <NavLink to="groups">ГРУПИ</NavLink>
         </li>
         <li>
-          <NavLink to="payment">Payment</NavLink>
+          <NavLink to="payment">ОПЛАТА</NavLink>
         </li>
         <li>
-          <NavLink to="events">Schedule</NavLink>
+          <NavLink to="events">РОЗКЛАД</NavLink>
         </li>
       </ul>
       <Outlet />
