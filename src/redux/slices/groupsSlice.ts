@@ -2,11 +2,21 @@ import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { addGroupTh, fetchAllGroups } from "../thunks/thunks";
 import { GroupStateType, GroupType } from "../types/types";
 
+
+const persistedState = localStorage.getItem('groups')
+  ? JSON.parse(localStorage.getItem('groups')!)
+  : undefined;
+
+
 const initialState: GroupStateType = {
   isLoading: false,
   error: undefined,
-  groups: [],
+  groups: persistedState ?? [],
 };
+
+
+
+
 const groupsSlice = createSlice({
   name: "groups",
   initialState,

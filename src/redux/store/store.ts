@@ -13,11 +13,14 @@ const store = configureStore({
     events: eventReducer,
     users: userReducer,
   }),
-  preloadedState: persistedState ?? [],
+  preloadedState: {...persistedState} ?? [],
 });
 
+
 store.subscribe(() => {
+//  console.log('start change LS')
   localStorage.setItem('rootState', JSON.stringify(store.getState()));
+ // console.log('finish change LS')
 });
 
 export default store;

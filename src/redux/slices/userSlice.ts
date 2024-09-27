@@ -1,11 +1,15 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { addGroupTh, fetchAllGroups, fetchAllUsers, fetchUsersByName } from "../thunks/thunks";
-import { GroupStateType, GroupType, User, UserStateType } from "../types/types";
+import { User, UserStateType } from "../types/types";
+
+
+const persistedState = localStorage.getItem('users')
+  ? JSON.parse(localStorage.getItem('users')!)
+  : undefined;
 
 const initialState: UserStateType = {
   isLoading: false,
   error: undefined,
-  users: [],
+  users: persistedState ?? [],
   
 };
 

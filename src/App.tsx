@@ -7,7 +7,7 @@ import { ToastContainer } from "react-toastify";
 
 // Динамическая загрузка компонентов
 const LandingPage = lazy(() => import("./pages/LandingPage/LandingPage"));
-const AdminPage = lazy(() => import("./pages/AdminPage/AdminPage"));
+// const AdminPage = lazy(() => import("./pages/AdminPage/AdminPage"));
 const EventsPage = lazy(() => import("./pages/EventsPage/EventsPage"));
 const OneEventPage = lazy(() => import("./pages/OneEventPage/OneEventPage"));
 const PaymentPage = lazy(() => import("./pages/PaymentPage/PaymentPage"));

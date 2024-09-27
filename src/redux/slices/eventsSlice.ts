@@ -8,10 +8,15 @@ type EventStateType = {
     events: EventTypeDB[];
     currentEvent?: EventTypeDB | undefined;
 }
+
+const persistedState = localStorage.getItem('events')
+  ? JSON.parse(localStorage.getItem('events')!)
+  : undefined;
+
 const initialState: EventStateType = {
     isLoading: false,
     error: undefined,
-    events: [],
+    events: persistedState ?? [],
     currentEvent: undefined
 }
 const eventsSlice = createSlice({
