@@ -1,15 +1,14 @@
-import React, { ChangeEvent, useState } from "react";
+import React, { ChangeEvent, useRef, useEffect } from "react";
 import { ParticipantType } from "../../redux/types/types";
-import style from './Find.User.module.scss'
+import style from './Find.User.module.scss';
 
 interface FindUsersProps {
-  handleAddUser?: (participant: ParticipantType) => void;
-  handleDeleteUser?: (participant: ParticipantType) => void;
   handleFindUsers?: (params: string) => void;
+  inputRef: React.RefObject<HTMLInputElement>; // Пробрасываем ref как пропс
 }
 
-export const FindUsers: React.FC<FindUsersProps> = ({ handleFindUsers }) => {
-  const [username, setUsername] = useState("");
+export const FindUsers: React.FC<FindUsersProps> = ({ handleFindUsers, inputRef }) => {
+  const [username, setUsername] = React.useState("");
 
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
     e.preventDefault();
@@ -22,8 +21,14 @@ export const FindUsers: React.FC<FindUsersProps> = ({ handleFindUsers }) => {
 
   return (
     <label className={style.label}>
-     <p className={style.title}>Можливі Учасники:</p> 
-      <input className={style.imput} type="text" value={username} onChange={handleChange} />
+      <p className={style.title}>Можливі Учасники:</p>
+      <input
+        ref={inputRef} // Привязываем переданный ref к инпуту
+        className={style.imput}
+        type="text"
+        value={username}
+        onChange={handleChange}
+      />
     </label>
   );
 };

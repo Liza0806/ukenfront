@@ -2,8 +2,8 @@ import React, { useEffect, useState } from "react";
 import DatePicker from "react-datepicker";
 
 import "react-datepicker/dist/react-datepicker.css";
-import "./Styles.css"
-import cls from './OneEventPage.module.scss'
+import "./Styles.css";
+import cls from "./OneEventPage.module.scss";
 import { useParams } from "react-router-dom";
 import { useAppDispatch } from "../../redux/hooks/hooks";
 import { fetchAllUsers, updateEvent } from "../../redux/thunks/thunks";
@@ -12,12 +12,11 @@ import { getEventById } from "../../redux/api/eventsApi";
 import { UserList } from "../../components/UserList/UserList";
 import { FindUsers } from "../../components/FindUsers/FindUsers";
 import { unwrapResult } from "@reduxjs/toolkit";
-import { uk } from 'date-fns/locale';
+import { uk } from "date-fns/locale";
 import { Container } from "../../components/Container/Container";
-import containerImage from '../../assets/PhoneForPagIvent.jpg';
-
-
-
+import containerImage from "../../assets/PhoneForPagIvent.jpg";
+import UpdateIcon from '@mui/icons-material/Update';
+import { useRef } from "react";
 
 const OneEventPage: React.FC = () => {
   const { id } = useParams<string>();
@@ -26,11 +25,23 @@ const OneEventPage: React.FC = () => {
   const [usersN, setUsersN] = useState<User[]>([]);
   const [noUsersFound, setNoUsersFound] = useState(false);
   const [showUpdateEvent, setShowUpdateEvent] = useState(false);
-  
+
   const dispatch = useAppDispatch();
   const [showCalendar, setShowCalendar] = useState(false);
   const [showTimer, setShowTimer] = useState(false);
-  
+
+  const inputRef = useRef<HTMLInputElement>(null); // Используем useRef для инпута
+
+  // Прокрутка к инпуту при фокусировке
+  const scrollToInput = () => {
+    if (inputRef.current) {
+      inputRef.current.scrollIntoView({
+        behavior: 'smooth',
+        block: 'center',
+      });
+    }
+  };
+
   useEffect(() => {
     if (id) {
       getEventById(id)
@@ -119,13 +130,22 @@ const OneEventPage: React.FC = () => {
     if (date) {
       updateEventDate(date);
     }
-  }; 
+  };
+ 
+
+
+
 
   return (
-    <Container isCentre={true} containerImage = {containerImage}>  
+    <Container isCentre={true} containerImage={containerImage}>
       <div className={cls.trainingContainer}>
         <div className={cls.header}>
           <h3 className={cls.title}>Група: {event.groupTitle}</h3>
+          
+        {showUpdateEvent && (
+          <UpdateIcon style={{ color: 'blue', fontSize: '36px', cursor: 'pointer'}}  className={cls.upIcon} onClick={() => submitEvent(event)}>
+          </UpdateIcon>
+        )}
         </div>
         <div className={cls.date}>
           <span className={cls.text}>Тренування відбудеться</span>
@@ -145,8 +165,14 @@ const OneEventPage: React.FC = () => {
         </div>
 
         {showCalendar && (
-          <div className={cls.modalOverlay} onClick={() => setShowCalendar(false)}>
-            <div className={cls.modalContent} onClick={(e) => e.stopPropagation()}>
+          <div
+            className={cls.modalOverlay}
+            onClick={() => setShowCalendar(false)}
+          >
+            <div
+              className={cls.modalContent}
+              onClick={(e) => e.stopPropagation()}
+            >
               <DatePicker
                 selected={event.date ? new Date(event.date) : null}
                 onChange={handleDateChange}
@@ -160,7 +186,10 @@ const OneEventPage: React.FC = () => {
 
         {showTimer && (
           <div className={cls.modalOverlay} onClick={() => setShowTimer(false)}>
-            <div className={cls.modalContent} onClick={(e) => e.stopPropagation()}>
+            <div
+              className={cls.modalContent}
+              onClick={(e) => e.stopPropagation()}
+            >
               <DatePicker
                 selected={event.date ? new Date(event.date) : null}
                 onChange={handleDateChange}
@@ -175,38 +204,35 @@ const OneEventPage: React.FC = () => {
             </div>
           </div>
         )}
-         
-         <div className={cls.participants}>
-        <h4>Участники:</h4>
-        <UserList
-          users={event.participants} //
-          deleteUser={handleDeleteUser}
-        />
-      </div>
 
-        {users.length !== 0 && <FindUsers handleFindUsers={findUsers} />}
+        <div className={cls.participants}>
+          <h4 className={cls.titleElement}>Учасники:</h4>
+          <UserList 
+            users={event.participants} //
+            deleteUser={handleDeleteUser}
+          />
+        </div>
+
+        {users.length !== 0 && <FindUsers inputRef={inputRef} handleFindUsers={findUsers} />}
         {noUsersFound && <div>Пользователи не найдены</div>}
-        
+
         {users.length !== 0 && !noUsersFound && (
           <UserList
             users={usersN.length > 0 ? usersN : users}
             addUsers={handleAddUser}
           />
         )}
-        
+
         {!users.length && (
-          <button type="button" className={cls.buttonOpen} onClick={getUsers}>Додати</button>
+          <button type="button" className={cls.buttonOpen} onClick={getUsers}>
+            Додати
+          </button>
         )}
+       
 
-        <hr />
-
-        {showUpdateEvent && (
-          <button className={cls.buttonOpen} onClick={() => submitEvent(event)}>Обновити подію</button>
-        )}
       </div>
     </Container>
   );
 };
-
 
 export default OneEventPage;
