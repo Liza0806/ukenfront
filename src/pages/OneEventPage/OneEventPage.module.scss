@@ -41,7 +41,13 @@ $dark-gray: #1a1a1a;
       letter-spacing: 2px;
       padding: 10px 0;
       position: relative;
-    }
+  }
+  
+  @media screen and (max-width: 768px) {
+      .title {
+          font-size: 1.5rem;
+      }
+  }
 
       /* Декоративная линия */
       &::after {
@@ -102,6 +108,10 @@ $dark-gray: #1a1a1a;
 
     /* Добавляем отступы, чтобы блоки не прилегали друг к другу */
     justify-content: center; /* Распределяем пространство между title и списком */
+
+    @media screen and (max-width: 768px) {
+      margin-right: -2vw;
+    }
     
     .titleElement {
       height: auto;
