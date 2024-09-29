@@ -11,6 +11,7 @@ const LandingPage = lazy(() => import("./pages/LandingPage/LandingPage"));
 const EventsPage = lazy(() => import("./pages/EventsPage/EventsPage"));
 const OneEventPage = lazy(() => import("./pages/OneEventPage/OneEventPage"));
 const PaymentPage = lazy(() => import("./pages/PaymentPage/PaymentPage"));
+const UserPage = lazy(() => import("./pages/UserPage/UserPage"));
 const GroupsPage = lazy(() => import("./pages/GroupsPage/GroupsPage"));
 
 function App() {
@@ -28,7 +29,7 @@ function App() {
                 <Route path="events/:id" element={<OneEventPage />} />
                 <Route path="payment" element={<PaymentPage />} />
                 <Route path="groups" element={<GroupsPage />} />
-          
+                <Route path="user/:id" element={<UserPage />} />
             </Route>
           </Routes>
         </Suspense>
