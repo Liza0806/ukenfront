@@ -4,14 +4,23 @@
     left: 0;
     width: 100%;
     height: 100vh; /* Занимает всю высоту экрана */
+    overflow-y: auto;
     background-size: cover;
     background-position: center;
     color: white;
     z-index: -1; /* Убедитесь, что контейнер находится под другими элементами */
-    
     display: flex; /* Включаем Flexbox */
-  
     justify-content: center; /* Горизонтальное центрирование */
+
+    &::-webkit-scrollbar {
+      width: 5px;
+    }
+
+    &::-webkit-scrollbar-thumb {
+      background-color: rgb(18, 17, 17);
+      border-radius: 10px;
+    }
+
 }
 
 .containerForCalendar {
