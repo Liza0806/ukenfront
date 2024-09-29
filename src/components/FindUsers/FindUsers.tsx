@@ -5,9 +5,10 @@ import style from './Find.User.module.scss';
 interface FindUsersProps {
   handleFindUsers?: (params: string) => void;
   inputRef: React.RefObject<HTMLInputElement>; // Пробрасываем ref как пропс
+  scrolInp: ()=>void
 }
 
-export const FindUsers: React.FC<FindUsersProps> = ({ handleFindUsers, inputRef }) => {
+export const FindUsers: React.FC<FindUsersProps> = ({ handleFindUsers, inputRef, scrolInp }) => {
   const [username, setUsername] = React.useState("");
 
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
@@ -24,6 +25,7 @@ export const FindUsers: React.FC<FindUsersProps> = ({ handleFindUsers, inputRef 
       <p className={style.title}>Можливі Учасники:</p>
       <input
         ref={inputRef} // Привязываем переданный ref к инпуту
+        onFocus={scrolInp}
         className={style.imput}
         type="text"
         value={username}

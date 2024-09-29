@@ -213,7 +213,7 @@ const OneEventPage: React.FC = () => {
           />
         </div>
 
-        {users.length !== 0 && <FindUsers inputRef={inputRef} handleFindUsers={findUsers} />}
+        {users.length !== 0 && <FindUsers scrolInp={scrollToInput} inputRef={inputRef} handleFindUsers={findUsers} />}
         {noUsersFound && <div>Пользователи не найдены</div>}
 
         {users.length !== 0 && !noUsersFound && (
