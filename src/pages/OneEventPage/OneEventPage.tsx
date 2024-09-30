@@ -18,6 +18,7 @@ import containerImage from "../../assets/PhoneForPagIvent.jpg";
 import UpdateIcon from '@mui/icons-material/Update';
 import { useRef } from "react";
 
+
 const OneEventPage: React.FC = () => {
   const { id } = useParams<string>();
   const [event, setEvent] = useState<EventTypeDB | null>(null);

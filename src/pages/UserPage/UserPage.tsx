@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { getUsersByTelegramId } from "../../redux/api/usersApi";
 import { User } from "../../redux/types/types";
+import React from 'react';
 
 const UserPage: React.FC = () => {
   const [user, setUser] = useState<User | null>(null);
