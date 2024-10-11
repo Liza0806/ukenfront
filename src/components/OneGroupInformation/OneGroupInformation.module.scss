@@ -1,0 +1,71 @@
+.oneGroupConteiner{
+    width: auto;
+    height: auto;
+    border-radius: 5px;
+    border: 2px solid black
+}
+
+.oneGroup {
+    width: auto;
+    height: 170px; /* Высота может быть изменена в зависимости от содержимого */
+    overflow: auto; /* Добавлено свойство для включения прокрутки */
+
+    &::-webkit-scrollbar {
+        width: 5px;
+    }
+
+    &::-webkit-scrollbar-thumb {
+        background-color: rgb(248, 117, 30);
+        border-radius: 10px;
+    } }
+
+    .title {
+        color: #f1f1f1; /* Цвет текста */
+        font-size: 0.7rem; /* Уменьшен размер шрифта на 30% */
+        font-weight: bold; /* Жирный шрифт */
+        text-transform: uppercase; /* Все буквы заглавные */
+        letter-spacing: 1.4px; /* Уменьшены пробелы между буквами */
+        padding: 8px 14px; /* Уменьшены отступы для комфорта */
+        background: rgba(0, 0, 0, 0.7); /* Полупрозрачный фон */
+        border-radius: 5px; /* Закругленные края */
+        box-shadow: 0 1.4px 3.5px rgba(0, 0, 0, 0.5); /* Уменьшена тень для объема */
+        margin: 7px 0; /* Уменьшены отступы сверху и снизу */
+        position: relative; /* Для возможности использования псевдоэлементов */
+    }
+    
+    /* Добавление псевдоэлемента для эффекта подчеркивания */
+    .title::after {
+        content: ""; /* Создаем псевдоэлемент */
+        display: block;
+        height: 2px; /* Уменьшена высота подчеркивания */
+        background-color: rgb(248, 117, 30); /* Цвет подчеркивания */
+        width: 35%; /* Уменьшена ширина подчеркивания */
+        margin: 4px auto 0; /* Центрируем и добавляем отступ сверху */
+        border-radius: 5px; /* Закругленные края подчеркивания */
+    }
+
+    .h3{
+        color: #f1f1f1; /* Цвет текста */
+        font-size: 0.7rem; /* Уменьшен размер шрифта на 30% */
+        font-weight: bold; /* Жирный шрифт */
+        text-transform: uppercase; /* Все буквы заглавные */
+        letter-spacing: 1.4px; /* Уменьшены пробелы между буквами */
+        padding: 2px 14px; /* Уменьшены отступы для комфорта */
+        border-radius: 5px; /* Закругленные края */
+        box-shadow: 0 1.4px 3.5px rgba(0, 0, 0, 0.5); /* Уменьшена тень для объема */
+
+        position: relative; /* Для возможности использования псевдоэлементов */
+        margin-bottom: 0.5vh;
+    }
+    .titleSchedule {
+        color: #f1f1f1; /* Цвет текста */
+        font-size: 0.55rem; /* Уменьшен размер шрифта на 30% */
+        font-weight: bold; /* Жирный шрифт */
+        text-transform: uppercase; /* Все буквы заглавные */
+        letter-spacing: 1.4px; /* Уменьшены пробелы между буквами */
+        padding: 4px 14px; /* Уменьшены отступы для комфорта */
+        border-radius: 5px; /* Закругленные края */
+        box-shadow: 0 1.4px 3.5px rgba(0, 0, 0, 0.5); /* Уменьшена тень для объема */
+ 
+        position: relative; /* Для возможности использования псевдоэлементов */
+    }

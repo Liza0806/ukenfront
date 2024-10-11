@@ -1,7 +1,8 @@
 import React from "react";
 import { Button, ButtonSize } from "../Button/Button";
 import { ScheduleType } from "../../redux/types/types";
-import cls from '../AddGroupForm/AddGroupForm.module.scss'
+import clss from '../AddGroupForm/AddGroupForm.module.scss'
+import cls from './GroupFormFields.module.scss'
 
 interface GroupFormFieldsProps {
   state: any;
@@ -20,10 +21,11 @@ const GroupFormFields: React.FC<GroupFormFieldsProps> = ({
   validDays,
   dispatch,
 }) => (
-  <>
-    <div>
-      <label>Название группы:</label>
+  <div className={cls.container}>
+    <div className={cls.name}>
+      <label className={cls.title}>Назва групи:</label>
       <input
+       className={cls.input}
         type="text"
         value={state.title}
         name="title"
@@ -32,34 +34,36 @@ const GroupFormFields: React.FC<GroupFormFieldsProps> = ({
       />
     </div>
     <div>
-      <label>Тренер:</label>
-      <input type="text" name="title" value="Костя" required />
+      <label className={cls.title}>Тренер:</label>
+      <input className={cls.input} type="text" name="title" value="Костя" required />
     </div>
     <div>
-      <label>Платежи:</label>
-      <div className={cls.paymentsWrapper}>
-        <label>Ежедневный платеж</label>
+      <label className={cls.title}>Платежі:</label>
+      <div className={cls.container}>
+        <label className={cls.title}>Оплата за день</label>
         <input
-          type="number"
+        className={cls.input}
+          type="text"
           name="dailyPayment"
           placeholder="Ежедневный платеж"
           value={state.dailyPayment}
-          onChange={(e) => dispatch({ type: "SET_DAILY_PAYMENT", payload: Number(e.target.value) })}
+          onChange={(e) => dispatch({ type: "SET_DAILY_PAYMENT", payload: e.target.value })}
           required
         />
-        <label>Ежемесячный платеж</label>
+        <label className={cls.title}>Оплата за місяць</label>
         <input
-          type="number"
+          className={cls.input}
+          type="text"
           name="monthlyPayment"
           placeholder="Ежемесячный платеж"
           value={state.monthlyPayment}
-          onChange={(e) => dispatch({ type: "SET_MONTHLY_PAYMENT", payload: Number(e.target.value) })}
+          onChange={(e) => dispatch({ type: "SET_MONTHLY_PAYMENT", payload: e.target.value })}
           required
         />
       </div>
     </div>
     <div>
-      <label>Расписание:</label>
+      <label className={cls.title}>Расписание:</label>
       {state.schedule.map((sched: ScheduleType, index: number) => (
         <div key={index}>
           <select
@@ -83,16 +87,16 @@ const GroupFormFields: React.FC<GroupFormFieldsProps> = ({
             onChange={(e) => handleScheduleChange(index, "time", e.target.value)}
             required
           />
-          <Button size={ButtonSize.BASE} type="button" onClick={() => removeScheduleItem(index)}>
+          <Button className={cls.button} size={ButtonSize.BASE} type="button" onClick={() => removeScheduleItem(index)}>
             Удалить занятие
           </Button>
         </div>
       ))}
-      <Button size={ButtonSize.BASE} type="button" onClick={addSchedule}>
+      <Button className={cls.button} size={ButtonSize.BASE} type="button" onClick={addSchedule}>
         Добавить занятие
       </Button>
     </div>
-  </>
+  </div>
 );
 
 export default GroupFormFields;
