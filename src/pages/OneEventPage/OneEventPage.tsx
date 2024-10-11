@@ -30,16 +30,26 @@ const OneEventPage: React.FC = () => {
   const dispatch = useAppDispatch();
   const [showCalendar, setShowCalendar] = useState(false);
   const [showTimer, setShowTimer] = useState(false);
+  const containerRef = useRef<HTMLDivElement>(null); // Создайте реф для контейнера
+  let scrollTop = 0
+  const handleScroll = () => {
+      if (containerRef.current) {
+         scrollTop = containerRef.current.scrollTop; // Получите значение скролла
+         
+      }
+  };
+  
 
   const inputRef = useRef<HTMLInputElement>(null); // Используем useRef для инпута
-
-  // Прокрутка к инпуту при фокусировке
   const scrollToInput = () => {
     if (inputRef.current) {
       inputRef.current.scrollIntoView({
         behavior: 'smooth',
-        block: 'center',
+        block: 'center', // Прокрутка к началу элемента
+        inline: 'nearest'
       });
+  
+    
     }
   };
 
@@ -138,7 +148,7 @@ const OneEventPage: React.FC = () => {
 
 
   return (
-    <Container isCentre={true} containerImage={containerImage}>
+    <Container ref={containerRef} isCentre={true} containerImage={containerImage}>
       <div className={cls.trainingContainer}>
         <div className={cls.header}>
           <h3 className={cls.title}>Група: {event.groupTitle}</h3>

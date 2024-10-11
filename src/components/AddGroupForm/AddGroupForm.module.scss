@@ -1,28 +1,35 @@
-@import "../../styles/variables.scss";
 
-.addGroupForm {
-    display: flex;
-    flex-direction: column;
-    width: 50%;
-    margin: auto;
-    border: 1px solid $color-primary;
-    gap: 1rem; 
-
- >div {
-display: flex;
-        flex-direction: column;
-        justify-content: center;
-        align-items: center;
-        gap: 1rem; 
-
- }
-    .paymentsWrapper{
-        border: 1px solid $color-primary; 
-        gap: 1rem; 
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        align-items: center;
+    
+    .title {
+        color: #f1f1f1;
+        font-size: 0.91rem; 
+        font-family: 'Poppins', 'Roboto', 'Arial', sans-serif; 
+        font-weight: bold; 
+        text-transform: uppercase; 
+        letter-spacing: 1.8px; 
+        
+        padding: 10px 16px; 
+        background: rgba(0, 0, 0, 0.7); 
+        border-radius: 5px;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.5);
+        margin: 10px 0; 
+        
+        position: relative; 
         width: 100%;
-    }
-}
+        max-width: 600px;
+        margin-left: auto;
+        margin-right: auto; 
+      }
+
+      .button{
+        background-color: #ff6600; /* Основной оранжевый цвет проекта */
+        color: white;
+        border: none;
+        border-radius: 5px; /* Легкое закругление */
+        padding: 10px 20px;
+        font-size: 16px;
+        cursor: pointer;
+        transition: background-color 0.3s, transform 0.2s;
+      }
+       
+ 

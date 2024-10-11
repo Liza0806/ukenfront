@@ -7,6 +7,7 @@ import { toast } from "react-toastify";
 import { GroupType, ScheduleType } from "../../redux/types/types";
 import { group } from "console";
 import GroupFormFields from "../GroupFormFields/GroupFormFields";
+import cls from './AddGroupForm.module.scss'
 
 interface AddGroupFormProps {
   groups: GroupType[]; // Замените any на конкретный тип
@@ -148,8 +149,8 @@ const AddGroupForm: React.FC<AddGroupFormProps> = ({ groups }) => {
   };
 
   return (
-    <div>
-      <h2>Добавить группу</h2>
+    <div className={cls.addFormConteiner}>
+      <h2 className={cls.title}>Додати групу</h2>
       <GroupFormFields
         state={state}
         handleScheduleChange={handleScheduleChange}
@@ -159,6 +160,7 @@ const AddGroupForm: React.FC<AddGroupFormProps> = ({ groups }) => {
         dispatch={dispatch}
       />
       <Button
+        className={cls.button}
         size={ButtonSize.BASE}
         color={ButtonColor.PRIMARY}
         onClick={handleSubmit}
