@@ -7,20 +7,21 @@ import { toast } from "react-toastify";
 import { GroupType, ScheduleType } from "../../redux/types/types";
 import { group } from "console";
 import GroupFormFields from "../GroupFormFields/GroupFormFields";
-import cls from './AddGroupForm.module.scss'
+import cls from "./AddGroupForm.module.scss";
+import LibraryAddIcon from "@mui/icons-material/LibraryAdd";
 
 interface AddGroupFormProps {
   groups: GroupType[]; // Замените any на конкретный тип
 }
 
 const validDays = [
-  "sunday",
-  "monday",
-  "tuesday",
-  "wednesday",
-  "thursday",
-  "friday",
-  "saturday",
+  "неділя",
+  "понеділок",
+  "вівторок",
+  "середа",
+  "четвер",
+  "п'ятниця",
+  "субота",
 ];
 
 const AddGroupForm: React.FC<AddGroupFormProps> = ({ groups }) => {
@@ -150,7 +151,18 @@ const AddGroupForm: React.FC<AddGroupFormProps> = ({ groups }) => {
 
   return (
     <div className={cls.addFormConteiner}>
-      <h2 className={cls.title}>Додати групу</h2>
+      <div className={cls.conteinerHeader}>
+        {" "}
+        <h2 className={cls.title}>Додати групу</h2>
+        <Button
+          size={ButtonSize.BASE}
+          color={ButtonColor.PRIMARY}
+          onClick={handleSubmit}
+          disabled={state.disable}
+        >
+          <LibraryAddIcon color="primary"></LibraryAddIcon>
+        </Button>
+      </div>
       <GroupFormFields
         state={state}
         handleScheduleChange={handleScheduleChange}
@@ -159,15 +171,6 @@ const AddGroupForm: React.FC<AddGroupFormProps> = ({ groups }) => {
         validDays={validDays}
         dispatch={dispatch}
       />
-      <Button
-        className={cls.button}
-        size={ButtonSize.BASE}
-        color={ButtonColor.PRIMARY}
-        onClick={handleSubmit}
-        disabled={state.disable}
-      >
-        Добавить группу
-      </Button>
     </div>
   );
 };

@@ -1,59 +1,152 @@
-.container{
+.container {
   display: flex;
-  flex-wrap: wrap;
+  justify-content: space-between; /* Размещаем контейнеры Name и Pay с краев */
+  flex-wrap: wrap; /* Позволяет элементам переноситься, если не хватает места */
+  width: 100%; /* Занимаем всю ширину */
+  margin-top: 5vh;
+}
+
+.containerName {
+  display: flex;
+  flex-direction: column;
+  gap: 3vh;
+  justify-content: center;
+  align-items: center;
+  width: 45%; /* Ширина контейнера Name */
+}
+
+.containerPay {
+  display: flex;
+  flex-direction: column;
+  gap: 3vh;
+  justify-content: center;
+  align-items: center;
+  width: 45%; /* Ширина контейнера Pay */
+}
+
+.containerSchedule {
+  display: flex;
   flex-direction: column;
   gap: 20px;
   justify-content: center;
   align-items: center;
-
+  margin-top: 20px; 
+  width: 100%; 
 }
 
 .title {
-    height: auto;
-    max-width: inherit; // Зафиксированная ширина заголовка (пример: 150px ≈ 37.5vw)
-  
-    margin-top: 1.5vh; // Отступ сверху (пример: 26px ≈ 6.5vh)
-    font-size: 1.25rem; // Оставляем в rem
-    font-weight: bold; // Жирный шрифт
-    color: white; // Цвет текста белый
-    margin-bottom: 1.5vh; // Отступ снизу (пример: 15px ≈ 1.5vh)
-    text-align: left; // Выравнивание текста влево
-    text-transform: uppercase; // Преобразуем текст в верхний регистр
-  }
-
-  
-  .input[type="text"] {
-    margin-top: 1.6vh; // Отступ сверху (пример: 8px ≈ 1.6vh)
-    padding: 1.25vh; // Отступ внутри (пример: 10px ≈ 1.25vh)
-    border: 0.1vw solid #ccc; // Ширина границы (пример: 1px ≈ 0.1vw)
-    border-radius: 0.5vh; // Скругление углов (пример: 5px ≈ 0.5vh)
-    font-size: 14px; // Оставляем в px или переводим в rem
-    transition: border-color 0.3s ease;
-    flex-grow: 1; /* Позволяет элементу занимать доступное пространство */
-    max-width: 400px; // Максимальная ширина (оставляем в px или переводим в vw, если нужно)
-    width: 100%; /* Занимаем всю ширину родителя для адаптивности */
-    color: #f9f7f7; // Цвет текста в поле ввода
-    margin-right: 0; // Убираем отступ справа
-    margin-left: 0.7vh;
-
-    &:focus {
-      border-color: #007bff;
-      outline: none;
-      box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
-    }
-  }
-.button{
-  background-color: #ff6600; /* Основной оранжевый цвет проекта */
+  height: auto;
+  max-width: inherit;
+  margin-top: 1.5vh;
+  font-size: 1.25rem;
+  font-weight: bold;
   color: white;
-  border: none;
-  border-radius: 5px; /* Легкое закругление */
-  padding: 10px 20px;
-  font-size: 16px;
-  cursor: pointer;
-  transition: background-color 0.3s, transform 0.2s;
+  margin-bottom: 1.5vh;
+  text-align: left;
+  text-transform: uppercase;
 }
 
-.name{
-  margin-left: auto;
-  margin-right: auto
+.input[type="text"] {
+  margin-top: 1.6vh;
+  padding: 1.25vh;
+  border: 0.1vw solid #ccc;
+  border-radius: 0.5vh;
+  font-size: 14px;
+  transition: border-color 0.3s ease;
+ width:60vh;
+  color: #f9f7f7;
+  margin-left: 0.7vh;
+  flex-grow: 1;
+
+  &:focus {
+    border-color: #007bff;
+    outline: none;
+    box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
+  }
+}
+
+.button {
+background-color: #ff6600;
+color: white;
+border: none;
+border-radius: 5px;
+padding: 10px 20px;
+font-size: 16px;
+cursor: pointer;
+transition: background-color 0.3s, transform 0.2s;
+}
+
+.selectCustom {
+  appearance: none; 
+  background-color: rgba(16, 15, 15, 1); // Черный фон селекта
+  border: 0.1vw solid rgba(204, 204, 204, 1); 
+  border-radius: 0.5vh; 
+  color: rgb(246, 241, 241); 
+  font-size: 14px; 
+  padding: 1.25vh; 
+  cursor: pointer; 
+  transition: border-color 0.3s ease; 
+  width: 20vh; 
+  margin-left: 0.7vh; 
+}
+
+.selectCustom:hover {
+  border-color: rgba(230, 92, 0, 1); 
+}
+
+.selectCustom:focus {
+  outline: none; 
+  border-color: rgba(255, 102, 0, 1); 
+  box-shadow: 0 0 5px rgba(255, 102, 0, 0.5); 
+}
+
+.selectCustom::after {
+  content: '▼'; 
+  position: absolute; 
+  right: 10px; 
+  top: 50%; 
+  transform: translateY(-50%); 
+  pointer-events: none; 
+}
+
+option {
+  background-color: rgba(16, 15, 15, 1); // Черный фон опций
+  color: rgba(246, 241, 241, 1); // Белый текст опций
+}
+
+.inputTime[type="text"] {
+  margin-top: 1.6vh; 
+  padding: 1.25vh; 
+  border: 0.1vw solid rgba(204, 204, 204, 1); 
+  border-radius: 0.5vh; 
+  font-size: 14px; 
+  transition: border-color 0.3s ease; 
+  width: 20vh; 
+  color:rgb(246, 241, 241); 
+  margin-left: 3vh; 
+  flex-grow: 1; 
+  background-color: rgba(16, 15, 15, 1)
+}
+
+.inputTime[type="text"]:focus {
+  border-color: rgba(255, 102, 0, 1); 
+  outline: none; 
+  box-shadow: 0 0 5px rgba(255, 123, 0, 0.5); 
+}
+
+.deleteIcon {
+  font-size: 2rem; // Задайте начальный размер иконки
+  transition: transform 0.3s ease, color 0.3s ease; // Плавный переход для трансформации и цвета
+
+  &:hover {
+    color: rgba(255, 0, 0, 1); // Красный цвет при наведении
+    transform: scale(1.3); // Увеличение на 30%
+    
+  }
+}
+.buttonDel{
+  padding-top: 10px;
+}
+option.placeholder{
+background-color: rgba(239, 5, 5, 1)
 }
