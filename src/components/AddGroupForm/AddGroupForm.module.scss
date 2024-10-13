@@ -1,35 +1,37 @@
+.conteinerHeader {
+  display: flex; 
+  align-items: center; 
+  justify-content: space-between; 
+  width: 100%;
+  position: relative; }
 
-    
-    .title {
-        color: #f1f1f1;
-        font-size: 0.91rem; 
-        font-family: 'Poppins', 'Roboto', 'Arial', sans-serif; 
-        font-weight: bold; 
-        text-transform: uppercase; 
-        letter-spacing: 1.8px; 
-        
-        padding: 10px 16px; 
-        background: rgba(0, 0, 0, 0.7); 
-        border-radius: 5px;
-        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.5);
-        margin: 10px 0; 
-        
-        position: relative; 
-        width: 100%;
-        max-width: 600px;
-        margin-left: auto;
-        margin-right: auto; 
-      }
+.title {
+  color: #f1f1f1;
+  font-size: 0.91rem; 
+  font-family: 'Poppins', 'Roboto', 'Arial', sans-serif; 
+  font-weight: bold; 
+  text-transform: uppercase; 
+  letter-spacing: 1.8px; 
 
-      .button{
-        background-color: #ff6600; /* Основной оранжевый цвет проекта */
-        color: white;
-        border: none;
-        border-radius: 5px; /* Легкое закругление */
-        padding: 10px 20px;
-        font-size: 16px;
-        cursor: pointer;
-        transition: background-color 0.3s, transform 0.2s;
-      }
-       
- 
+  padding: 10px 16px; 
+  background: rgba(0, 0, 0, 0.7); 
+  border-radius: 5px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.5);
+  margin: 10px 0; 
+  max-width: 600px; /* Ограничиваем максимальную ширину */
+  flex-grow: 1; /* Позволяем элементу занимать оставшееся пространство */
+  text-align: center; /* Центрируем текст внутри заголовка */
+  margin-left: 19.5vh;
+}
+
+.button {
+  background-color: #ff6600; /* Основной оранжевый цвет проекта */
+  color: white;
+  border: none;
+  border-radius: 5px; /* Легкое закругление */
+  padding: 10px 20px;
+  font-size: 16px;
+  cursor: pointer;
+  transition: background-color 0.3s, transform 0.2s;
+  margin-left: auto; /* Сдвигаем кнопку к правому краю */
+}
