@@ -1,6 +1,6 @@
-import { AddGroupType, ApiResponse, EventTypeDB } from "./../types/types";
+import { AddGroupType, ApiResponse, EventTypeDB, GroupType } from "./../types/types";
 import { createAsyncThunk } from "@reduxjs/toolkit";
-import { addGroup, getAllGroups } from "../api/groupsApi";
+import { addGroup, deleteGroup, getAllGroups } from "../api/groupsApi";
 import { getAllEvents, getEventById } from "../api/eventsApi";
 import { getAllUsers, getUsersByName } from "../api/usersApi";
 import axios from "axios";
@@ -72,6 +72,10 @@ interface UpdateEventParticipantsPayload {
   event: EventTypeDB;
 }
 
+interface UpdateGroupThPayload {
+  group: GroupType;
+  _id: string;
+}
 // Функция для отправки PUT-запроса на сервер
 export const updateEvent = createAsyncThunk(
   "events/updateEvent",
@@ -94,25 +98,54 @@ export const addGroupTh = createAsyncThunk<
   { group: AddGroupType },
   { rejectValue: string }
 >("groups/addGroup", async ({ group }, thunkAPI) => {
-  console.log("старт санка");
+  // console.log("старт санка");
 
   try {
     console.log("addGroup, TH", group);
     const response = await addGroup(group);
     if (!response) {
-      console.log("в санке не респонс");
+      //  console.log("в санке не респонс");
 
       return thunkAPI.rejectWithValue("No response from server");
     }
     if (response.status >= 400) {
-      console.log("в санке статус 400 и меньше");
+      // console.log("в санке статус 400 и меньше");
 
       return thunkAPI.rejectWithValue(response.data);
     }
     return response;
   } catch (error) {
-    console.log("кетч у санка");
+    //   console.log("кетч у санка");
 
     return thunkAPI.rejectWithValue("error");
   }
+});
+
+export const deleteGroupTh = createAsyncThunk(
+  "groups/deleteGroupTh",
+  async (_id: string, thunkAPI) => {
+    try {
+      const response = await deleteGroup(_id);
+      //   console.log(response.data);
+      return response.data;
+    } catch (error: any) {
+      return thunkAPI.rejectWithValue(error.response.data);
+    }
+  }
+);export const updateGroupTh = createAsyncThunk<
+GroupType, // Тип возвращаемого значения
+{ group: GroupType; _id: string }, // Тип аргумента
+{ rejectValue: string } // Тип для rejected value
+>("events/updateEvent", async ({ group, _id }, thunkAPI) => {
+console.log(group, 'updateGroupTh');
+try {
+  const response = await axios.put(
+    `https://ukenback.vercel.app/groups/${_id}`,
+    group
+  );
+  console.log(response.data, 'updateGroupTh');
+  return response.data; // Возвращаем обновленную группу
+} catch (error: any) {
+  return thunkAPI.rejectWithValue(error.response.data); // Возвращаем ошибку
+}
 });

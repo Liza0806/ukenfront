@@ -25,10 +25,11 @@ export type ScheduleType = {
 export type ParticipantType = {
   _id: string;
   name: string;
+  telegramId?: string;
 };
 
 export type GroupType = {
-  _id: string;
+  _id?: string;
   title: string;
   coachId?: string;
   payment: PaymentType[];

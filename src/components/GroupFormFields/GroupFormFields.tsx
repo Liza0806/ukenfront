@@ -1,7 +1,6 @@
 import React from "react";
 import { Button, ButtonSize } from "../Button/Button";
 import { ScheduleType } from "../../redux/types/types";
-import clss from '../AddGroupForm/AddGroupForm.module.scss'
 import cls from './GroupFormFields.module.scss'
 
 interface GroupFormFieldsProps {
@@ -30,6 +29,7 @@ const GroupFormFields: React.FC<GroupFormFieldsProps> = ({
         value={state.title}
         name="title"
         onChange={(e) => dispatch({ type: "SET_TITLE", payload: e.target.value })}
+        onDoubleClick={(e) => dispatch({ type: "SET_TITLE", payload: e.currentTarget.value })}
         required
       />
     </div>
