@@ -1,10 +1,12 @@
 import React from "react";
 import { Button, ButtonSize } from "../Button/Button";
 import { ScheduleType } from "../../redux/types/types";
+
 import clss from "../AddGroupForm/AddGroupForm.module.scss";
 import cls from "./GroupFormFields.module.scss";
 
 import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
+
 
 
 interface GroupFormFieldsProps {
@@ -25,6 +27,7 @@ const GroupFormFields: React.FC<GroupFormFieldsProps> = ({
   dispatch,
 }) => (
   <div className={cls.container}>
+
     <div className={cls.containerName}>
       <div className={cls.name}>
         <label className={cls.title}>Назва групи:</label>
@@ -49,6 +52,7 @@ const GroupFormFields: React.FC<GroupFormFieldsProps> = ({
           required
         />
       </div>
+
     </div>
     <div className={cls.containerPay}>
       

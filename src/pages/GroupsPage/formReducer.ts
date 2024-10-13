@@ -1,3 +1,4 @@
+import { ParticipantType } from './../../redux/types/types';
 import { ScheduleType } from "../../redux/types/types";
 
 export type InitialStateAddGroupFormType = {
@@ -8,6 +9,9 @@ export type InitialStateAddGroupFormType = {
   schedule: ScheduleType[];
   error: string | null;
   disable: boolean;
+  _id: string;
+  participants?: ParticipantType[];
+  isUpdate?: boolean;
 };
 
 export type ActionType =
@@ -30,6 +34,7 @@ export const initialState: InitialStateAddGroupFormType = {
   schedule: [],
   error: null,
   disable: true,
+  _id: '0'
 };
 
 export function reducer(

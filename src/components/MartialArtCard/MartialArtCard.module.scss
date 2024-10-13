@@ -1,0 +1,47 @@
+.flipCard {
+    background-color: transparent;
+    width: 280px;
+    height: 360px;
+    perspective: 1000px;
+    margin-bottom: 14px;
+}
+.flipCardFront {
+    padding: 43px 7.5px;
+}
+
+
+
+.flipCardInner {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    text-align: left;
+    transition: transform 0.8s;
+    transform-style: preserve-3d;
+  }
+
+.flipCardBack {
+    background: #1e2827;
+    border-radius: 8px;
+
+    transform: rotateY(180deg);
+
+    padding-top: 40px;
+    padding-right: 60px;
+    padding-left: 40px;
+    padding-bottom: 40px;
+}
+.flipCard:hover .flipCardInner,
+.flipCard:focus .flipCardInner {
+  transform: rotateY(180deg);
+}
+
+.flipCardFront,
+.flipCardBack {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  backface-visibility: hidden;
+}

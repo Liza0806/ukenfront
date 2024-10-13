@@ -1,17 +1,18 @@
-import React, { useEffect, useReducer } from "react";
+import React, { useEffect, useReducer, useState } from "react";
 import { useAppDispatch } from "../../redux/hooks/hooks";
 import { addGroupTh, fetchAllGroups } from "../../redux/thunks/thunks";
 import { Button, ButtonColor, ButtonSize } from "../Button/Button";
-import { initialState, reducer } from "./formReducer";
+import { initialState, InitialStateAddGroupFormType, reducer } from "../../pages/GroupsPage/formReducer";
 import { toast } from "react-toastify";
 import { GroupType, ScheduleType } from "../../redux/types/types";
-import { group } from "console";
 import GroupFormFields from "../GroupFormFields/GroupFormFields";
+
 import cls from "./AddGroupForm.module.scss";
 import LibraryAddIcon from "@mui/icons-material/LibraryAdd";
 
+
 interface AddGroupFormProps {
-  groups: GroupType[]; // Замените any на конкретный тип
+  groups: GroupType[]; 
 }
 
 const validDays = [
@@ -26,8 +27,10 @@ const validDays = [
 
 const AddGroupForm: React.FC<AddGroupFormProps> = ({ groups }) => {
   const [state, dispatch] = useReducer(reducer, initialState);
+
   const appDispatch = useAppDispatch();
 
+// показываем-убираем кнопку добавить группу
   useEffect(() => {
     if (
       state.title.trim() &&
@@ -40,75 +43,18 @@ const AddGroupForm: React.FC<AddGroupFormProps> = ({ groups }) => {
     }
   }, [state.title, state.dailyPayment, state.monthlyPayment, state.schedule]);
 
+  // обработка ошибок нотификашками
   useEffect(() => {
     if (state.error) {
       toast.error(state.error);
     }
   }, [state.error]);
 
-  const validateForm = () => {
-    if (!state.title.trim()) {
-      dispatch({
-        type: "SET_ERROR",
-        payload: "Название группы не может быть пустым",
-      });
-      return false;
-    }
-    if (!state.dailyPayment && !state.monthlyPayment) {
-      dispatch({
-        type: "SET_ERROR",
-        payload: "Укажите хотя бы один тип платежа",
-      });
-      return false;
-    }
-    if (state.schedule.length === 0) {
-      dispatch({
-        type: "SET_ERROR",
-        payload: "Добавьте хотя бы одно занятие в расписание",
-      });
-      return false;
-    }
-    for (let sched of state.schedule) {
-      if (!sched.day || !sched.time) {
-        dispatch({
-          type: "SET_ERROR",
-          payload: "Заполните все поля расписания",
-        });
-        return false;
-      }
-      if (isTimeOccupied(sched.day, sched.time)) {
-        dispatch({
-          type: "SET_ERROR",
-          payload: "Время занято другим занятием",
-        });
-        return false;
-      }
-    }
-    if (isGroupExists(state.title)) {
-      dispatch({
-        type: "SET_ERROR",
-        payload: "Группа с таким названием уже существует",
-      });
-      return false;
-    }
-    dispatch({ type: "SET_ERROR", payload: null });
-    return true;
-  };
 
-  const isGroupExists = (groupTitle: string) => {
-    return groups.some((group) => group.title === groupTitle);
-  };
 
-  const isTimeOccupied = (day: string, time: string) => {
-    return groups.some((group) =>
-      group.schedule.some(
-        (sched: ScheduleType) => sched.day === day && sched.time === time
-      )
-    );
-  };
-
+// сабмит формы
   const handleSubmit = async () => {
-    if (validateForm()) {
+    if (validateForm(state, dispatch, groups)) {
       try {
         const group = {
           title: state.title,
@@ -122,7 +68,7 @@ const AddGroupForm: React.FC<AddGroupFormProps> = ({ groups }) => {
           schedule: state.schedule,
           participants: [],
         };
-        console.log(group, "группа в handleSubmit");
+     //   console.log(group, "группа в handleSubmit");
         await appDispatch(addGroupTh({ group }));
         dispatch({ type: "RESET_FORM" });
         toast.success("Группа успешно добавлена");
@@ -133,6 +79,7 @@ const AddGroupForm: React.FC<AddGroupFormProps> = ({ groups }) => {
     }
   };
 
+  // штуки про расписание
   const handleScheduleChange = (
     index: number,
     field: string,
@@ -150,6 +97,7 @@ const AddGroupForm: React.FC<AddGroupFormProps> = ({ groups }) => {
   };
 
   return (
+
     <div className={cls.addFormConteiner}>
       <div className={cls.conteinerHeader}>
         {" "}
@@ -163,6 +111,7 @@ const AddGroupForm: React.FC<AddGroupFormProps> = ({ groups }) => {
           <LibraryAddIcon color="primary"></LibraryAddIcon>
         </Button>
       </div>
+
       <GroupFormFields
         state={state}
         handleScheduleChange={handleScheduleChange}
@@ -170,7 +119,19 @@ const AddGroupForm: React.FC<AddGroupFormProps> = ({ groups }) => {
         removeScheduleItem={removeScheduleItem}
         validDays={validDays}
         dispatch={dispatch}
+    
       />
+
+      <Button
+        className={cls.button}
+        size={ButtonSize.BASE}
+        color={ButtonColor.PRIMARY}
+        onClick={handleSubmit}
+        disabled={state.disable}
+      >
+        Добавить группу
+      </Button>
+
     </div>
   );
 };
