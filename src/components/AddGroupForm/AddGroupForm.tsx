@@ -54,7 +54,7 @@ const AddGroupForm: React.FC<AddGroupFormProps> = ({ groups }) => {
 
 // сабмит формы
   const handleSubmit = async () => {
-    if (validateForm(state, dispatch, groups)) {
+  //  if (validateForm(state, dispatch, groups)) {
       try {
         const group = {
           title: state.title,
@@ -76,7 +76,7 @@ const AddGroupForm: React.FC<AddGroupFormProps> = ({ groups }) => {
       } catch (error) {
         toast.error("Ошибка при добавлении группы");
       }
-    }
+  //  }
   };
 
   // штуки про расписание
