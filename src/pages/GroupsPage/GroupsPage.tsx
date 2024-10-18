@@ -7,7 +7,8 @@ import { Container } from "../../components/Container/Container";
 import containerImage from "../../assets/gymForGruops.jpg";
 import { selectGroups } from "../../redux/selectors/selectors";
 import {
-  deleteGroupTh, 
+  deleteGroupTh,
+  fetchAllGroups, 
 } from "../../redux/thunks/thunks";
 import { Modal } from "../../components/Modal/Modal";
 import { useManageUsers } from "../../hooks/hooks";
@@ -20,6 +21,7 @@ const GroupsPage = () => {
   } = useManageUsers();
   useEffect(() => {
     getUsers()
+dispatch(fetchAllGroups())
   }, []);
 
   const groups = useAppSelector(selectGroups);
