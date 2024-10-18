@@ -25,7 +25,7 @@ export type ScheduleType = {
 export type ParticipantType = {
   _id: string;
   name: string;
-  telegramId?: string;
+  telegramId: string;
 };
 
 export type GroupType = {
@@ -61,6 +61,16 @@ export type validDays =
   | "friday"
   | "saturday";
 
+ export const daysOfWeekUk = [
+    "Понеділок",
+    "Вівторок",
+    "Середа",
+    "Четвер",
+    "П'ятниця",
+    "Субота",
+    "Неділя",
+  ];
+
 /// EVENT
 
 export type EventTypeDB = {
@@ -90,9 +100,9 @@ export interface User {
   _id: string;
   name: string;
   password: string;
-  phone?: string; // Опциональное поле, так как оно не является обязательным в Mongoose модели
-  isAdmin?: boolean; // Опциональное поле с значением по умолчанию false
-  groups: string[]; // Массив строк
+  phone?: string;
+  isAdmin?: boolean; 
+  groups: string[]; 
   balance: number;
-  discount?: number; // Оп
+  telegramId: string;
 }

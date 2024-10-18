@@ -1,33 +1,26 @@
-import React from "react"; /////
-import ReactDOM from "react-dom"; //////
-import cls from './Modal.module.scss'
+import React from "react";
+import ReactDOM from "react-dom"; 
+import cls from './Modal.module.scss';
 
 interface ModalProps {
-    open: boolean;
-    onClose: () => void;
-    children: React.ReactNode;
-  }
-  
-  const Modal: React.FC<ModalProps> = ({ open, onClose, children }) => {
-  if (!open) return null; ///////
+  open: boolean;
+  onClose: () => void;
+  children: React.ReactNode;
+}
 
-  // Найдем элемент для портала
-  const modalRoot = document.getElementById('modal-root'); /////////
+export const Modal: React.FC<ModalProps> = ({ open, onClose, children }) => {
+  if (!open) return null;
 
-  // Если элемента нет, ничего не рендерим
-  if (!modalRoot) return null; //////
+  // Находим элемент modal-root
+  const modalRootElement = document.getElementById('modal-root') as HTMLElement;
 
-  return ReactDOM.createPortal( ////////
+  return ReactDOM.createPortal(
     <div className={cls.overlay}>
       <div className={cls.modal}>
         <button onClick={onClose}>Close</button>
         {children}
       </div>
     </div>,
-    modalRoot 
+    modalRootElement // Используем напрямую DOM-элемент
   );
 };
-
-
-
-
