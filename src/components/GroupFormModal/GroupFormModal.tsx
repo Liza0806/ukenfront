@@ -1,5 +1,5 @@
 import cls from "./GroupFormModal.module.scss";
-import { daysOfWeekUk, EventTypeDB } from "../../redux/types/types";
+import { daysOfWeekUk } from "../../redux/types/types";
 import { UserList } from "../UserList/UserList";
 import { selectUsers } from "../../redux/selectors/selectors";
 import { useAppSelector } from "../../redux/hooks/hooks";
