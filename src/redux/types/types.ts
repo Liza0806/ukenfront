@@ -52,15 +52,6 @@ export type GroupStateType = {
   newGroup?: GroupType;
 };
 
-export type validDays =
-  | "sunday"
-  | "monday"
-  | "tuesday"
-  | "wednesday"
-  | "thursday"
-  | "friday"
-  | "saturday";
-
  export const daysOfWeekUk = [
     "Понеділок",
     "Вівторок",
@@ -74,12 +65,12 @@ export type validDays =
 /// EVENT
 
 export type EventTypeDB = {
-  date: Date;
-  isCancelled: boolean;
-  participants: ParticipantType[];
   _id: string;
+  date: Date;
   groupTitle: string;
   groupId: string;
+  isCancelled: boolean;
+  participants: ParticipantType[];
 };
 
 //// USER
@@ -105,4 +96,6 @@ export interface User {
   groups: string[]; 
   balance: number;
   telegramId: string;
+  discount?: number;
+  visits: Visit[];
 }
