@@ -16,7 +16,7 @@ export const LiqPayWidget: React.FC<LiqPayWidgetProps> = ({ amount, currency, de
 
   const initiatePayment = async () => {
     try {
-      const response = await fetch('/api/payment/create-payment', {
+      const response = await fetch("https://ukenback.vercel.app/api/payment/create-payment", {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ amount, currency, description, order_id: orderId }),
