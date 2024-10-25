@@ -32,7 +32,7 @@ export const getUsersByName = async (username:string) => {
     }
   };
 
-  export const getUsersByUserId = async (userId: number) => {
+  export const getUsersByUserId = async (userId: string) => {
     //console.log('getUsersByUserId');
     try {
      // console.log('getUsersByUserId try');

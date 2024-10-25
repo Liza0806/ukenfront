@@ -7,18 +7,19 @@ import React from 'react';
 const UserPage: React.FC = () => {
   const [user, setUser] = useState<User | null>(null);
   const { id } = useParams<string>();
-  const userId = Number(id);
+  //const userId = id;
 
   useEffect(() => {
-    if (userId) {
-      getUsersByUserId(userId)
+    // debugger
+    if (id) {
+      getUsersByUserId(id)
         .then((user) => {
           console.log("getUser in UserPage", user);
           setUser(user);
         })
         .catch((error) => console.error(error));
     }
-  }, [userId]);
+  }, [id]);
 
   return (
     <div>
