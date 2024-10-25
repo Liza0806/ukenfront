@@ -32,22 +32,22 @@ export const getUsersByName = async (username:string) => {
     }
   };
 
-  export const getUsersByUserId = async (userId:number) => {
-    console.log('getUsersByTelegramId')
-      try {
-        console.log('getUsersByTelegramId try')
-        const response = await axios.get(
-          `https://ukenback.vercel.app/users/${userId}`,
-         { params: { telegramId: userId }}
-        );
-        console.log(response.data, "response.data  console.log('getUsersByTelegramId try')");
-        localStorage.setItem('user', JSON.stringify(response.data))
-        return response.data;
-      } catch (error) {
-        console.log('getUsersByTelegramId catch')
-        throw error;
-      }
-    };
+  export const getUsersByUserId = async (userId: number) => {
+    //console.log('getUsersByUserId');
+    try {
+     // console.log('getUsersByUserId try');
+      const response = await axios.get(`https://ukenback.vercel.app/users/${userId}`);
+      
+    //  console.log(response.data, "response.data");
+      localStorage.setItem('user', JSON.stringify(response.data));
+      
+      return response.data;
+    } catch (error) {
+    //  console.log('getUsersByUserId catch');
+      throw error;
+    }
+  };
+  
   
 
   export const addParticipant = async (username:string, id: string) => {
