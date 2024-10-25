@@ -3,7 +3,7 @@ import { LiqPayWidget } from '../../components/paymentBth/paymentBtn';
 
 const PaymentPage: React.FC = () => {
  /// amount, currency, description, orderId 
- const amount = 100;
+ const amount = 1;
  const currency = "UAH";
  const description = "test"
  const orderId = '12345';
