@@ -1,7 +1,15 @@
 import React from 'react';
+import { LiqPayWidget } from '../../components/paymentBth/paymentBtn';
 
 const PaymentPage: React.FC = () => {
-  return <div>PaymentPage</div>;
+ /// amount, currency, description, orderId 
+ const amount = 100;
+ const currency = "UAH";
+ const description = "test"
+ const orderId = '12345';
+  return (<div>PaymentPage
+    <LiqPayWidget amount={amount} currency={currency} description={description} orderId={orderId}/>
+  </div>)
 };
 
 export default PaymentPage;
