@@ -6,7 +6,8 @@ const PaymentPage: React.FC = () => {
  const amount = 1;
  const currency = "UAH";
  const description = "test"
- const orderId = '12345';
+ const orderId = `12345_${Date.now()}`; // добавляем уникальную метку времени
+
   return (<div>PaymentPage
     <LiqPayWidget amount={amount} currency={currency} description={description} orderId={orderId}/>
   </div>)
