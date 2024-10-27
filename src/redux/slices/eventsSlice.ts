@@ -1,13 +1,7 @@
 import { fetchAllEvents } from '../thunks/thunks';
-import { EventTypeDB } from '../types/types';
+import { EventStateType, EventTypeDB } from '../types/types';
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
-type EventStateType = {
-    isLoading: boolean,
-    error: string | undefined,
-    events: EventTypeDB[];
-    currentEvent?: EventTypeDB | undefined;
-}
 
 const persistedState = localStorage.getItem('events')
   ? JSON.parse(localStorage.getItem('events')!)

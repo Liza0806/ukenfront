@@ -1,9 +1,5 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-
-interface PaymentState {
-  paymentStatus: string;
-  error: string | null;
-}
+import { PaymentState } from '../types/types';
 
 const initialState: PaymentState = {
   paymentStatus: '',

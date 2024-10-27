@@ -1,11 +1,11 @@
 import { combineReducers, configureStore } from "@reduxjs/toolkit";
 import groupReducer from "../slices/groupsSlice";
 import eventReducer from "../slices/eventsSlice";
-import userReducer  from "../slices/userSlice";
-import paymertReducer from "../slices/paymentSlice"
+import userReducer from "../slices/userSlice";
+import paymertReducer from "../slices/paymentSlice";
 
 const persistedState = localStorage.getItem('reduxState')
-  ? JSON.parse(localStorage.getItem('rootState')!)
+  ? JSON.parse(localStorage.getItem('reduxState')!)
   : undefined;
 
 const store = configureStore({
@@ -15,14 +15,13 @@ const store = configureStore({
     users: userReducer,
     payment: paymertReducer,
   }),
-  preloadedState: {...persistedState},
+  preloadedState: persistedState,
+  middleware: (getDefaultMiddleware) => 
+    getDefaultMiddleware(), // Убираем thunk, если он уже включен
 });
 
-
 store.subscribe(() => {
-//  console.log('start change LS')
-  localStorage.setItem('rootState', JSON.stringify(store.getState()));
- // console.log('finish change LS')
+  localStorage.setItem('reduxState', JSON.stringify(store.getState()));
 });
 
 export default store;

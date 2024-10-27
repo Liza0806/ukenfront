@@ -73,6 +73,13 @@ export type EventTypeDB = {
   participants: ParticipantType[];
 };
 
+export type EventStateType = {
+  isLoading: boolean,
+  error: string | undefined,
+  events: EventTypeDB[];
+  currentEvent?: EventTypeDB | undefined;
+}
+
 //// USER
 export type UserStateType = {
   isLoading: boolean;
@@ -99,3 +106,13 @@ export interface User {
   discount?: number;
   visits: Visit[];
 }
+
+//// PAYMENT
+
+export interface PaymentState {
+  paymentStatus: string;
+  error: string | null;
+}
+
+//// ALL
+
