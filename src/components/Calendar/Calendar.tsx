@@ -74,9 +74,9 @@ import ArrowCircleRightIcon from '@mui/icons-material/ArrowCircleRight';
           <div className={cls.calendarHeader}>
             
             
-             <ArrowCircleLeftIcon  onClick={lastMonth} style={{ color: 'black',   fontSize: '36px', cursor: 'pointer'}} fontSize="inherit" />
+             <ArrowCircleLeftIcon  onClick={lastMonth} style={{ color: 'black',   fontSize: '36px', cursor: 'pointer'}} fontSize="inherit"   data-testid="last-month-button" />
              <h2>{month}</h2>
-             <ArrowCircleRightIcon onClick={nextMonth} style={{ color: 'black',   fontSize: '36px', cursor: 'pointer'}} fontSize="inherit" />
+             <ArrowCircleRightIcon onClick={nextMonth} style={{ color: 'black',   fontSize: '36px', cursor: 'pointer'}} fontSize="inherit" data-testid="next-month-button" />
           </div>
           <div className={cls.calendarGrid}>
             {daysOfMonth.map((day) => {
