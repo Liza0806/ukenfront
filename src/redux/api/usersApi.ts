@@ -1,9 +1,9 @@
 import axios from "axios";
 import { User } from "../types/types";
 
-export const getAllUsers = async ():  Promise<User[]> => {
+export const getAllUsers = async () => {
     try {
-      const response = await axios.get<User[]>(
+      const response = await axios.get(
         `https://ukenback.vercel.app/users/`
       );
       console.log(response.data, "response.data in getAllUsers");

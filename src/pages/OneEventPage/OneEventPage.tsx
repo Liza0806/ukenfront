@@ -69,7 +69,7 @@ const OneEventPage: React.FC = () => {
   const updateEventDate = (newDate: Date) => {
     if (event) {
       // Создаем новый объект с обновленным значением даты
-      const updatedEvent = { ...event, date: newDate };
+      const updatedEvent = { ...event, date: newDate.toISOString() };
       setEvent(updatedEvent);
     }
   };

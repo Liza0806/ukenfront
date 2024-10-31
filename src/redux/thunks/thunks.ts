@@ -1,22 +1,30 @@
-import { AddGroupType, ApiResponse, EventTypeDB, GroupType } from "./../types/types";
+import { AddGroupType, ApiResponse, EventTypeDB, GroupType, User } from "./../types/types";
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import { addGroup, deleteGroup, getAllGroups } from "../api/groupsApi";
 import { getAllEvents, getEventById } from "../api/eventsApi";
 import { getAllUsers, getUsersByName } from "../api/usersApi";
 import axios from "axios";
 
-export const fetchAllGroups = createAsyncThunk(
+export const fetchAllGroups = createAsyncThunk<
+GroupType[], // Тип возвращаемого значения
+void,                  // Тип аргументов (в данном случае ничего не передается)
+{ rejectValue: string } // Тип значения для reject
+>(
   "groups/fetchAllGroups",
-  async (thunkAPI) => {
+  async (_, thunkAPI) => {
     const response = await getAllGroups();
     if (!response) {
-      return "error";
+      return thunkAPI.rejectWithValue("error");
     }
     return response;
   }
 );
 
-export const fetchAllEvents = createAsyncThunk(
+export const fetchAllEvents = createAsyncThunk<
+EventTypeDB[], // Тип возвращаемого значения
+void,                  // Тип аргументов (в данном случае ничего не передается)
+{ rejectValue: string } // Тип значения для reject
+>(
   "events/fetchAllEvents",
   async (_, thunkAPI) => {
     const response = await getAllEvents();
@@ -25,54 +33,60 @@ export const fetchAllEvents = createAsyncThunk(
       console.log("fetchAllEvents");
       return thunkAPI.rejectWithValue("error");
     }
-    
-    // return response.map((event: EventTypeDB) => ({
-    //   ...event,
-    //   date: event.date, // Убедитесь, что date уже в строковом формате
-    // }));// возвращаем сериализованный массив
     return response
   }
 );
 
 
-export const fetchEventById = createAsyncThunk(
-  "events/fetchAllEvents",
-  async (id: string, thunkAPI) => {
-    try {
+
+export const fetchEventById = createAsyncThunk<
+EventTypeDB, // Тип возвращаемого значения
+string,                  // Тип аргументов
+{ rejectValue: string } // Тип значения для reject
+>(
+  "events/fetchEventById",
+  async (id, thunkAPI) => {
+ 
       const response = await getEventById(id);
       if (!response) {
         console.log("fetchEventById");
-        return "error";
+        return thunkAPI.rejectWithValue("error");
       }
       return response;
-    } catch (error) {
-      console.error(error);
-    }
   }
 );
 
-export const fetchAllUsers = createAsyncThunk(
+export const fetchAllUsers = createAsyncThunk<
+User[], // Тип возвращаемого значения
+void,                  // Тип аргументов (в данном случае ничего не передается)
+{ rejectValue: string } // Тип значения для reject
+>(
   "users/fetchAllUsers",
-  async () => {
+
+      async (_, thunkAPI) => {
     const response = await getAllUsers();
     if (!response) {
-      return "error";
+      return thunkAPI.rejectWithValue("error");
     }
     return response;
   }
 );
 
-export const fetchUsersByName = createAsyncThunk(
+export const fetchUsersByName = createAsyncThunk<
+User, // Тип возвращаемого значения
+string,                  // Тип аргументов 
+{ rejectValue: string } // Тип значения для reject
+>(
   "users/fetchUsersByName",
   async (username: string, thunkAPI) => {
-    try {
+
       const response = await getUsersByName(username);
-      return response;
-    } catch (error) {
+      if (!response) {
+
       console.log("fetchUsersByName catch");
-      return thunkAPI.rejectWithValue("Failed to fetch users");
-    }
-  }
+      return thunkAPI.rejectWithValue("error");}
+    return response;
+  }    
 );
 
 interface UpdateEventParticipantsPayload {

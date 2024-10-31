@@ -49,7 +49,7 @@ export type GroupStateType = {
   isLoading: boolean;
   error: string | undefined;
   groups: GroupType[];
-  newGroup?: GroupType;
+  newGroup?: GroupType | undefined;
 };
 
  export const daysOfWeekUk = [

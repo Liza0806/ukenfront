@@ -107,7 +107,7 @@ describe("MyCalendar component", () => {
     ).toBeInTheDocument();
 
     const arrowBtnNext = await screen.findByTestId("next-month-button");
-    expect(arrowBtnNext).toBeInTheDocument();
+    expect(await screen.findByTestId("next-month-button")).toBeInTheDocument();
 
     // Имитируем клик по событию
     fireEvent.click(arrowBtnNext);
@@ -122,7 +122,7 @@ describe("MyCalendar component", () => {
     );
 
     const arrowBtnLast = await screen.findByTestId("last-month-button");
-    expect(arrowBtnLast).toBeInTheDocument();
+    expect(await screen.findByTestId("last-month-button")).toBeInTheDocument();
 
     // Имитируем клик по событию
     fireEvent.click(arrowBtnLast);

@@ -14,9 +14,9 @@ export const getAllEvents = async () => {
     }
   };
 
-  export const getEventById = async (id:string): Promise<EventTypeDB> => {
+  export const getEventById = async (id:string) => {
     try {
-      const response = await axios.get<EventTypeDB>(
+      const response = await axios.get(
         `https://ukenback.vercel.app/events/${id}`
       );
       console.log(response.data, "response.data");

@@ -1,4 +1,4 @@
-import { fetchAllEvents } from '../thunks/thunks';
+import { fetchAllEvents, fetchEventById } from '../thunks/thunks';
 import { EventStateType, EventTypeDB } from '../types/types';
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
@@ -37,10 +37,23 @@ const eventsSlice = createSlice({
     })
     .addCase(fetchAllEvents.rejected, (state, action) => {
         state.isLoading = false
-//state.error = action.payload
+       state.error = action.payload
         console.log(action.payload, 'error')
     })
-    
+    .addCase(fetchEventById.pending, (state) => {
+        state.isLoading = true
+        console.log('pending')
+    })
+    .addCase(fetchEventById.fulfilled, (state, action) => {
+        state.isLoading = false
+        state.currentEvent = action.payload
+        console.log(action.payload)
+    })
+    .addCase(fetchEventById.rejected, (state, action) => {
+        state.isLoading = false
+       state.error = action.payload
+        console.log(action.payload, 'error')
+    })
 }});
 
 export const { setEvents, setCurrentEvent } = eventsSlice.actions;
