@@ -18,15 +18,22 @@ export const fetchAllGroups = createAsyncThunk(
 
 export const fetchAllEvents = createAsyncThunk(
   "events/fetchAllEvents",
-  async (thunkAPI) => {
+  async (_, thunkAPI) => {
     const response = await getAllEvents();
+    
     if (!response) {
       console.log("fetchAllEvents");
-      return "error";
+      return thunkAPI.rejectWithValue("error");
     }
-    return response;
+    
+    // return response.map((event: EventTypeDB) => ({
+    //   ...event,
+    //   date: event.date, // Убедитесь, что date уже в строковом формате
+    // }));// возвращаем сериализованный массив
+    return response
   }
 );
+
 
 export const fetchEventById = createAsyncThunk(
   "events/fetchAllEvents",

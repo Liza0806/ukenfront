@@ -66,7 +66,7 @@ export type GroupStateType = {
 
 export type EventTypeDB = {
   _id: string;
-  date: Date;
+  date: string;
   groupTitle: string;
   groupId: string;
   isCancelled: boolean;

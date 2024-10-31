@@ -141,7 +141,7 @@ describe("MyCalendar component", () => {
       groupTitle: "Тренировка по боксу",
       groupId: "1",
       isCancelled: false,
-      date: new Date(),
+      date: new Date().toISOString(),
       participants: [],
     };
 
@@ -186,7 +186,7 @@ describe("MyCalendar component", () => {
       groupTitle: "Тренировка по боксу",
       groupId: "1",
       isCancelled: false,
-      date: new Date(),
+      date: new Date().toISOString(),
       participants: [
         { _id: "101", name: "Ivan", telegramId: "11" },
         { _id: "102", name: "Anna", telegramId: "22" },
@@ -287,6 +287,6 @@ describe("MyCalendar component", () => {
 
     // Проверяем, что происходит редирект
     // Здесь предполагается, что после клика происходит навигация
-    //  expect(window.location.pathname).toBe("/events/1"); // поставь на правильный путь!!!
+     expect(window.location.pathname).toBe("/events/1"); // поставь на правильный путь!!!
   });
 });
