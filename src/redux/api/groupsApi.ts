@@ -1,4 +1,4 @@
-import { AddGroupType, ApiResponse } from "./../types/types";
+import { AddGroupType, ApiResponse, GroupType } from "./../types/types";
 import axios from "axios";
 export const getAllGroups = async () => {
   try {
@@ -11,25 +11,20 @@ export const getAllGroups = async () => {
   }
 };
 
-export const addGroup = async (group: AddGroupType): Promise<ApiResponse> => {
-  //  console.log('addGroup, API', group)
+export const addGroup = async (group: AddGroupType) => {
   try {
-    //   console.log('апи 1')
-
-    const response = await axios.post<ApiResponse>(
+    const response = await axios.post(
       `https://ukenback.vercel.app/groups/`,
       group
     );
-    //   console.log(response.data, "response.dataб апи2");
-    return response.data;
-  } catch (error) {
-    //    console.log('апи кетч')
 
-    throw error;
+    return response;
+  } catch (error) {
+    throw error; // обработка ошибок в вызывающем коде
   }
 };
 
-export const deleteGroup = async (_id: string): Promise<ApiResponse> => {
+export const deleteGroup = async (_id: string) => {
   try {
     //  console.log('апи 1')
 
@@ -42,5 +37,16 @@ export const deleteGroup = async (_id: string): Promise<ApiResponse> => {
     //   console.log('апи кетч')
 
     throw error;
+  }
+};
+export const updateGroup = async (group: AddGroupType, _id: string) => {
+  try {
+    const response = await axios.put(
+      `https://ukenback.vercel.app/groups/${_id}`,
+      group
+    );
+    return response.data;
+  } catch (error) {
+    throw error; // обработка ошибок в вызывающем коде
   }
 };

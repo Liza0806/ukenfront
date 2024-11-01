@@ -1,4 +1,4 @@
-import { error, group } from 'console';
+import { error, group } from "console";
 /// GROUP
 
 export interface AddGroupArgs {
@@ -8,15 +8,15 @@ export interface AddGroupArgs {
 export interface ApiResponse {
   success: boolean;
   message?: string;
-  data: string; 
-  status: number
+  data: string;
+  status: number;
 }
 
 export type PaymentType = {
   dailyPayment: number;
   monthlyPayment: number;
-}
-  
+};
+
 export type ScheduleType = {
   day: string;
   time: string;
@@ -29,7 +29,7 @@ export type ParticipantType = {
 };
 
 export type GroupType = {
-  _id?: string;
+  _id: string;
   title: string;
   coachId?: string;
   payment: PaymentType[];
@@ -39,7 +39,7 @@ export type GroupType = {
 
 export type AddGroupType = {
   title: string;
-  coachId?: string;
+  coachId?: string | "Костя";
   payment: PaymentType[];
   schedule: ScheduleType[];
   participants: ParticipantType[];
@@ -52,15 +52,15 @@ export type GroupStateType = {
   newGroup?: GroupType | undefined;
 };
 
- export const daysOfWeekUk = [
-    "Понеділок",
-    "Вівторок",
-    "Середа",
-    "Четвер",
-    "П'ятниця",
-    "Субота",
-    "Неділя",
-  ];
+export const daysOfWeekUk = [
+  "Понеділок",
+  "Вівторок",
+  "Середа",
+  "Четвер",
+  "П'ятниця",
+  "Субота",
+  "Неділя",
+];
 
 /// EVENT
 
@@ -74,19 +74,18 @@ export type EventTypeDB = {
 };
 
 export type EventStateType = {
-  isLoading: boolean,
-  error: string | undefined,
+  isLoading: boolean;
+  error: string | undefined;
   events: EventTypeDB[];
   currentEvent?: EventTypeDB | undefined;
-}
+};
 
 //// USER
 export type UserStateType = {
   isLoading: boolean;
   error: string | undefined;
   users: User[];
-}
-
+};
 
 export interface Visit {
   date: Date;
@@ -99,8 +98,8 @@ export interface User {
   name: string;
   password: string;
   phone?: string;
-  isAdmin?: boolean; 
-  groups: string[]; 
+  isAdmin?: boolean;
+  groups: string[];
   balance: number;
   telegramId: string;
   discount?: number;
@@ -115,4 +114,3 @@ export interface PaymentState {
 }
 
 //// ALL
-

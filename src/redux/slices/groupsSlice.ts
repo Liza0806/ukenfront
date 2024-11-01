@@ -46,8 +46,8 @@ const groupsSlice = createSlice({
         console.log("pending");
   })
   .addCase(addGroupTh.fulfilled, (state, action) => {
-
     state.isLoading = false;
+    state.error = undefined;
     console.log(action, 'slice')
 
   })

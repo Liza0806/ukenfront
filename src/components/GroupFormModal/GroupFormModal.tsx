@@ -1,5 +1,5 @@
 import cls from "./GroupFormModal.module.scss";
-import { daysOfWeekUk } from "../../redux/types/types";
+import { AddGroupType, daysOfWeekUk } from "../../redux/types/types";
 import { UserList } from "../UserList/UserList";
 import { selectUsers } from "../../redux/selectors/selectors";
 import { useAppSelector } from "../../redux/hooks/hooks";
@@ -41,7 +41,7 @@ export const GroupFormModal: React.FC<GroupFormProps> = ({
   const usersInBase = useAppSelector(selectUsers);
 
   const handleSubmit = useCallback(async () => {
-    const groupForTh: GroupType = {
+    const groupForTh: AddGroupType = {
       title: groupFormState.title,
       coachId: "Kostya",
       payment: [
@@ -63,7 +63,7 @@ export const GroupFormModal: React.FC<GroupFormProps> = ({
           toast.success("Группа успешно обновлена");
         }
       } else {
-        await appDispatch(addGroupTh({ group: groupForTh }));
+        await appDispatch(addGroupTh(groupForTh));
         toast.success("Группа успешно добавлена");
       }
       appDispatch(fetchAllGroups());

@@ -47,7 +47,7 @@ export const OneGroupInformation: React.FC<OneGroupInformationProps> = ({
     try {
       const response = await appDispatch(fetchAllUsers());
       const result = unwrapResult(response);
-      setUsersInBase(result !== "error" ? result : []);
+      setUsersInBase(typeof result !== "string" ? result : []);
     } catch (error) {
       console.error("Ошибка при получении пользователей:", error);
       setUsersInBase([]);

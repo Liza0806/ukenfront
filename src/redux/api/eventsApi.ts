@@ -25,4 +25,17 @@ export const getAllEvents = async () => {
       throw error;
     }
   };
+
+  export const updateEventAPi = async (event: EventTypeDB)=>{
+    try {
+      const response = await axios.put(
+        `https://ukenback.vercel.app/events/${event._id}`,
+        event
+      );
+      console.log(response.data);
+      return response.data;
+    } catch (error) {
+      throw error;
+    }
+  }
   
