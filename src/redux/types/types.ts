@@ -114,3 +114,4 @@ export interface PaymentState {
 }
 
 //// ALL
+export type PartialUserWithRequiredFields = Partial<User> & Pick<User, '_id' | 'name' | 'telegramId'>;

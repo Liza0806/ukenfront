@@ -3,7 +3,7 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
 import cls from './UserList.module.scss';
 import { ChangeEventHandler, useState } from 'react';
-import { EventTypeDB, GroupType} from '../../redux/types/types';
+import { EventTypeDB, GroupType, PartialUserWithRequiredFields, User} from '../../redux/types/types';
 import { useManageUsers } from "../../hooks/hooks";
 import {  useAppSelector } from '../../redux/hooks/hooks';
 import { selectUsers } from '../../redux/selectors/selectors';
@@ -11,7 +11,7 @@ import { selectUsers } from '../../redux/selectors/selectors';
 interface UserListProps {
   smth: EventTypeDB | GroupType | any;
   setSmth: React.Dispatch<React.SetStateAction<EventTypeDB | GroupType | undefined>> | any;
-  existingUsers?: Array<{ _id: string; name: string; telegramId: string }>; }
+  existingUsers?: PartialUserWithRequiredFields[] }
 
 export const UserList: React.FC<UserListProps> = ({ smth, setSmth, existingUsers}) => {
   const [username, setUsername] = useState('')
@@ -23,7 +23,7 @@ export const UserList: React.FC<UserListProps> = ({ smth, setSmth, existingUsers
     handleDeleteUser,
   } = useManageUsers();
   console.log(existingUsers, 'existingUsers' )
-  const usersForList = existingUsers? existingUsers.filter((user) => user.name.toLowerCase().includes(username.toLowerCase())) : users.filter((user) => user.name.toLowerCase().includes(username.toLowerCase()));
+  const usersForList = existingUsers? existingUsers.filter((user) => user!.name.toLowerCase().includes(username.toLowerCase())) : users.filter((user) => user.name.toLowerCase().includes(username.toLowerCase()));
   const handleChange: ChangeEventHandler<HTMLInputElement> = (event) => {
     const name = event.target.value;
     setUsername(name)
@@ -43,16 +43,16 @@ export const UserList: React.FC<UserListProps> = ({ smth, setSmth, existingUsers
       </label>
       <ul>
         {usersForList.map((user) => (
-          <li key={user._id}>
-            {user.name}
-              <IconButton onClick={() => handleAddUser(user, smth, setSmth )}>
+          <li key={user!._id}>
+            {user!.name}
+              <IconButton onClick={() => handleAddUser(user!, smth, setSmth )}>
                 <AddCircleOutlineIcon color="primary" fontSize="inherit" />
               </IconButton>
           
           
               <DeleteIcon
                 className={cls.deleteIcon}
-                onClick={() => handleDeleteUser(user._id, smth, setSmth)}
+                onClick={() => handleDeleteUser(user!._id, smth, setSmth)}
               />
           </li>
         ))}
