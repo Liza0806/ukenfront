@@ -36,7 +36,7 @@ export const fetchAllEvents = createAsyncThunk<
   const response = await getAllEvents();
 
   if (!response) {
-    console.log("fetchAllEvents");
+  //  console.log("fetchAllEvents");
     return thunkAPI.rejectWithValue("error");
   }
   return response;
@@ -49,7 +49,7 @@ export const fetchEventById = createAsyncThunk<
 >("events/fetchEventById", async (id, thunkAPI) => {
   const response = await getEventById(id);
   if (!response) {
-    console.log("fetchEventById");
+  //  console.log("fetchEventById");
     return thunkAPI.rejectWithValue("error");
   }
   return response;
@@ -78,7 +78,7 @@ export const fetchUsersByName = createAsyncThunk<
 >("users/fetchUsersByName", async (username: string, thunkAPI) => {
   const response = await getUsersByName(username);
   if (!response) {
-    console.log("fetchUsersByName catch");
+ //   console.log("fetchUsersByName catch");
     return thunkAPI.rejectWithValue("error");
   }
   return response;
@@ -115,11 +115,13 @@ export const addGroupTh = createAsyncThunk<
 >("groups/addGroupTh", async (group: AddGroupType, thunkAPI) => {
   try {
     const response = await addGroup(group);
-    if (response.status && response.status !== 200) {
-      return thunkAPI.rejectWithValue("error");
-    }
+    // if (response.status && response.status !== 200) {
+    //   return thunkAPI.rejectWithValue("error");
+    // }
 
-    return response.data; // возвращаемый результат будет типа GroupType
+    if (response.status >= 200 && response.status < 300) {
+      return response.data; // Успешный результат
+    } // возвращаемый результат будет типа GroupType
   } catch (error) {
     return thunkAPI.rejectWithValue("error");
   }

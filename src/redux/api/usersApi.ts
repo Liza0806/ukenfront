@@ -4,7 +4,7 @@ import { User } from "../types/types";
 export const getAllUsers = async () => {
   try {
     const response = await axios.get(`https://ukenback.vercel.app/users/`);
-    console.log(response.data, "response.data in getAllUsers");
+ //   console.log(response.data, "response.data in getAllUsers");
     localStorage.setItem("users", JSON.stringify(response.data));
     return response.data;
   } catch (error) {
@@ -13,21 +13,21 @@ export const getAllUsers = async () => {
 };
 
 export const getUsersByName = async (username: string) => {
-  console.log("getUsersByName1");
+ // console.log("getUsersByName1");
   try {
-    console.log("getUsersByName try");
+  //  console.log("getUsersByName try");
     const response = await axios.get(
       `https://ukenback.vercel.app/users/search`,
       { params: { name: username } }
     );
-    console.log(
-      response.data,
-      "response.data  console.log('getUsersByName try')"
-    );
+  //  console.log(
+  //    response.data,
+  //    "response.data  console.log('getUsersByName try')"
+  //  );
     localStorage.setItem("users", JSON.stringify(response.data));
     return response.data;
   } catch (error) {
-    console.log("getUsersByName catch");
+  //  console.log("getUsersByName catch");
     throw error;
   }
 };
@@ -51,20 +51,20 @@ export const getUsersByUserId = async (userId: string) => {
 };
 
 export const addParticipant = async (username: string, id: string) => {
-  console.log("addParticipant");
+//  console.log("addParticipant");
   try {
-    console.log("addParticipant try");
+ //   console.log("addParticipant try");
     const response = await axios.put(`https://ukenback.vercel.app/event/`, {
       params: { name: username, id: id },
     });
-    console.log(
-      response.data,
-      "response.data  console.log('getUsersByName try')"
-    );
+  //  console.log(
+  //    response.data,
+  //    "response.data  console.log('getUsersByName try')"
+  //  );
     localStorage.setItem("users", JSON.stringify(response.data));
     return response.data;
   } catch (error) {
-    console.log("getUsersByName catch");
+  //  console.log("getUsersByName catch");
     throw error;
   }
 };

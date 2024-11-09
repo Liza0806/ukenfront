@@ -22,7 +22,7 @@ export const UserList: React.FC<UserListProps> = ({ smth, setSmth, existingUsers
     handleAddUser,
     handleDeleteUser,
   } = useManageUsers();
-  console.log(existingUsers, 'existingUsers' )
+ // console.log(existingUsers, 'existingUsers' )
   const usersForList = existingUsers? existingUsers.filter((user) => user!.name.toLowerCase().includes(username.toLowerCase())) : users.filter((user) => user.name.toLowerCase().includes(username.toLowerCase()));
   const handleChange: ChangeEventHandler<HTMLInputElement> = (event) => {
     const name = event.target.value;

@@ -28,10 +28,10 @@ export const GroupFormModal: React.FC<GroupFormProps> = ({
     title: initialGroupData ? initialGroupData.title : "",
     dailyPayment: initialGroupData
       ? initialGroupData.payment[0].dailyPayment
-      : 0,
+      : undefined,
     monthlyPayment: initialGroupData
       ? initialGroupData.payment[0].monthlyPayment
-      : 0,
+      : undefined,
     schedule: initialGroupData ? initialGroupData.schedule : [],
     participants: initialGroupData?.participants
       ? initialGroupData?.participants
@@ -51,23 +51,32 @@ export const GroupFormModal: React.FC<GroupFormProps> = ({
         },
       ],
       schedule: [...groupFormState.schedule],
-      participants: [...groupFormState.participants],
+      participants: groupFormState.participants,
     };
 
     try {
+      let result;
       if (isEditMode) {
         if (initialGroupData?._id) {
-          await appDispatch(
+          result = await appDispatch(
             updateGroupTh({ group: groupForTh, _id: initialGroupData!._id })
-          );
+          ).unwrap(); // Разворачиваем результат, чтобы проверить ошибки
+          //   console.log(result, 'result isEditMode')
+          // Показать сообщение только при успешном выполнении
+
           toast.success("Группа успешно обновлена");
         }
       } else {
-        await appDispatch(addGroupTh(groupForTh));
+        result = await appDispatch(addGroupTh(groupForTh)).unwrap(); // Разворачиваем результат
+        // console.log(result, 'result not isEditMode')
+
+        // Показать сообщение только при успешном выполнении
         toast.success("Группа успешно добавлена");
       }
       appDispatch(fetchAllGroups());
     } catch (error) {
+      // Если ошибка возникла в процессе выполнения санка
+
       toast.error("Ошибка при обновлении группы");
     }
   }, [groupFormState, appDispatch, initialGroupData, isEditMode]);
@@ -75,7 +84,11 @@ export const GroupFormModal: React.FC<GroupFormProps> = ({
   const handleInputChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
   ) => {
-    const { name, value } = e.target;
+    const { name, type } = e.target as HTMLInputElement;
+    let value: string | number = e.target.value;
+    if (type === "number") {
+      value = Number(value);
+    }
     setGroupFormState((prevState) => ({
       ...prevState,
       [name]: value,
@@ -107,6 +120,7 @@ export const GroupFormModal: React.FC<GroupFormProps> = ({
       ],
     }));
   };
+
   const handleDeleteSchedule = (index: number) => {
     setGroupFormState((prevState) => ({
       ...prevState,
@@ -116,31 +130,37 @@ export const GroupFormModal: React.FC<GroupFormProps> = ({
 
   return (
     <div>
-      {!isEditMode && <p>"Название":</p>}
+      <label htmlFor="title">Название</label>
+      <p>{groupFormState.title}</p>
       <input
+        id="title"
         className={cls.input}
         type="text"
         value={groupFormState.title}
         name="title"
         onChange={handleInputChange}
+        data-testid="group-title-input"
         required
       />
 
-      <label>Ежедневный платеж</label>
+      <label htmlFor="dailyPayment">Ежедневный платеж</label>
       <input
+        id="dailyPayment"
         className={cls.input}
-        type="text"
+        type="number"
         name="dailyPayment"
         placeholder="Ежедневный платеж"
         value={groupFormState.dailyPayment}
         onChange={handleInputChange}
+        data-testid="group-dailyPayment-input"
         required
       />
 
-      <label>Ежемесячный платеж</label>
+      <label htmlFor="monthlyPayment">Ежемесячный платеж</label>
       <input
+        id="monthlyPayment"
         className={cls.input}
-        type="text"
+        type="number"
         name="monthlyPayment"
         placeholder="Ежемесячный платеж"
         value={groupFormState.monthlyPayment}
@@ -177,12 +197,8 @@ export const GroupFormModal: React.FC<GroupFormProps> = ({
         ))}
         <button onClick={handleAddSchedule}>Добавить расписание</button>
         <div>
-          {usersInBase.length > 0 ? (
-            <UserList
-              smth={groupFormState}
-              setSmth={setGroupFormState}
-        
-            />
+          {usersInBase?.length > 0 ? (
+            <UserList smth={groupFormState} setSmth={setGroupFormState} />
           ) : (
             <p>Пользователи не найдены</p>
           )}

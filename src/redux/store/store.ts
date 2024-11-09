@@ -8,16 +8,18 @@ const persistedState = localStorage.getItem('reduxState')
   ? JSON.parse(localStorage.getItem('reduxState')!)
   : undefined;
 
-const store = configureStore({
-  reducer: combineReducers({
+  const rootReducer = combineReducers({
     groups: groupReducer,
     events: eventReducer,
     users: userReducer,
     payment: paymertReducer,
-  }),
+  });
+  
+const store = configureStore({
+  reducer: rootReducer,
   preloadedState: persistedState,
   middleware: (getDefaultMiddleware) => 
-    getDefaultMiddleware(), // Убираем thunk, если он уже включен
+    getDefaultMiddleware(),
 });
 
 store.subscribe(() => {

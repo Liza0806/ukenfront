@@ -13,8 +13,8 @@ export interface ApiResponse {
 }
 
 export type PaymentType = {
-  dailyPayment: number;
-  monthlyPayment: number;
+  dailyPayment: number | undefined;
+  monthlyPayment: number | undefined;
 };
 
 export type ScheduleType = {
@@ -25,7 +25,7 @@ export type ScheduleType = {
 export type ParticipantType = {
   _id: string;
   name: string;
-  telegramId: string;
+  telegramId: number;
 };
 
 export type GroupType = {
@@ -101,7 +101,7 @@ export interface User {
   isAdmin?: boolean;
   groups: string[];
   balance: number;
-  telegramId: string;
+  telegramId: number;
   discount?: number;
   visits: Visit[];
 }

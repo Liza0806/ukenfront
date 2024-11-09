@@ -6,7 +6,7 @@ export const getAllEvents = async () => {
       const response = await axios.get(
         `https://ukenback.vercel.app/events/`
       );
-      console.log(response.data, "response.data");
+   //   console.log(response.data, "response.data");
       localStorage.setItem('events', JSON.stringify(response.data))
       return response.data;
     } catch (error) {
@@ -19,7 +19,7 @@ export const getAllEvents = async () => {
       const response = await axios.get(
         `https://ukenback.vercel.app/events/${id}`
       );
-      console.log(response.data, "response.data");
+    //  console.log(response.data, "response.data");
       return response.data;
     } catch (error) {
       throw error;
@@ -32,7 +32,7 @@ export const getAllEvents = async () => {
         `https://ukenback.vercel.app/events/${event._id}`,
         event
       );
-      console.log(response.data);
+    //  console.log(response.data);
       return response.data;
     } catch (error) {
       throw error;

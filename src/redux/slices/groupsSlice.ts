@@ -29,32 +29,32 @@ const groupsSlice = createSlice({
     builder
       .addCase(fetchAllGroups.pending, (state) => {
         state.isLoading = true;
-        console.log("pending");
+     //   console.log("pending");
       })
       .addCase(fetchAllGroups.fulfilled, (state, action) => {
         state.isLoading = false;
         state.groups = action.payload;
-        console.log(action.payload);
+     //   console.log(action.payload);
       })
       .addCase(fetchAllGroups.rejected, (state, action) => {
         state.isLoading = false;
         state.error = action.payload
-        console.log(action.payload, "error");
+      //  console.log(action.payload, "error");
       })
       .addCase(addGroupTh.pending, (state) => {
         state.isLoading = true;
-        console.log("pending");
+      //  console.log("pending");
   })
   .addCase(addGroupTh.fulfilled, (state, action) => {
     state.isLoading = false;
     state.error = undefined;
-    console.log(action, 'slice')
+   // console.log(action, 'slice')
 
   })
   .addCase(addGroupTh.rejected, (state, action) => {
     state.isLoading = false;
     state.error = action.payload;
-    console.log(action.payload, "error");
+ //   console.log(action.payload, "error");
   })
   },
 });

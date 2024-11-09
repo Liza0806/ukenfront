@@ -28,31 +28,31 @@ const eventsSlice = createSlice({
     builder
     .addCase(fetchAllEvents.pending, (state) => {
         state.isLoading = true
-        console.log('pending')
+      //  console.log('pending')
     })
     .addCase(fetchAllEvents.fulfilled, (state, action) => {
         state.isLoading = false
         state.events = action.payload
-        console.log(action.payload)
+    //    console.log(action.payload)
     })
     .addCase(fetchAllEvents.rejected, (state, action) => {
         state.isLoading = false
        state.error = action.payload
-        console.log(action.payload, 'error')
+     //   console.log(action.payload, 'error')
     })
     .addCase(fetchEventById.pending, (state) => {
         state.isLoading = true
-        console.log('pending')
+     //   console.log('pending')
     })
     .addCase(fetchEventById.fulfilled, (state, action) => {
         state.isLoading = false
         state.currentEvent = action.payload
-        console.log(action.payload)
+   //     console.log(action.payload)
     })
     .addCase(fetchEventById.rejected, (state, action) => {
         state.isLoading = false
        state.error = action.payload
-        console.log(action.payload, 'error')
+    //    console.log(action.payload, 'error')
     })
 }});
 

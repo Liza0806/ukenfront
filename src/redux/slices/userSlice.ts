@@ -29,17 +29,17 @@ const usersSlice = createSlice({
       builder
         .addCase(fetchAllUsers.pending, (state) => {
           state.isLoading = true;
-          console.log("pending");
+       //   console.log("pending");
         })
         .addCase(fetchAllUsers.fulfilled, (state, action) => {
           state.isLoading = false;
           state.users = action.payload;
-          console.log(action.payload);
+       //   console.log(action.payload);
         })
         .addCase(fetchAllUsers.rejected, (state, action) => {
           state.isLoading = false;
           state.error = action.payload
-          console.log(action.payload, "error");
+       //   console.log(action.payload, "error");
         })
         
     },

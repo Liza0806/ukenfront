@@ -16,7 +16,7 @@ export const useManageUsers = (props?: useManageUsersProps) => {
     const getUsers = async () => {
       await  dispatch(fetchAllUsers())
           .then(unwrapResult)
-          .then((result) => setUsers(Array.isArray(result)? result.sort((a, b) => a.name.localeCompare(b.name)): []))
+          .then((result) => setUsers(result))
           .catch(console.error);
       };
       useEffect(() => {
@@ -28,11 +28,11 @@ export const useManageUsers = (props?: useManageUsersProps) => {
       }, [props?.users]);
 
   
-  console.log(users, 'users')
+  // console.log(users, 'users')
     const findUsers = (name: string) => {
       if (users.length === 0) {
         console.log("Users are still loading.");
-        return;
+        return; // Не выполняем фильтрацию, пока данные не загружены
       }
     
       const filteredUsers = users.filter((user) =>
@@ -42,17 +42,17 @@ export const useManageUsers = (props?: useManageUsersProps) => {
     };
 
     const handleAddUser = (user: Partial<User> , smth: EventTypeDB | GroupType, setSmth: Function) => {
-      console.log('handleAddUser1', user, smth.participants)
+    //  console.log('handleAddUser1', user, smth.participants)
   
         if (!smth.participants.find(p => p._id === user._id)) {
        
-            console.log('handleAddUser2', user, smth.participants)
+          //  console.log('handleAddUser2', user, smth.participants)
         setSmth({
           ...smth,
           participants: [...smth.participants, {_id: user._id, name: user.name, telegramId: user.telegramId}],
         });
      
-        console.log('handleAddUser3', user, smth.participants)
+      //  console.log('handleAddUser3', user, smth.participants)
       }
 
     };

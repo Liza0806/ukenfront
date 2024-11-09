@@ -1,19 +1,18 @@
 import { getAllUsers } from "../redux/api/usersApi"; // Функция для запроса
 import { fetchAllUsers } from "../redux/thunks/thunks"; // Танк для получения пользователей
 import { UserList } from "../components/UserList/UserList";
-import { act, render, screen, waitFor } from "@testing-library/react";
+import { act, render, screen } from "@testing-library/react";
 import { configureStore } from "@reduxjs/toolkit";
 import usersReducer from "../redux/slices/userSlice";
 import { Provider } from "react-redux";
 import { BrowserRouter as Router } from "react-router-dom";
 import "@testing-library/jest-dom";
 import { useManageUsers } from "./hooks";
-import React, { useEffect, useRef, useState } from "react";
+import React from "react";
 import {
   EventTypeDB,
   GroupType,
   PartialUserWithRequiredFields,
-  User,
 } from "../redux/types/types";
 
 // Мокаем getAllUsers
@@ -31,7 +30,7 @@ const mockUsers = [
     isAdmin: false,
     groups: [],
     balance: 11,
-    telegramId: "111",
+    telegramId: 111,
     discount: 11,
     visits: [],
   },
@@ -43,23 +42,25 @@ const mockUsers = [
     isAdmin: true,
     groups: [],
     balance: 22,
-    telegramId: "222",
+    telegramId: 222,
     discount: 22,
     visits: [],
   },
 ];
+
 const mockUsersForUserList: PartialUserWithRequiredFields[] = [
   {
     _id: "1",
     name: "userName",
-    telegramId: "111",
+    telegramId: 111,
   },
   {
     _id: "2",
     name: "userName2",
-    telegramId: "222",
+    telegramId: 222,
   },
 ];
+
 // Конфигурируем мок-функцию getAllUsers
 const mockedgetAllUsers = getAllUsers as jest.MockedFunction<
   typeof getAllUsers
@@ -147,7 +148,7 @@ describe("findUsers in useManageUsers hook", () => {
 
     // Проверка, что hookResult инициализирован
     expect(hookResult).toBeDefined();
-    console.log(hookResult, "hookResult");
+   // console.log(hookResult, "hookResult");
     // Вызов методов хука и проверка результата
     await act(async () => {
       hookResult!.findUsers("userName");
@@ -162,7 +163,7 @@ describe("findUsers in useManageUsers hook", () => {
         isAdmin: false,
         groups: [],
         balance: 11,
-        telegramId: "111",
+        telegramId: 111,
         discount: 11,
         visits: [],
       },
@@ -176,7 +177,7 @@ describe("findUsers in useManageUsers hook", () => {
         isAdmin: false,
         groups: [],
         balance: 11,
-        telegramId: "111",
+        telegramId: 111,
         discount: 11,
         visits: [],
       },
@@ -202,8 +203,8 @@ describe("handleAddUser useManageUsers hook", () => {
     isCancelled: false,
     date: new Date().toISOString(),
     participants: [
-      { _id: "2", name: "user2", telegramId: "222" },
-      { _id: "3", name: "user3", telegramId: "333" },
+      { _id: "2", name: "user2", telegramId: 222 },
+      { _id: "3", name: "user3", telegramId: 333 },
     ],
   };
   it("should add users by name when addUsers is called", async () => {
@@ -263,7 +264,7 @@ describe("handleAddUser useManageUsers hook", () => {
       isAdmin: false,
       groups: [],
       balance: 11,
-      telegramId: "111",
+      telegramId: 111,
       discount: 11,
       visits: [],
     };
@@ -318,9 +319,9 @@ describe("handleDeleteUser useManageUsers hook", () => {
     isCancelled: false,
     date: new Date().toISOString(),
     participants: [
-      { _id: "1", name: "user1", telegramId: "111" },
-      { _id: "2", name: "user2", telegramId: "222" },
-      { _id: "3", name: "user3", telegramId: "333" },
+      { _id: "1", name: "user1", telegramId: 111 },
+      { _id: "2", name: "user2", telegramId: 222 },
+      { _id: "3", name: "user3", telegramId: 333 },
     ],
   };
   const initialParticipantsLength = initialEvent.participants.length;
