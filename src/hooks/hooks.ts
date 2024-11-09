@@ -32,7 +32,7 @@ export const useManageUsers = (props?: useManageUsersProps) => {
     const findUsers = (name: string) => {
       if (users.length === 0) {
         console.log("Users are still loading.");
-        return; // Не выполняем фильтрацию, пока данные не загружены
+        return;
       }
     
       const filteredUsers = users.filter((user) =>
