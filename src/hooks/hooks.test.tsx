@@ -104,12 +104,12 @@ describe("getUsers useManageUsers hook", () => {
     );
 
     // Проверяем, что пользователи отобразились на странице
-    await waitFor(() => {
-      expect(screen.getByText("userName")).toBeInTheDocument();
-    });
-    await waitFor(() => {
-      expect(screen.getByText("userName2")).toBeInTheDocument();
-    });
+    
+      await expect(screen.getByText("userName")).toBeInTheDocument();
+   
+   
+      await expect(screen.getByText("userName2")).toBeInTheDocument();
+  
   });
 });
 
