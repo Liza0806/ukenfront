@@ -1,5 +1,3 @@
-
-import { EventType } from "@testing-library/react";
 import { RootState } from "../store/store";
 import { EventTypeDB, GroupType, User } from "../types/types";
 
