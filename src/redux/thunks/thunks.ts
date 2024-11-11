@@ -114,11 +114,9 @@ export const addGroupTh = createAsyncThunk<
   { rejectValue: string } // Тип для ошибки
 >("groups/addGroupTh", async (group: AddGroupType, thunkAPI) => {
   try {
+    debugger
     const response = await addGroup(group);
-    // if (response.status && response.status !== 200) {
-    //   return thunkAPI.rejectWithValue("error");
-    // }
-
+debugger
     if (response.status >= 200 && response.status < 300) {
       return response.data; // Успешный результат
     } // возвращаемый результат будет типа GroupType
@@ -142,13 +140,16 @@ export const deleteGroupTh = createAsyncThunk<
 });
 
 export const updateGroupTh = createAsyncThunk<
-  GroupType, // Тип возвращаемого значения
+ {_id: string, updatedGroup: GroupType}, // Тип возвращаемого значения
   { group: AddGroupType; _id: string }, // Тип аргумента
   { rejectValue: string } // Тип для rejected value
 >("groups/updateGroupTh", async ({ group, _id }, thunkAPI) => {
+  debugger
   const response = await updateGroup(group, _id);
   if (!response) {
+    debugger
     return thunkAPI.rejectWithValue("error");
   }
+  debugger
   return response;
 });

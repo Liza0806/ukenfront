@@ -17,9 +17,10 @@ export const addGroup = async (group: AddGroupType) => {
       `https://ukenback.vercel.app/groups/`,
       group
     );
-
+debugger
     return response;
   } catch (error) {
+    debugger
     throw error; // обработка ошибок в вызывающем коде
   }
 };
@@ -40,13 +41,17 @@ export const deleteGroup = async (_id: string) => {
   }
 };
 export const updateGroup = async (group: AddGroupType, _id: string) => {
+ debugger
   try {
+    debugger
     const response = await axios.put(
       `https://ukenback.vercel.app/groups/${_id}`,
       group
     );
+    debugger
     return response.data;
   } catch (error) {
+    debugger
     throw error; // обработка ошибок в вызывающем коде
   }
 };

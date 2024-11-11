@@ -1,5 +1,10 @@
 import cls from "./GroupFormModal.module.scss";
-import { AddGroupType, daysOfWeekUk } from "../../redux/types/types";
+import {
+  AddGroupType,
+  daysOfWeekUk,
+  ParticipantType,
+  ScheduleType,
+} from "../../redux/types/types";
 import { UserList } from "../UserList/UserList";
 import { selectUsers } from "../../redux/selectors/selectors";
 import { useAppSelector } from "../../redux/hooks/hooks";
@@ -13,10 +18,64 @@ import {
   addGroupTh,
   updateGroupTh,
 } from "../../redux/thunks/thunks";
+import { AppDispatch } from "../../redux/store/store";
+
 interface GroupFormProps {
   initialGroupData?: GroupType;
   isEditMode: boolean;
 }
+interface groupFormStateType {
+  title: string;
+  dailyPayment: number | undefined;
+  monthlyPayment: number | undefined;
+  schedule: ScheduleType[];
+  participants: ParticipantType[];
+}
+export const handleSubmit = async (
+  isEditMode: boolean,
+  groupFormState: groupFormStateType, // Типизируй аргументы
+  appDispatch: AppDispatch,
+  initialGroupData?: GroupType
+) => {
+  
+  debugger;
+  const groupForTh: AddGroupType = {
+    title: groupFormState!.title!,
+    coachId: "Kostya",
+    payment: [
+      {
+        dailyPayment: groupFormState.dailyPayment,
+        monthlyPayment: groupFormState.monthlyPayment,
+      },
+    ],
+    schedule: [...groupFormState!.schedule!],
+    participants: [...groupFormState!.participants!],
+  };
+
+  try {
+    let result;
+    if (isEditMode) {
+      debugger;
+      if (initialGroupData?._id) {
+        debugger
+        result = await appDispatch(
+          updateGroupTh({ group: groupForTh, _id: initialGroupData!._id })
+        ).unwrap(); // Разворачиваем результат, чтобы проверить ошибки
+       debugger
+        toast.success("Группа успешно обновлена");
+      }
+    } else {
+      debugger;
+      console.log(groupForTh, "groupForTh");
+      result = await appDispatch(addGroupTh(groupForTh)).unwrap(); // Разворачиваем результат
+      toast.success("Группа успешно добавлена");
+    }
+    appDispatch(fetchAllGroups());
+  } catch (error) {
+    debugger;
+    toast.error("Ошибка при обновлении группы");
+  }
+};
 
 export const GroupFormModal: React.FC<GroupFormProps> = ({
   initialGroupData,
@@ -24,7 +83,7 @@ export const GroupFormModal: React.FC<GroupFormProps> = ({
 }) => {
   const appDispatch = useAppDispatch();
 
-  const [groupFormState, setGroupFormState] = useState({
+  const [groupFormState, setGroupFormState] = useState<groupFormStateType>({
     title: initialGroupData ? initialGroupData.title : "",
     dailyPayment: initialGroupData
       ? initialGroupData.payment[0].dailyPayment
@@ -39,47 +98,6 @@ export const GroupFormModal: React.FC<GroupFormProps> = ({
   });
 
   const usersInBase = useAppSelector(selectUsers);
-
-  const handleSubmit = useCallback(async () => {
-    const groupForTh: AddGroupType = {
-      title: groupFormState.title,
-      coachId: "Kostya",
-      payment: [
-        {
-          dailyPayment: groupFormState.dailyPayment,
-          monthlyPayment: groupFormState.monthlyPayment,
-        },
-      ],
-      schedule: [...groupFormState.schedule],
-      participants: groupFormState.participants,
-    };
-
-    try {
-      let result;
-      if (isEditMode) {
-        if (initialGroupData?._id) {
-          result = await appDispatch(
-            updateGroupTh({ group: groupForTh, _id: initialGroupData!._id })
-          ).unwrap(); // Разворачиваем результат, чтобы проверить ошибки
-          //   console.log(result, 'result isEditMode')
-          // Показать сообщение только при успешном выполнении
-
-          toast.success("Группа успешно обновлена");
-        }
-      } else {
-        result = await appDispatch(addGroupTh(groupForTh)).unwrap(); // Разворачиваем результат
-        // console.log(result, 'result not isEditMode')
-
-        // Показать сообщение только при успешном выполнении
-        toast.success("Группа успешно добавлена");
-      }
-      appDispatch(fetchAllGroups());
-    } catch (error) {
-      // Если ошибка возникла в процессе выполнения санка
-
-      toast.error("Ошибка при обновлении группы");
-    }
-  }, [groupFormState, appDispatch, initialGroupData, isEditMode]);
 
   const handleInputChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
@@ -165,6 +183,7 @@ export const GroupFormModal: React.FC<GroupFormProps> = ({
         placeholder="Ежемесячный платеж"
         value={groupFormState.monthlyPayment}
         onChange={handleInputChange}
+        data-testid="group-monthlyPayment-input"
         required
       />
 
@@ -174,6 +193,7 @@ export const GroupFormModal: React.FC<GroupFormProps> = ({
           <div key={index}>
             <select
               value={sched.day}
+              data-testid="group-scheduleDay-select"
               onChange={(e) =>
                 handleScheduleChange(index, "day", e.target.value)
               }
@@ -188,6 +208,7 @@ export const GroupFormModal: React.FC<GroupFormProps> = ({
             <input
               type="time"
               value={sched.time}
+              data-testid="group-scheduleTime-select"
               onChange={(e) =>
                 handleScheduleChange(index, "time", e.target.value)
               }
@@ -204,7 +225,9 @@ export const GroupFormModal: React.FC<GroupFormProps> = ({
           )}
         </div>
       </div>
-      <button onClick={handleSubmit}>
+      <button
+        onClick={() => handleSubmit(isEditMode, groupFormState, appDispatch)}
+      >
         {isEditMode ? "Обновить группу" : "Добавить группу"}
       </button>
     </div>
