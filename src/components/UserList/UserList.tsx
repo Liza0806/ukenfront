@@ -14,21 +14,30 @@ interface UserListProps {
   existingUsers?: PartialUserWithRequiredFields[] }
 
 export const UserList: React.FC<UserListProps> = ({ smth, setSmth, existingUsers}) => {
-  const [username, setUsername] = useState('')
-  const users = useAppSelector(selectUsers)
-
+  const [username, setUsername] = useState('') /// 1
+  debugger
+ // const users = useAppSelector((state)=> state.users.users) /// 2
+//  console.log(users, 'users')
+debugger
   const {
+    users,
     findUsers,
     handleAddUser,
     handleDeleteUser,
   } = useManageUsers();
+  debugger
  // console.log(existingUsers, 'existingUsers' )
   const usersForList = existingUsers? existingUsers.filter((user) => user!.name.toLowerCase().includes(username.toLowerCase())) : users.filter((user) => user.name.toLowerCase().includes(username.toLowerCase()));
+  debugger
+
   const handleChange: ChangeEventHandler<HTMLInputElement> = (event) => {
     const name = event.target.value;
     setUsername(name)
     findUsers? findUsers(name) : console.log('передай findUsers, а потом ищи')
   };
+
+  debugger
+  console.log('render user list')
   return (
     <div>
 
@@ -43,7 +52,7 @@ export const UserList: React.FC<UserListProps> = ({ smth, setSmth, existingUsers
       </label>
       <ul>
         {usersForList.map((user) => (
-          <li key={user!._id}>
+          <li key={user!._id} data-testid='userInList'>
             {user!.name}
               <IconButton onClick={() => handleAddUser(user!, smth, setSmth )}>
                 <AddCircleOutlineIcon color="primary" fontSize="inherit" />

@@ -3,6 +3,7 @@ import groupReducer from "../slices/groupsSlice";
 import eventReducer from "../slices/eventsSlice";
 import userReducer from "../slices/userSlice";
 import paymertReducer from "../slices/paymentSlice";
+import { useDispatch, useSelector, useStore } from 'react-redux'
 
 const persistedState = localStorage.getItem('reduxState')
   ? JSON.parse(localStorage.getItem('reduxState')!)
@@ -30,3 +31,4 @@ export default store;
 
 export type RootState = ReturnType<typeof store.getState>;
 export type AppDispatch = typeof store.dispatch;
+export type AppStore = typeof store

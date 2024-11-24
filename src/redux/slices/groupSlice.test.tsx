@@ -1,4 +1,4 @@
-import groupReducer, { getGroups } from './groupsSlice';
+import groupReducer, { setGroups } from './groupsSlice';
 import { fetchAllGroups } from '../thunks/thunks'; 
 import { GroupType } from '../types/types';
 import { getAllGroups } from "../api/groupsApi";
@@ -17,18 +17,18 @@ describe('eventsSlice', () => {
     expect(groupReducer(undefined, { type: '' })).toEqual(initialState);
   });
 
-  it('should handle getGroups', () => {
+  it('should handle setGroups', () => {
     const groups: GroupType[] = [
       { _id: '1', title: 'groupTitle 1', coachId: 'Костя', payment: [], schedule: [], participants: [] }, 
       { _id: '2', title: 'groupTitle 2',  coachId: 'Костя', payment: [], schedule: [], participants: [] }
     ];
-    const nextState = groupReducer(initialState, getGroups(groups));
+    const nextState = groupReducer(initialState, setGroups(groups));
     expect(nextState.groups).toEqual(groups);
   });
 
   // Тестирование асинхронных операций
   describe('extraReducers', () => {
-    it('should handle getchGroups.pending', () => {
+    it('should handle getGroups.pending', () => {
       const nextState = groupReducer(initialState, { type: fetchAllGroups.pending.type });
       expect(nextState.isLoading).toBe(true);
     });

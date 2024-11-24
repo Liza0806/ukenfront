@@ -64,9 +64,9 @@ export const OneGroupInformation: React.FC<OneGroupInformationProps> = ({
       >
         OPEN MODAL
       </button>
-      <div>
+      {/* <div>
         <p className={cls.title}>{groupData?.title ?? ""}</p>
-      </div>
+      </div> */}
       {/* Секция оплаты */}
       <section>
         <h3 className={cls.title}>Оплата</h3>
@@ -99,14 +99,6 @@ export const OneGroupInformation: React.FC<OneGroupInformationProps> = ({
           <p>Нет учасників</p>
         )}
       </section>
-
-      {/* Модалка */}
-
-      {showModal && (
-        <Modal open={showModal} onClose={() => setShowModal(false)}>
-          <GroupFormModal initialGroupData={groupData} isEditMode={true} />
-        </Modal>
-      )}
     </div>
   );
 };

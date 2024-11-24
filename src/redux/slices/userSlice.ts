@@ -3,15 +3,10 @@ import { User, UserStateType } from "../types/types";
 import { fetchAllUsers } from "../thunks/thunks";
 
 
-const persistedState = localStorage.getItem('users')
-  ? JSON.parse(localStorage.getItem('users')!)
-  : undefined;
-
 const initialState: UserStateType = {
   isLoading: false,
   error: undefined,
   users: [],
-  
 };
 
 const usersSlice = createSlice({

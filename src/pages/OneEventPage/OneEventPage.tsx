@@ -5,10 +5,9 @@ import "react-datepicker/dist/react-datepicker.css";
 import "./Styles.css";
 import cls from "./OneEventPage.module.scss";
 import { useParams } from "react-router-dom";
-import { useAppDispatch } from "../../redux/hooks/hooks";
-import { updateEvent } from "../../redux/thunks/thunks";
+import { useAppDispatch, useAppSelector } from "../../redux/hooks/hooks";
+import { fetchEventById, updateEvent } from "../../redux/thunks/thunks";
 import { EventTypeDB, GroupType } from "../../redux/types/types";
-import { getEventById } from "../../redux/api/eventsApi";
 import { UserList } from "../../components/UserList/UserList";
 import { uk } from "date-fns/locale";
 import { Container } from "../../components/Container/Container";
@@ -16,20 +15,26 @@ import containerImage from "../../assets/PhoneForPagIvent.jpg";
 import UpdateIcon from "@mui/icons-material/Update";
 import { useRef } from "react";
 import { useManageUsers } from "../../hooks/hooks";
+import { selectCurrentEvent } from "../../redux/selectors/selectors";
+import { clearCurrentEvent } from "../../redux/slices/eventsSlice";
 
 const OneEventPage: React.FC = () => {
   const { id } = useParams<string>();
-  const [event, setEvent] = useState<EventTypeDB>();
-  const [noUsersFound, setNoUsersFound] = useState(false);
-  const [showUpdateEvent, setShowUpdateEvent] = useState(true);
-
+  const currentEvent = useAppSelector(selectCurrentEvent);
   const dispatch = useAppDispatch();
+  const containerRef = useRef<HTMLDivElement>(null);
+
+  const [editedEvent, setEditedEvent] = useState<EventTypeDB | null>(null);
+  const [showUpdateEvent, setShowUpdateEvent] = useState(true);
+  const [showAdditionalUsers, setShowAdditionalUsers] = useState(false);
   const [showCalendar, setShowCalendar] = useState(false);
   const [showTimer, setShowTimer] = useState(false);
-  const containerRef = useRef<HTMLDivElement>(null); // Создайте реф для контейнера
 
-  const { users, getUsers } = useManageUsers();
-
+  // реф для контейнера
+  // const { users, getUsers } = useManageUsers();
+  const { getUsers } = useManageUsers();
+  debugger;
+  console.log(currentEvent, "currentEvent");
   let scrollTop = 0;
   const handleScroll = () => {
     if (containerRef.current) {
@@ -38,6 +43,7 @@ const OneEventPage: React.FC = () => {
   };
 
   const inputRef = useRef<HTMLInputElement>(null); // Используем useRef для инпута
+
   const scrollToInput = () => {
     if (inputRef.current) {
       inputRef.current.scrollIntoView({
@@ -50,27 +56,37 @@ const OneEventPage: React.FC = () => {
 
   useEffect(() => {
     if (id) {
-      getEventById(id)
-        .then((event) => setEvent(event))
-        .catch((error) => console.error(error));
+      dispatch(fetchEventById(id)); // Загружаем ивент
     }
-  }, [id]);
+  }, [id, dispatch]);
 
-  if (!event) {
-    return <div>Загрузка...</div>;
-  }
+  useEffect(() => {
+    if (currentEvent && currentEvent !== editedEvent) {
+      setEditedEvent(currentEvent); // Только если данные отличаются
+    }
+  }, [currentEvent, editedEvent]);
+
+  useEffect(() => {
+    return () => {
+      dispatch(clearCurrentEvent()); // Очищаем состояние при размонтировании
+      setEditedEvent(null);
+    };
+  }, [dispatch]);
+
+  debugger;
 
   const submitEvent = (event: EventTypeDB) => {
-    dispatch(updateEvent({ event })); // тут шлем на бекенд обновленный ивент
-    setShowUpdateEvent(false); // тут я скрывала кнопку "обновить"
-    getUsers(); // фетчим заново всех участников, чтобы пришли обновленные данные
+    dispatch(updateEvent({ event })).then(() => {
+      getUsers(); // Фетч участников после успешного обновления
+    });
+    setShowUpdateEvent(false);
   };
 
   const updateEventDate = (newDate: Date) => {
-    if (event) {
+    if (editedEvent) {
       // Создаем новый объект с обновленным значением даты
-      const updatedEvent = { ...event, date: newDate.toISOString() };
-      setEvent(updatedEvent);
+      const updatedEvent = { ...editedEvent, date: newDate.toISOString() };
+      setEditedEvent(updatedEvent);
     }
   };
 
@@ -79,6 +95,7 @@ const OneEventPage: React.FC = () => {
       updateEventDate(date);
     }
   };
+  console.log("render one event page");
 
   return (
     <Container
@@ -86,107 +103,134 @@ const OneEventPage: React.FC = () => {
       isCentre={true}
       containerImage={containerImage}
     >
-      <div className={cls.trainingContainer}>
-        <div className={cls.header}>
-          <h3 className={cls.title}>Група: {event.groupTitle}</h3>
+      {editedEvent && (
+        <div className={cls.trainingContainer}>
+          <div className={cls.header}>
+            <h3 className={cls.title}>Група: {editedEvent.groupTitle}</h3>
+            {showUpdateEvent && (
+              <button
+                data-testid="updateIcon"
+                onClick={() => submitEvent(editedEvent!)}
+              >
+                <UpdateIcon
+                  style={{ color: "blue", fontSize: "36px", cursor: "pointer" }}
+                  className={cls.upIcon}
+                ></UpdateIcon>
+              </button>
+            )}
+          </div>
 
-          {showUpdateEvent && (
-            <UpdateIcon
-              style={{ color: "blue", fontSize: "36px", cursor: "pointer" }}
-              className={cls.upIcon}
-              onClick={() => submitEvent(event)}
-            ></UpdateIcon>
+          <div className={cls.date}>
+            <span className={cls.text}>Тренування відбудеться</span>
+            <p onClick={() => setShowCalendar(!showCalendar)}>
+              {new Date(editedEvent?.date).toLocaleString("uk-UA", {
+                day: "numeric",
+                month: "long",
+                year: "numeric",
+              })}
+            </p>
+
+            <p onClick={() => setShowTimer(!showTimer)}>
+              {new Date(editedEvent?.date).toLocaleString("uk-UA", {
+                hour: "2-digit",
+                minute: "2-digit",
+              })}
+            </p>
+          </div>
+
+          {showCalendar && (
+            <div
+              className={cls.modalOverlay}
+              onClick={() => setShowCalendar(false)}
+            >
+              <div
+                className={cls.modalContent}
+                onClick={(e) => e.stopPropagation()}
+              >
+                <DatePicker
+                  selected={
+                    editedEvent?.date ? new Date(editedEvent.date) : null
+                  }
+                  onChange={handleDateChange}
+                  dateFormat="Pp"
+                  inline
+                  locale={uk}
+                />
+              </div>
+            </div>
+          )}
+
+          {showTimer && (
+            <div
+              className={cls.modalOverlay}
+              onClick={() => setShowTimer(false)}
+            >
+              <div
+                className={cls.modalContent}
+                onClick={(e) => e.stopPropagation()}
+              >
+                <DatePicker
+                  selected={
+                    editedEvent?.date ? new Date(editedEvent.date) : null
+                  }
+                  onChange={handleDateChange}
+                  showTimeSelect
+                  showTimeSelectOnly
+                  timeIntervals={1}
+                  timeFormat="HH:mm"
+                  dateFormat="HH:mm"
+                  inline
+                  locale={uk}
+                />
+              </div>
+            </div>
+          )}
+
+          {/* участники: */}
+          <div className={cls.participants}>
+            {editedEvent.participants.length !== 0 && (
+              <UserList
+                existingUsers={editedEvent.participants}
+                smth={editedEvent}
+                setSmth={
+                  setEditedEvent as React.Dispatch<
+                    React.SetStateAction<EventTypeDB | GroupType | undefined>
+                  >
+                }
+              />
+            )}
+          </div>
+          {editedEvent.participants.length === 0 && (
+            <p>На тренировку пока никто не записался</p>
+          )}
+
+          {/* возможные участники: */}
+
+          <div className={cls.participants}>
+            {showAdditionalUsers && (
+              <UserList
+                smth={editedEvent}
+                setSmth={
+                  setEditedEvent as React.Dispatch<
+                    React.SetStateAction<EventTypeDB | GroupType | undefined>
+                  >
+                }
+              />
+            )}
+          </div>
+
+          {!showAdditionalUsers && (
+            <button
+              data-testid="ShowAdditionalUsers"
+              type="button"
+              className={cls.buttonOpen}
+              onClick={() => setShowAdditionalUsers(true)}
+            >
+              показать дополнительных юзеров
+            </button>
           )}
         </div>
-        <div className={cls.date}>
-          <span className={cls.text}>Тренування відбудеться</span>
-          <p onClick={() => setShowCalendar(!showCalendar)}>
-            {new Date(event.date).toLocaleString("uk-UA", {
-              day: "numeric",
-              month: "long",
-              year: "numeric",
-            })}
-          </p>
-          <p onClick={() => setShowTimer(!showTimer)}>
-            {new Date(event.date).toLocaleString("uk-UA", {
-              hour: "2-digit",
-              minute: "2-digit",
-            })}
-          </p>
-        </div>
-
-        {showCalendar && (
-          <div
-            className={cls.modalOverlay}
-            onClick={() => setShowCalendar(false)}
-          >
-            <div
-              className={cls.modalContent}
-              onClick={(e) => e.stopPropagation()}
-            >
-              <DatePicker
-                selected={event.date ? new Date(event.date) : null}
-                onChange={handleDateChange}
-                dateFormat="Pp"
-                inline
-                locale={uk}
-              />
-            </div>
-          </div>
-        )}
-
-        {showTimer && (
-          <div className={cls.modalOverlay} onClick={() => setShowTimer(false)}>
-            <div
-              className={cls.modalContent}
-              onClick={(e) => e.stopPropagation()}
-            >
-              <DatePicker
-                selected={event.date ? new Date(event.date) : null}
-                onChange={handleDateChange}
-                showTimeSelect
-                showTimeSelectOnly
-                timeIntervals={1}
-                timeFormat="HH:mm"
-                dateFormat="HH:mm"
-                inline
-                locale={uk}
-              />
-            </div>
-          </div>
-        )}
-
-        <div className={cls.participants}>
-          <UserList
-            existingUsers={event.participants}
-            smth={event}
-            setSmth={
-              setEvent as React.Dispatch<
-                React.SetStateAction<EventTypeDB | GroupType | undefined>
-              >
-            }
-          />
-        </div>
-
-        {users.length !== 0 && !noUsersFound && (
-          <div className={cls.participants}>
-            <UserList
-              smth={event}
-              setSmth={
-                setEvent as React.Dispatch<
-                  React.SetStateAction<EventTypeDB | GroupType | undefined>
-                >
-              }
-            />
-          </div>
-        )}
-
-        {!users.length && (
-          <button type="button" className={cls.buttonOpen} onClick={getUsers}>
-            показать дополнительных юзеров
-          </button>
-        )}
-      </div>
+      )}
     </Container>
   );
 };

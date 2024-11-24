@@ -22,8 +22,10 @@ export const fetchAllGroups = createAsyncThunk<
   { rejectValue: string } // Тип значения для reject
 >("groups/fetchAllGroups", async (_, thunkAPI) => {
   const response = await getAllGroups();
+  debugger
   if (!response) {
     return thunkAPI.rejectWithValue("error");
+    debugger
   }
   return response;
 });
@@ -100,7 +102,9 @@ export const updateEvent = createAsyncThunk<
 >(
   "events/updateEvent",
   async ({ event }: UpdateEventParticipantsPayload, thunkAPI) => {
-    const response = await updateEventAPi(event);
+  
+  console.log('updateEventTH')  
+  const response = await updateEventAPi(event);
     if (!response) {
       return thunkAPI.rejectWithValue("error");
     }
@@ -126,7 +130,7 @@ debugger
 });
 
 export const deleteGroupTh = createAsyncThunk<
-  GroupType, // Тип данных при успешном выполнении
+  {_id: string, message: string}, // Тип данных при успешном выполнении
   string, // Тип аргументов, передаваемых в thunk
   { rejectValue: string } // Тип для ошибки
 >("groups/deleteGroupTh", async (_id: string, thunkAPI) => {

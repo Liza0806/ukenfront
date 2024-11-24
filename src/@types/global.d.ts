@@ -4,6 +4,8 @@ declare global {
         respondWith(response: Response | Promise<Response>): void;
     }
 }
+
+
 interface BeforeInstallPromptEvent extends Event {
     preventDefault(): void;
     prompt(): Promise<void>;
@@ -12,4 +14,9 @@ interface BeforeInstallPromptEvent extends Event {
         platform: string;
     }>;
 }
+
+declare module '*.jpg';
+declare module '*.png';
+declare module '*.svg';
+
 export {};

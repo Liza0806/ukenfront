@@ -9,7 +9,7 @@ import { UserList } from "../UserList/UserList";
 import { selectUsers } from "../../redux/selectors/selectors";
 import { useAppSelector } from "../../redux/hooks/hooks";
 
-import React, { useState, useCallback } from "react";
+import React, { useState } from "react";
 import { GroupType } from "../../redux/types/types";
 import { useAppDispatch } from "../../redux/hooks/hooks";
 import { toast } from "react-toastify";
@@ -23,6 +23,7 @@ import { AppDispatch } from "../../redux/store/store";
 interface GroupFormProps {
   initialGroupData?: GroupType;
   isEditMode: boolean;
+  closeModal: () => void;
 }
 interface groupFormStateType {
   title: string;
@@ -31,13 +32,14 @@ interface groupFormStateType {
   schedule: ScheduleType[];
   participants: ParticipantType[];
 }
+
 export const handleSubmit = async (
   isEditMode: boolean,
   groupFormState: groupFormStateType, // Типизируй аргументы
   appDispatch: AppDispatch,
-  initialGroupData?: GroupType
+  closeModal: () => void,
+  _id?: string
 ) => {
-  
   debugger;
   const groupForTh: AddGroupType = {
     title: groupFormState!.title!,
@@ -51,37 +53,41 @@ export const handleSubmit = async (
     schedule: [...groupFormState!.schedule!],
     participants: [...groupFormState!.participants!],
   };
-
+  // console.log(initialGroupData, 'initialGroupData')
   try {
     let result;
-    if (isEditMode) {
-      debugger;
-      if (initialGroupData?._id) {
-        debugger
+    if (isEditMode && _id) {
+       //  debugger;
         result = await appDispatch(
-          updateGroupTh({ group: groupForTh, _id: initialGroupData!._id })
+          updateGroupTh({ group: groupForTh, _id: _id })
         ).unwrap(); // Разворачиваем результат, чтобы проверить ошибки
-       debugger
+      //  debugger;
         toast.success("Группа успешно обновлена");
-      }
+        closeModal();   
     } else {
-      debugger;
+   //   debugger;
       console.log(groupForTh, "groupForTh");
       result = await appDispatch(addGroupTh(groupForTh)).unwrap(); // Разворачиваем результат
       toast.success("Группа успешно добавлена");
+      closeModal();
     }
+ //   debugger;
     appDispatch(fetchAllGroups());
   } catch (error) {
-    debugger;
-    toast.error("Ошибка при обновлении группы");
+  //  debugger;
+    toast.error("Ошибка при сохранении группы");
   }
 };
 
 export const GroupFormModal: React.FC<GroupFormProps> = ({
   initialGroupData,
   isEditMode,
+  closeModal,
 }) => {
   const appDispatch = useAppDispatch();
+  const usersInBase = useAppSelector(selectUsers);
+
+  const [groupId, setGroupId] = useState(initialGroupData?._id);
 
   const [groupFormState, setGroupFormState] = useState<groupFormStateType>({
     title: initialGroupData ? initialGroupData.title : "",
@@ -91,13 +97,13 @@ export const GroupFormModal: React.FC<GroupFormProps> = ({
     monthlyPayment: initialGroupData
       ? initialGroupData.payment[0].monthlyPayment
       : undefined,
-    schedule: initialGroupData ? initialGroupData.schedule : [],
+    schedule: initialGroupData
+      ? initialGroupData.schedule
+      : [{ day: daysOfWeekUk[0], time: "08:00" }],
     participants: initialGroupData?.participants
       ? initialGroupData?.participants
       : [],
   });
-
-  const usersInBase = useAppSelector(selectUsers);
 
   const handleInputChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
@@ -189,6 +195,7 @@ export const GroupFormModal: React.FC<GroupFormProps> = ({
 
       <div>
         <label>Schedule</label>
+
         {groupFormState.schedule.map((sched, index) => (
           <div key={index}>
             <select
@@ -226,7 +233,16 @@ export const GroupFormModal: React.FC<GroupFormProps> = ({
         </div>
       </div>
       <button
-        onClick={() => handleSubmit(isEditMode, groupFormState, appDispatch)}
+        onClick={() => {
+          handleSubmit(
+            isEditMode,
+            groupFormState,
+            appDispatch,
+            closeModal,
+            groupId
+          );
+          setGroupId("");
+        }}
       >
         {isEditMode ? "Обновить группу" : "Добавить группу"}
       </button>

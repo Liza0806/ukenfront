@@ -22,7 +22,10 @@ const eventsSlice = createSlice({
     },
     setCurrentEvent(state, action: PayloadAction<EventTypeDB>){
         state.currentEvent = action.payload
-    }
+    },
+    clearCurrentEvent(state) {
+      state.currentEvent = undefined;
+    },
   },
   extraReducers: (builder) => {
     builder
@@ -56,5 +59,5 @@ const eventsSlice = createSlice({
     })
 }});
 
-export const { setEvents, setCurrentEvent } = eventsSlice.actions;
+export const { setEvents, setCurrentEvent, clearCurrentEvent } = eventsSlice.actions;
 export default eventsSlice.reducer;

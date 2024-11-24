@@ -489,8 +489,9 @@ describe("deleteGroupTh thunk", () => {
       participants: [],
     };
     // Мокаем успешный ответ от deleteGroup
-    mockeddeleteGroup.mockResolvedValueOnce(group._id);
-
+    // @ts-ignore
+    mockeddeleteGroup.mockResolvedValueOnce({_id: group._id, message: 'f'});
+   
     // Диспатчим санку и получаем результат
     const result = await store.dispatch(deleteGroupTh(_id));
 
@@ -500,7 +501,8 @@ describe("deleteGroupTh thunk", () => {
   });
 
   it("dispatches rejected action when deleteGroupTh fails", async () => {
-    mockeddeleteGroup.mockResolvedValueOnce(null); // имитируем ошибку API
+    //@ts-ignore
+    mockeddeleteGroup.mockRejectedValueOnce('error'); // имитируем ошибку API
     const group: GroupType = {
       _id: "1",
       title: "Group 1",

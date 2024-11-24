@@ -1,8 +1,12 @@
-import { AddGroupType, ApiResponse, GroupType } from "./../types/types";
+import { AddGroupType } from "./../types/types";
 import axios from "axios";
+
 export const getAllGroups = async () => {
+  debugger
   try {
+    debugger
     const response = await axios.get(`https://ukenback.vercel.app/groups/`);
+    debugger
     //   console.log(response.data, "response.data");
     localStorage.setItem("groups", JSON.stringify(response.data));
     return response.data;
@@ -28,15 +32,15 @@ debugger
 export const deleteGroup = async (_id: string) => {
   try {
     //  console.log('апи 1')
-
+debugger
     const response = await axios.delete(
       `https://ukenback.vercel.app/groups/${_id}`
     );
-
-    return response.data;
+debugger
+    return response;
   } catch (error) {
     //   console.log('апи кетч')
-
+debugger
     throw error;
   }
 };

@@ -20,7 +20,7 @@
     "isolatedModules": true,
     "noEmit": true,
     "jsx": "react-jsx",
-    "typeRoots": ["./src/redux/types", "./node_modules/@types"]
+    "typeRoots": ["./src/redux/types", "./node_modules/@types", "./src/@types/declarations.d.ts", "./src/@types/global.d.ts"]
   },
 "include": [
   "src"

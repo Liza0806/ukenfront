@@ -183,7 +183,7 @@ describe("deleteGroup", () => {
       const result = await deleteGroup(mockId);
   
       // Проверяем, что возвращаемые данные соответствуют ожидаемым
-      expect(result).toEqual({ message: "Group successfully deleted" });
+      expect(result.data).toEqual({ message: "Group successfully deleted" });
     });
 
 
