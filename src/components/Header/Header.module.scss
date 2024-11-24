@@ -8,6 +8,9 @@
   width: 100%;
   justify-content: space-around;
   align-items: center;
+  position: sticky; // Заставить хедер "прилипать"
+  top: 0; // Привязать к верхней части окна
+  z-index: 1007; // Убедитесь, что он выше других элементов
  
 
   .logo {

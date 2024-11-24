@@ -1,0 +1,120 @@
+.containerSchedule {
+    height: 90vh;
+    width: 100%;
+    display: flex;
+    flex-direction: column; 
+    background: linear-gradient(180deg,rgba(0, 0, 0, 0.8) 0%, rgba(0, 0, 0, 0.7) 50%,  rgba(2, 2, 2, 0.4) 100%);
+    position: relative;
+    gap: 80px; 
+    padding-right: 90px;
+    padding-left: 90px;
+    padding-top: 30px;
+   
+  }
+
+  .titleHead {
+    display: flex;
+    align-items: center;
+    margin-left: auto; 
+    text-align: center;
+
+    .headerTitle {
+        text-transform: uppercase;
+        font-family: 'Roboto';
+        font-weight: 700;
+        font-size: 36px;
+        line-height: 36px;
+        color: #fbfbfa;
+        text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+        margin-left: auto;
+    }
+
+    .headerTitle::before {
+        content: '';
+        position: absolute;
+        top: 25px;
+        right: -38%;
+        transform: translateX(-50%) rotate(-0.16deg);
+        width: 1070px;
+        height: 1px;
+        background: #f7f7f7;
+    }
+}
+
+.gridDay{
+   
+    display: grid;
+    grid-template-columns: repeat(10, 117px);
+    gap: 4px;
+
+}
+
+.oneDay{
+    border: #FF6600, 1px, solid;
+}
+
+.gridContainer{
+    display: grid;
+    gap: 8px;
+    grid-template-rows: repeat(8, 40px);
+
+}
+
+.oneLine{
+    border-radius: 10px;
+    border: 1px #FF6600 solid;
+    background-color:rgba($color: #212121, $alpha: 0.6) ;
+    display: grid;
+    grid-template-columns: repeat(10, 120px);
+
+}
+.oneTime{
+   
+    grid-row-start: 1;
+    grid-row-end: 3;
+    align-content: center;
+    justify-items: center;
+}
+
+
+
+.oneTime:first-child{
+    grid-column-start: 1;
+    grid-column-end: 4;
+    grid-row-start: 1;
+    grid-row-end: 3;
+}
+
+
+.oneTimeDay{
+    border-radius: 7px;
+    background-color: black;
+    grid-row-start: 1;
+    grid-row-end: 3;
+    align-content: center;
+    justify-items: center;
+    height: auto;
+    width: 16vh;
+}
+
+
+
+.oneTimeDay:first-child{
+    background-color: rgba(0, 0, 0, 0.0);
+    border: none;
+    grid-column-start: 1;
+    grid-column-end: 4;
+    grid-row-start: 1;
+    grid-row-end: 3;
+}
+
+
+.dateOfShcedule{
+    color: #f1f1f1; /* Цвет текста */
+    font-size: 0.85rem; /* Уменьшен размер шрифта на 30% */
+    font-weight: bold; /* Жирный шрифт */
+    text-transform: uppercase; /* Все буквы заглавные */
+}
+
+
+

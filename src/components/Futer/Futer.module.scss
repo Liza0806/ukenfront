@@ -1,0 +1,68 @@
+.futerLanding {
+    height: 11vh;
+    background-color: black;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 40px;
+  }
+  
+  .label {
+    text-transform: uppercase;
+    font-family: 'Roboto';
+    font-style: normal;
+    font-weight: 700;
+    font-size: 32px; /* 64px -> 32px */
+    line-height: 32px; /* 64px -> 32px */
+    color: #FF6600;
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3); /* 2px -> 1px, 4px -> 2px */
+}
+  
+.contact {
+  color: #ffffff;
+  font-size: 1rem;
+  font-weight: 500;
+  text-transform: none;
+  letter-spacing: 0.05em;
+  line-height: 1.5;
+  font-family: 'Inter', sans-serif;
+  margin: 0;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.25);
+  display: inline-block;
+}
+  
+  
+  .contactContainer{
+    display: flex;
+    gap: 10px;
+    align-items: center;
+  }
+
+  .contactData{
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    cursor: pointer;
+  
+  }
+  .social{
+    color: #f1f1f1;
+    font-size: 0.85rem;
+    font-weight: bold;
+    text-transform: uppercase;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 5px;
+  }
+
+  .icon{
+    cursor: pointer;
+  }
+  .icon:hover{
+    scale: 110%;
+  }
+  .icon:nth-child(3){
+    padding-left: 7px;
+    background-color: #FF6600;
+  }
