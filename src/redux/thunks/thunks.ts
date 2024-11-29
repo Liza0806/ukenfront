@@ -35,9 +35,11 @@ export const fetchAllEvents = createAsyncThunk<
   void, // Тип аргументов (в данном случае ничего не передается)
   { rejectValue: string } // Тип значения для reject
 >("events/fetchAllEvents", async (_, thunkAPI) => {
+  debugger
   const response = await getAllEvents();
-
+debugger
   if (!response) {
+    debugger
   //  console.log("fetchAllEvents");
     return thunkAPI.rejectWithValue("error");
   }

@@ -1,5 +1,5 @@
 import { getAllUsers } from "../redux/api/usersApi"; // Функция для запроса
-import { fetchAllUsers } from "../redux/thunks/thunks"; // Танк для получения пользователей
+import { fetchAllUsers } from "../redux/thunks/thunks"; 
 import { UserList } from "../components/UserList/UserList";
 import { act, render, screen } from "@testing-library/react";
 import { configureStore } from "@reduxjs/toolkit";

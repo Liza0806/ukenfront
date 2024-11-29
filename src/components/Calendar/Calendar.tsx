@@ -7,6 +7,7 @@ import {
   format,
   isSameDay,
   subMonths,
+  isSameWeek,
 } from "date-fns";
 import { useNavigate } from "react-router-dom";
 import { EventTypeDB } from "../../redux/types/types";
@@ -28,6 +29,9 @@ import ArrowCircleRightIcon from '@mui/icons-material/ArrowCircleRight';
   const events = useAppSelector((state) => state.events.events);
   const isLoading = useAppSelector((state) => state.events.isLoading);
   const error = useAppSelector((state) => state.events.error);
+  console.log(error, 'error MyCalendar')
+  console.log(isLoading, 'isLoading MyCalendar')
+  console.log(events, 'events MyCalendar')
   // Фетчим ивенты при первом рендере
   useEffect(() => {
     dispatch(fetchAllEvents());
@@ -48,9 +52,11 @@ import ArrowCircleRightIcon from '@mui/icons-material/ArrowCircleRight';
   const getEventsForDay = (day: Date) => {
     return events.filter((event) => isSameDay(new Date(event.date), day));
   };
+  // const getEventsForWeek = (day: Date) => {
+  //   return events.filter((event) => isSameWeek(new Date(event.date), day));
+  // };
 
   const handleSelectEvent = (event: EventTypeDB) => {
-    localStorage.setItem("selectedEvent", JSON.stringify(event));
     navigate(`/events/${event._id}`, { state: { event } });
   };
 
@@ -69,7 +75,7 @@ import ArrowCircleRightIcon from '@mui/icons-material/ArrowCircleRight';
       {error && <div>Ошибка при загрузке событий </div>}
       {events.length === 0 && <div>Немає тренувань... </div>}
 
-      {!isLoading && !error && (
+      {events.length > 0 && (
         <div className={cls.joincalendar}>
           <div className={cls.calendarHeader}>
             

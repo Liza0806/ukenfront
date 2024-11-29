@@ -59,7 +59,7 @@ describe("fetchAllGroups thunk", () => {
   // Создаем временный Redux store для тестов
   const store = configureStore({
     reducer: {
-      groups: groupsReducer, // заменить на соответствующий редюсер для группы
+      groups: groupsReducer, 
     },
   });
 

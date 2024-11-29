@@ -1,21 +1,9 @@
 import React, { useState, useCallback } from "react";
 import cls from "./OneGroupInformation.module.scss";
-import {
-  GroupType,
-  ParticipantType,
-  ScheduleType,
-} from "../../redux/types/types";
+import { GroupType, ParticipantType } from "../../redux/types/types";
 import { useAppDispatch } from "../../redux/hooks/hooks";
-import { toast } from "react-toastify";
-import {
-  fetchAllGroups,
-  fetchAllUsers,
-  updateGroupTh,
-} from "../../redux/thunks/thunks";
+import { fetchAllUsers } from "../../redux/thunks/thunks";
 import { unwrapResult } from "@reduxjs/toolkit";
-import { UserList } from "../UserList/UserList";
-import { Modal } from "../Modal/Modal";
-import { GroupFormModal } from "../GroupFormModal/GroupFormModal";
 
 interface OneGroupInformationProps {
   groupData: GroupType;
@@ -40,7 +28,7 @@ export const OneGroupInformation: React.FC<OneGroupInformationProps> = ({
     newDayPayment: payment[0].dailyPayment,
     newMonthlyPayment: payment[0].monthlyPayment,
     newScheduleUS: schedule,
-    participants: participants
+    participants: participants,
   });
 
   const getUsers = useCallback(async () => {

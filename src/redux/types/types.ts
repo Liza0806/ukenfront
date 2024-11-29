@@ -110,7 +110,7 @@ export interface User {
 
 export interface PaymentState {
   paymentStatus: string;
-  error: string | null;
+  error: string | undefined;
 }
 
 //// ALL

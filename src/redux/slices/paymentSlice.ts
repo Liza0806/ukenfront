@@ -3,7 +3,7 @@ import { PaymentState } from '../types/types';
 
 const initialState: PaymentState = {
   paymentStatus: '',
-  error: null,
+  error: undefined,
 };
 
 const paymentSlice = createSlice({
@@ -13,7 +13,7 @@ const paymentSlice = createSlice({
     setPaymentStatus(state, action: PayloadAction<string>) {
       state.paymentStatus = action.payload;
     },
-    setError(state, action: PayloadAction<string | null>) {
+    setError(state, action: PayloadAction<string | undefined>) {
       state.error = action.payload;
     },
   },
