@@ -9,6 +9,7 @@ type useManageUsersProps = {
 }
 
 export const useManageUsers = (props?: useManageUsersProps) => {
+  debugger
     const [users, setUsers] = useState<PartialUserWithRequiredFields[] | User[]>([]);
     const [usersN, setUsersN] = useState<PartialUserWithRequiredFields[] | User[]>([]);
     const dispatch = useAppDispatch();
@@ -43,9 +44,9 @@ export const useManageUsers = (props?: useManageUsersProps) => {
 
     const handleAddUser = (user: Partial<User> , smth: EventTypeDB | GroupType, setSmth: Function) => {
     //  console.log('handleAddUser1', user, smth.participants)
-  
+  debugger
         if (!smth.participants.find(p => p._id === user._id)) {
-       
+       debugger
           //  console.log('handleAddUser2', user, smth.participants)
         setSmth({
           ...smth,
