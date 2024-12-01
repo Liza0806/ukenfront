@@ -1,8 +1,10 @@
+import React from 'react'
+
 import cls from "./Futer.module.scss";
 import telefon from "../../assets/svg/telephone-svgrepo-com (1).svg";
 import telegram from "../../assets/svg/telegram-svgrepo-com.svg";
 import instagram from "../../assets/svg/instagram-svgrepo-com.svg";
-import location from "../../assets/svg/location-svgrepo-com.svg";
+import location from '../../assets/svg/location-svgrepo-com.svg'
 
 export const Futer = () => {
   return (
