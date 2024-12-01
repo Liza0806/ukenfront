@@ -17,7 +17,7 @@ import ArrowCircleLeftIcon from '@mui/icons-material/ArrowCircleLeft';
 import ArrowCircleRightIcon from '@mui/icons-material/ArrowCircleRight';
 
 
-const MyCalendar: React.FC = () => {
+ const MyCalendar: React.FC = () => {
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
   const [dif, setDif] = useState(0);
@@ -26,7 +26,8 @@ const MyCalendar: React.FC = () => {
   const [month, setMonth] = useState<string>("");
 
   const events = useAppSelector((state) => state.events.events);
-
+  const isLoading = useAppSelector((state) => state.events.isLoading);
+  const error = useAppSelector((state) => state.events.error);
   // Фетчим ивенты при первом рендере
   useEffect(() => {
     dispatch(fetchAllEvents());
@@ -64,15 +65,18 @@ const MyCalendar: React.FC = () => {
   return (
    
       <div className={cls.calendar}>
-      {events.length === 0 && <div>Завантаження тренувань... </div>}
-      {events.length > 0 && (
+      {isLoading && <div>Завантаження тренувань... </div>}
+      {error && <div>Ошибка при загрузке событий </div>}
+      {events.length === 0 && <div>Немає тренувань... </div>}
+
+      {!isLoading && !error && (
         <div className={cls.joincalendar}>
           <div className={cls.calendarHeader}>
             
             
-             <ArrowCircleLeftIcon  onClick={lastMonth} style={{ color: 'black',   fontSize: '36px', cursor: 'pointer'}} fontSize="inherit" />
+             <ArrowCircleLeftIcon  onClick={lastMonth} style={{ color: 'black',   fontSize: '36px', cursor: 'pointer'}} fontSize="inherit"   data-testid="last-month-button" />
              <h2>{month}</h2>
-             <ArrowCircleRightIcon onClick={nextMonth} style={{ color: 'black',   fontSize: '36px', cursor: 'pointer'}} fontSize="inherit" />
+             <ArrowCircleRightIcon onClick={nextMonth} style={{ color: 'black',   fontSize: '36px', cursor: 'pointer'}} fontSize="inherit" data-testid="next-month-button" />
           </div>
           <div className={cls.calendarGrid}>
             {daysOfMonth.map((day) => {

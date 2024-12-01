@@ -1,4 +1,4 @@
-import { error, group } from 'console';
+import { error, group } from "console";
 /// GROUP
 
 export interface AddGroupArgs {
@@ -8,15 +8,15 @@ export interface AddGroupArgs {
 export interface ApiResponse {
   success: boolean;
   message?: string;
-  data: string; 
-  status: number
+  data: string;
+  status: number;
 }
 
 export type PaymentType = {
-  dailyPayment: number;
-  monthlyPayment: number;
-}
-  
+  dailyPayment: number | undefined;
+  monthlyPayment: number | undefined;
+};
+
 export type ScheduleType = {
   day: string;
   time: string;
@@ -25,6 +25,7 @@ export type ScheduleType = {
 export type ParticipantType = {
   _id: string;
   name: string;
+  telegramId: number;
 };
 
 export type GroupType = {
@@ -38,7 +39,7 @@ export type GroupType = {
 
 export type AddGroupType = {
   title: string;
-  coachId?: string;
+  coachId?: string | "Костя";
   payment: PaymentType[];
   schedule: ScheduleType[];
   participants: ParticipantType[];
@@ -48,27 +49,35 @@ export type GroupStateType = {
   isLoading: boolean;
   error: string | undefined;
   groups: GroupType[];
-  newGroup?: GroupType;
+  newGroup?: GroupType | undefined;
 };
 
-export type validDays =
-  | "sunday"
-  | "monday"
-  | "tuesday"
-  | "wednesday"
-  | "thursday"
-  | "friday"
-  | "saturday";
+export const daysOfWeekUk = [
+  "Понеділок",
+  "Вівторок",
+  "Середа",
+  "Четвер",
+  "П'ятниця",
+  "Субота",
+  "Неділя",
+];
 
 /// EVENT
 
 export type EventTypeDB = {
-  date: Date;
-  isCancelled: boolean;
-  participants: ParticipantType[];
   _id: string;
+  date: string;
   groupTitle: string;
   groupId: string;
+  isCancelled: boolean;
+  participants: ParticipantType[];
+};
+
+export type EventStateType = {
+  isLoading: boolean;
+  error: string | undefined;
+  events: EventTypeDB[];
+  currentEvent?: EventTypeDB | undefined;
 };
 
 //// USER
@@ -76,8 +85,7 @@ export type UserStateType = {
   isLoading: boolean;
   error: string | undefined;
   users: User[];
-}
-
+};
 
 export interface Visit {
   date: Date;
@@ -89,9 +97,21 @@ export interface User {
   _id: string;
   name: string;
   password: string;
-  phone?: string; // Опциональное поле, так как оно не является обязательным в Mongoose модели
-  isAdmin?: boolean; // Опциональное поле с значением по умолчанию false
-  groups: string[]; // Массив строк
+  phone?: string;
+  isAdmin?: boolean;
+  groups: string[];
   balance: number;
-  discount?: number; // Оп
+  telegramId: number;
+  discount?: number;
+  visits: Visit[];
 }
+
+//// PAYMENT
+
+export interface PaymentState {
+  paymentStatus: string;
+  error: string | null;
+}
+
+//// ALL
+export type PartialUserWithRequiredFields = Partial<User> & Pick<User, '_id' | 'name' | 'telegramId'>;

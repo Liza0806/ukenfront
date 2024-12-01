@@ -1,16 +1,12 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { User, UserStateType } from "../types/types";
+import { fetchAllUsers } from "../thunks/thunks";
 
-
-const persistedState = localStorage.getItem('users')
-  ? JSON.parse(localStorage.getItem('users')!)
-  : undefined;
 
 const initialState: UserStateType = {
   isLoading: false,
   error: undefined,
-  users: persistedState ?? [],
-  
+  users: [],
 };
 
 const usersSlice = createSlice({
@@ -24,7 +20,24 @@ const usersSlice = createSlice({
         state.users = [];
       },
     },
-
+    extraReducers: (builder) => {
+      builder
+        .addCase(fetchAllUsers.pending, (state) => {
+          state.isLoading = true;
+       //   console.log("pending");
+        })
+        .addCase(fetchAllUsers.fulfilled, (state, action) => {
+          state.isLoading = false;
+          state.users = action.payload;
+       //   console.log(action.payload);
+        })
+        .addCase(fetchAllUsers.rejected, (state, action) => {
+          state.isLoading = false;
+          state.error = action.payload
+       //   console.log(action.payload, "error");
+        })
+        
+    },
   });
   
   export const { getUsers, clearUsers } = usersSlice.actions;

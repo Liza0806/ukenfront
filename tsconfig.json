@@ -19,9 +19,11 @@
     "resolveJsonModule": true,
     "isolatedModules": true,
     "noEmit": true,
-    "jsx": "react-jsx"
+    "jsx": "react-jsx",
+    "typeRoots": ["./src/redux/types", "./node_modules/@types", "./src/@types/declarations.d.ts", "./src/@types/global.d.ts"]
   },
 "include": [
   "src"
-]
+],
+"exclude": ["**/*.test.ts", "**/*.test.tsx"]
 }

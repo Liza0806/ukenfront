@@ -1,13 +1,7 @@
-import { fetchAllEvents } from '../thunks/thunks';
-import { EventTypeDB } from '../types/types';
+import { fetchAllEvents, fetchEventById } from '../thunks/thunks';
+import { EventStateType, EventTypeDB } from '../types/types';
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
-type EventStateType = {
-    isLoading: boolean,
-    error: string | undefined,
-    events: EventTypeDB[];
-    currentEvent?: EventTypeDB | undefined;
-}
 
 const persistedState = localStorage.getItem('events')
   ? JSON.parse(localStorage.getItem('events')!)
@@ -28,26 +22,42 @@ const eventsSlice = createSlice({
     },
     setCurrentEvent(state, action: PayloadAction<EventTypeDB>){
         state.currentEvent = action.payload
-    }
+    },
+    clearCurrentEvent(state) {
+      state.currentEvent = undefined;
+    },
   },
   extraReducers: (builder) => {
     builder
     .addCase(fetchAllEvents.pending, (state) => {
         state.isLoading = true
-        console.log('pending')
+      //  console.log('pending')
     })
     .addCase(fetchAllEvents.fulfilled, (state, action) => {
         state.isLoading = false
         state.events = action.payload
-        console.log(action.payload)
+    //    console.log(action.payload)
     })
     .addCase(fetchAllEvents.rejected, (state, action) => {
         state.isLoading = false
-//state.error = action.payload
-        console.log(action.payload, 'error')
+       state.error = action.payload
+     //   console.log(action.payload, 'error')
     })
-    
+    .addCase(fetchEventById.pending, (state) => {
+        state.isLoading = true
+     //   console.log('pending')
+    })
+    .addCase(fetchEventById.fulfilled, (state, action) => {
+        state.isLoading = false
+        state.currentEvent = action.payload
+   //     console.log(action.payload)
+    })
+    .addCase(fetchEventById.rejected, (state, action) => {
+        state.isLoading = false
+       state.error = action.payload
+    //    console.log(action.payload, 'error')
+    })
 }});
 
-export const { setEvents, setCurrentEvent } = eventsSlice.actions;
+export const { setEvents, setCurrentEvent, clearCurrentEvent } = eventsSlice.actions;
 export default eventsSlice.reducer;

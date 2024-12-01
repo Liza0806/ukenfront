@@ -6,7 +6,7 @@ export const getAllEvents = async () => {
       const response = await axios.get(
         `https://ukenback.vercel.app/events/`
       );
-      console.log(response.data, "response.data");
+   //   console.log(response.data, "response.data");
       localStorage.setItem('events', JSON.stringify(response.data))
       return response.data;
     } catch (error) {
@@ -14,15 +14,28 @@ export const getAllEvents = async () => {
     }
   };
 
-  export const getEventById = async (id:string): Promise<EventTypeDB> => {
+  export const getEventById = async (id:string) => {
     try {
-      const response = await axios.get<EventTypeDB>(
+      const response = await axios.get(
         `https://ukenback.vercel.app/events/${id}`
       );
-      console.log(response.data, "response.data");
+    //  console.log(response.data, "response.data");
       return response.data;
     } catch (error) {
       throw error;
     }
   };
+
+  export const updateEventAPi = async (event: EventTypeDB)=>{
+    try {
+      const response = await axios.put(
+        `https://ukenback.vercel.app/events/${event._id}`,
+        event
+      );
+    //  console.log(response.data);
+      return response.data;
+    } catch (error) {
+      throw error;
+    }
+  }
   

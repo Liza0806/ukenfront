@@ -1,53 +1,86 @@
-import React from "react";
+import React, { useState, useCallback } from "react";
 import cls from "./OneGroupInformation.module.scss";
+import {
+  GroupType,
+  ParticipantType,
+  ScheduleType,
+} from "../../redux/types/types";
+import { useAppDispatch } from "../../redux/hooks/hooks";
+import { toast } from "react-toastify";
+import {
+  fetchAllGroups,
+  fetchAllUsers,
+  updateGroupTh,
+} from "../../redux/thunks/thunks";
+import { unwrapResult } from "@reduxjs/toolkit";
+import { UserList } from "../UserList/UserList";
+import { Modal } from "../Modal/Modal";
+import { GroupFormModal } from "../GroupFormModal/GroupFormModal";
 
-import { GroupType } from "../../redux/types/types";
-
-interface GroupPageProps {
+interface OneGroupInformationProps {
   groupData: GroupType;
 }
 
-export const GroupPage: React.FC<GroupPageProps> = ({ groupData }) => {
-  const { title, payment, schedule, participants } = groupData;
+export const OneGroupInformation: React.FC<OneGroupInformationProps> = ({
+  groupData,
+}) => {
+  const { title, payment, schedule, participants, _id } = groupData;
 
-  // Определение типа для дней недели
-  type DaysOfWeek = 'Monday' | 'Tuesday' | 'Wednesday' | 'Thursday' | 'Friday' | 'Saturday' | 'Sunday';
+  const appDispatch = useAppDispatch();
+  // const [updateButton, setUpdateButton] = useState(true);
 
-  // Объект с переводами дней недели на украинский
-  const daysOfWeekUk: Record<DaysOfWeek, string> = {
-    Monday: "Понеділок",
-    Tuesday: "Вівторок",
-    Wednesday: "Середа",
-    Thursday: "Четвер",
-    Friday: "П'ятниця",
-    Saturday: "Субота",
-    Sunday: "Неділя",
-  };
+  const [updateSchedule, setUpdateSchedule] = useState(false);
+  const [usersInBase, setUsersInBase] = useState<ParticipantType[]>([]);
 
-  // Функция для получения дня недели на украинском языке
-  const getDayInUkrainian = (day: string): string => {
-    const dayKey = day.charAt(0).toUpperCase() + day.slice(1).toLowerCase(); // Приводим строку к правильному регистру
-    return daysOfWeekUk[dayKey as DaysOfWeek] || day; // Возвращаем перевод или оригинал
-  };
+  ////////////////// new part /////////////////
+
+  const [showModal, setShowModal] = useState(false);
+  const [groupFormState, setGroupFormState] = useState({
+    newTitle: title,
+    newDayPayment: payment[0].dailyPayment,
+    newMonthlyPayment: payment[0].monthlyPayment,
+    newScheduleUS: schedule,
+    participants: participants
+  });
+
+  const getUsers = useCallback(async () => {
+    try {
+      const response = await appDispatch(fetchAllUsers());
+      const result = unwrapResult(response);
+      setUsersInBase(typeof result !== "string" ? result : []);
+    } catch (error) {
+      console.error("Ошибка при получении пользователей:", error);
+      setUsersInBase([]);
+    }
+  }, [appDispatch]);
 
   return (
     <div className={cls.oneGroup}>
+      <button
+        onClick={() => {
+          setShowModal(true);
+          getUsers();
+        }}
+      >
+        OPEN MODAL
+      </button>
+      {/* <div>
+        <p className={cls.title}>{groupData?.title ?? ""}</p>
+      </div> */}
       {/* Секция оплаты */}
       <section>
         <h3 className={cls.title}>Оплата</h3>
-        <div>
-          <p className={cls.title}>Оплата за день: {payment[0].dailyPayment} грн</p>
-          <p className={cls.title}>Оплата за місяць: {payment[0].monthlyPayment} грн</p>
-        </div>
+        <p>Оплата за день: {groupFormState.newDayPayment || 0} грн</p>
+        <p>Оплата за місяць: {groupFormState.newMonthlyPayment ?? 0} грн</p>
       </section>
 
       {/* Секция графика */}
       <section className={cls.title}>
         <h3 className={cls.h3}>Графік:</h3>
-        <ul className={cls.titleSchedule}>
-          {schedule.map((sched, index) => (
-            <li key={index}>
-              {getDayInUkrainian(sched.day)}: {sched.time}
+        <ul>
+          {groupFormState.newScheduleUS.map((sched, index) => (
+            <li key={index} onDoubleClick={() => setUpdateSchedule(true)}>
+              {sched.day}: {sched.time}
             </li>
           ))}
         </ul>
@@ -57,13 +90,13 @@ export const GroupPage: React.FC<GroupPageProps> = ({ groupData }) => {
       <section className={cls.title}>
         <h3 className={cls.h3}>Учасники:</h3>
         {participants.length > 0 ? (
-          <ul className={cls.titleSchedule}>
+          <ul>
             {participants.map((participant, index) => (
               <li key={index}>{participant.name || "Не вказано"}</li>
             ))}
           </ul>
         ) : (
-          <p className={cls.titleSchedule}>Нет учасників</p>
+          <p>Нет учасників</p>
         )}
       </section>
     </div>
