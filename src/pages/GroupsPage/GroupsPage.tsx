@@ -16,6 +16,7 @@ import {
 } from "../../redux/thunks/thunks";
 import { Modal } from "../../components/Modal/Modal";
 import { GroupFormModal } from "../../components/GroupFormModal/GroupFormModal";
+import { toast } from "react-toastify";
 
 const GroupsPage = () => {
   const [showModalForUpdate, setShowModalForUpdate] = useState(false);
@@ -36,6 +37,7 @@ const GroupsPage = () => {
     try {
       await dispatch(deleteGroupTh(groupId));
     } catch (error) {
+      toast.error('Ошибка при удалении группы')
       console.error("Ошибка при удалении группы:", error);
     }
   };
@@ -45,7 +47,6 @@ const GroupsPage = () => {
       <div className={cls.containerGradient}>
         <div className={cls.containerHeader}>
           <p className={cls.titleHead}>ГРУПИ</p>
-          {error && <p>Ошибка при удалении группы</p>}
         </div>
 
         {/* Модалка для создания*/}
