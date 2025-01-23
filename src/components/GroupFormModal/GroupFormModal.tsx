@@ -118,7 +118,7 @@ console.log(initialGroupData, 'initialGroupData')
           title: '',
           dailyPayment: 0,
           monthlyPayment: 0,
-          schedule: [{ day: '', time: "00:00" }],
+          schedule: [],
           participants:[]
      
       })
