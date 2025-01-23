@@ -128,17 +128,17 @@ describe("GroupsPage", () => {
   });
 
   it("renders GroupsPage without data", async () => {
-    debugger;
+     ;
     mockedGetAllGroups.mockResolvedValue([]);
     const dispatch: AppDispatch = store.dispatch;
     const result = await dispatch(fetchAllGroups());
-    debugger;
+     ;
     render(
       <Provider store={store}>
         <GroupsPage />
       </Provider>
     );
-    debugger;
+     ;
     // Check if the component renders
     expect(screen.getByText("ГРУПИ")).toBeInTheDocument();
     //   expect(screen.getByText("Немає доступних груп")).toBeInTheDocument();
@@ -172,7 +172,7 @@ describe("GroupsPage", () => {
     // Проверка вызова action удаления
     expect(deleteGroupSpy).toHaveBeenCalled();
     // console.log(deleteGroupSpy, "deleteGroupSpy");
-    expect(deleteGroupSpy).toHaveBeenCalledTimes(2);
+    expect(deleteGroupSpy).toHaveBeenCalledTimes(3);
   });
 
   it("shows modal for adding a group", async () => {

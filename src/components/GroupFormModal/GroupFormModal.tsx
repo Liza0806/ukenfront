@@ -5,7 +5,7 @@ import {
   ParticipantType,
   ScheduleType,
 } from "../../redux/types/types";
-import { UserList } from "../UserList/UserList";
+import UserList from "../UserList/UserList";
 import { selectUsers } from "../../redux/selectors/selectors";
 import { useAppSelector } from "../../redux/hooks/hooks";
 
@@ -40,41 +40,57 @@ export const handleSubmit = async (
   closeModal: () => void,
   _id?: string
 ) => {
-  debugger;
+   ;
+if(!groupFormState.title){
+  toast.error("Title")
+  return
+}
+if(!groupFormState.dailyPayment && !groupFormState.monthlyPayment){
+  toast.error("один из платежей должен быть заполнен")
+  return
+}
+
+if(!groupFormState.schedule.map(el=>{
+ if(el.day && el.time){return true}
+ return false
+}) || groupFormState.schedule.length === 0){
+  toast.error("не верный формат расписания")
+  return
+}
   const groupForTh: AddGroupType = {
-    title: groupFormState!.title!,
+    title: groupFormState.title,
     coachId: "Kostya",
     payment: [
       {
-        dailyPayment: groupFormState.dailyPayment,
-        monthlyPayment: groupFormState.monthlyPayment,
+        dailyPayment: groupFormState.dailyPayment? groupFormState.dailyPayment : 0,
+        monthlyPayment: groupFormState.monthlyPayment? groupFormState.monthlyPayment : 0,
       },
     ],
-    schedule: [...groupFormState!.schedule!],
-    participants: [...groupFormState!.participants!],
+    schedule: [...groupFormState.schedule],
+    participants: [...groupFormState.participants],
   };
   // console.log(initialGroupData, 'initialGroupData')
   try {
     let result;
     if (isEditMode && _id) {
-       //  debugger;
+       //   ;
         result = await appDispatch(
           updateGroupTh({ group: groupForTh, _id: _id })
         ).unwrap(); // Разворачиваем результат, чтобы проверить ошибки
-      //  debugger;
+      //   ;
         toast.success("Группа успешно обновлена");
         closeModal();   
     } else {
-   //   debugger;
+   //    ;
       console.log(groupForTh, "groupForTh");
       result = await appDispatch(addGroupTh(groupForTh)).unwrap(); // Разворачиваем результат
       toast.success("Группа успешно добавлена");
       closeModal();
     }
- //   debugger;
+ //    ;
     appDispatch(fetchAllGroups());
   } catch (error) {
-  //  debugger;
+  //   ;
     toast.error("Ошибка при сохранении группы");
   }
 };
@@ -86,30 +102,35 @@ export const GroupFormModal: React.FC<GroupFormProps> = ({
 }) => {
   const appDispatch = useAppDispatch();
   const usersInBase = useAppSelector(selectUsers);
-
+console.log(initialGroupData, 'initialGroupData')
   const [groupId, setGroupId] = useState(initialGroupData?._id);
 
-  const [groupFormState, setGroupFormState] = useState<groupFormStateType>({
-    title: initialGroupData ? initialGroupData.title : "",
-    dailyPayment: initialGroupData
-      ? initialGroupData.payment[0].dailyPayment
-      : undefined,
-    monthlyPayment: initialGroupData
-      ? initialGroupData.payment[0].monthlyPayment
-      : undefined,
-    schedule: initialGroupData
-      ? initialGroupData.schedule
-      : [{ day: daysOfWeekUk[0], time: "08:00" }],
-    participants: initialGroupData?.participants
-      ? initialGroupData?.participants
-      : [],
-  });
+  const [groupFormState, setGroupFormState] = useState<groupFormStateType>((isEditMode && initialGroupData)?{
+
+        title: initialGroupData.title,
+        dailyPayment: initialGroupData.payment[0].dailyPayment,
+        monthlyPayment: initialGroupData.payment[0].monthlyPayment,
+        schedule: initialGroupData.schedule,
+        participants: initialGroupData.participants
+  
+   } :{ 
+
+          title: '',
+          dailyPayment: 0,
+          monthlyPayment: 0,
+          schedule: [{ day: '', time: "00:00" }],
+          participants:[]
+     
+      })
+
+  
 
   const handleInputChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
   ) => {
     const { name, type } = e.target as HTMLInputElement;
     let value: string | number = e.target.value;
+
     if (type === "number") {
       value = Number(value);
     }
@@ -140,7 +161,7 @@ export const GroupFormModal: React.FC<GroupFormProps> = ({
       ...prevState,
       schedule: [
         ...prevState.schedule,
-        { day: daysOfWeekUk[0], time: "08:00" },
+        { day: '', time: "00:00" },
       ],
     }));
   };
@@ -163,6 +184,7 @@ export const GroupFormModal: React.FC<GroupFormProps> = ({
         value={groupFormState.title}
         name="title"
         onChange={handleInputChange}
+       // onBlur={onUnfocus}
         data-testid="group-title-input"
         required
       />
@@ -174,7 +196,7 @@ export const GroupFormModal: React.FC<GroupFormProps> = ({
         type="number"
         name="dailyPayment"
         placeholder="Ежедневный платеж"
-        value={groupFormState.dailyPayment}
+        value={groupFormState.dailyPayment? groupFormState.dailyPayment : undefined}
         onChange={handleInputChange}
         data-testid="group-dailyPayment-input"
         required
@@ -187,7 +209,7 @@ export const GroupFormModal: React.FC<GroupFormProps> = ({
         type="number"
         name="monthlyPayment"
         placeholder="Ежемесячный платеж"
-        value={groupFormState.monthlyPayment}
+        value={groupFormState.monthlyPayment? groupFormState.monthlyPayment: undefined}
         onChange={handleInputChange}
         data-testid="group-monthlyPayment-input"
         required
@@ -199,7 +221,7 @@ export const GroupFormModal: React.FC<GroupFormProps> = ({
         {groupFormState.schedule.map((sched, index) => (
           <div key={index}>
             <select
-              value={sched.day}
+              value={sched.day? sched.day : undefined}
               data-testid="group-scheduleDay-select"
               onChange={(e) =>
                 handleScheduleChange(index, "day", e.target.value)
@@ -241,7 +263,6 @@ export const GroupFormModal: React.FC<GroupFormProps> = ({
             closeModal,
             groupId
           );
-          setGroupId("");
         }}
       >
         {isEditMode ? "Обновить группу" : "Добавить группу"}

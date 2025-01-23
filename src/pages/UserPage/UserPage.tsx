@@ -10,7 +10,7 @@ const UserPage: React.FC = () => {
   //const userId = id;
 
   useEffect(() => {
-    // debugger
+    //  
     if (id) {
       getUsersByUserId(id)
         .then((user) => {

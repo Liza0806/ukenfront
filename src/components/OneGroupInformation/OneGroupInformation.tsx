@@ -2,8 +2,6 @@ import React, { useState, useCallback } from "react";
 import cls from "./OneGroupInformation.module.scss";
 import { GroupType, ParticipantType } from "../../redux/types/types";
 import { useAppDispatch } from "../../redux/hooks/hooks";
-import { fetchAllUsers } from "../../redux/thunks/thunks";
-import { unwrapResult } from "@reduxjs/toolkit";
 
 interface OneGroupInformationProps {
   groupData: GroupType;
@@ -31,30 +29,10 @@ export const OneGroupInformation: React.FC<OneGroupInformationProps> = ({
     participants: participants,
   });
 
-  const getUsers = useCallback(async () => {
-    try {
-      const response = await appDispatch(fetchAllUsers());
-      const result = unwrapResult(response);
-      setUsersInBase(typeof result !== "string" ? result : []);
-    } catch (error) {
-      console.error("Ошибка при получении пользователей:", error);
-      setUsersInBase([]);
-    }
-  }, [appDispatch]);
 
   return (
     <div className={cls.oneGroup}>
-      <button
-        onClick={() => {
-          setShowModal(true);
-          getUsers();
-        }}
-      >
-        OPEN MODAL
-      </button>
-      {/* <div>
-        <p className={cls.title}>{groupData?.title ?? ""}</p>
-      </div> */}
+    
       {/* Секция оплаты */}
       <section>
         <h3 className={cls.title}>Оплата</h3>

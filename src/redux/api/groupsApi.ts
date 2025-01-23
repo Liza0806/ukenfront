@@ -2,11 +2,12 @@ import { AddGroupType } from "./../types/types";
 import axios from "axios";
 
 export const getAllGroups = async () => {
-  debugger
+   
   try {
-    debugger
+     
     const response = await axios.get(`https://ukenback.vercel.app/groups/`);
-    debugger
+   // const response = await axios.get(`/groups/`);
+     
     //   console.log(response.data, "response.data");
     localStorage.setItem("groups", JSON.stringify(response.data));
     return response.data;
@@ -17,14 +18,13 @@ export const getAllGroups = async () => {
 
 export const addGroup = async (group: AddGroupType) => {
   try {
-    const response = await axios.post(
-      `https://ukenback.vercel.app/groups/`,
-      group
-    );
-debugger
+    const response = await axios.post(`https://ukenback.vercel.app/groups/`, group);
+   // const response = await axios.post(`/groups/`, group);
+
+ 
     return response;
   } catch (error) {
-    debugger
+     
     throw error; // обработка ошибок в вызывающем коде
   }
 };
@@ -32,30 +32,28 @@ debugger
 export const deleteGroup = async (_id: string) => {
   try {
     //  console.log('апи 1')
-debugger
-    const response = await axios.delete(
-      `https://ukenback.vercel.app/groups/${_id}`
-    );
-debugger
+ 
+     const response = await axios.delete(`https://ukenback.vercel.app/groups/${_id}`);
+  //  const response = await axios.delete(`/groups/${_id}`);
+
+    //  
     return response;
   } catch (error) {
     //   console.log('апи кетч')
-debugger
+ 
     throw error;
   }
 };
 export const updateGroup = async (group: AddGroupType, _id: string) => {
- debugger
+  
   try {
-    debugger
-    const response = await axios.put(
-      `https://ukenback.vercel.app/groups/${_id}`,
-      group
-    );
-    debugger
+     
+     const response = await axios.put(`https://ukenback.vercel.app/groups/${_id}`,group);
+    // const response = await axios.put(`/groups/${_id}`,group);
+     
     return response.data;
   } catch (error) {
-    debugger
+     
     throw error; // обработка ошибок в вызывающем коде
   }
 };

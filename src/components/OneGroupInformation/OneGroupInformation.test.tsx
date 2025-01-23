@@ -55,20 +55,6 @@ describe("OneGroupInformation Component", () => {
     expect(screen.getByText("Иван")).toBeInTheDocument();
   });
 
-  it("opens modal and fetches users on button click", async () => {
-    render(
-      <Provider store={mockStore}>
-        <OneGroupInformation groupData={mockGroupData} />
-      </Provider>
-    );
-
-    const button = screen.getByText("OPEN MODAL");
-    fireEvent.click(button);
-
-    expect(fetchAllUsers).toHaveBeenCalled();
-    await screen.findByText("Анна");
-  });
-
   it("displays message when no participants", () => {
     const groupDataWithoutParticipants = { ...mockGroupData, participants: [] };
 

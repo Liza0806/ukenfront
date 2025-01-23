@@ -2,28 +2,26 @@ import axios from "axios";
 import { EventTypeDB } from "../types/types";
 
 export const getAllEvents = async () => {
-  debugger
+   
     try {
-      debugger
-      const response = await axios.get(
-        `https://ukenback.vercel.app/events/`
-      );
-      debugger
+       
+      const response = await axios.get(`https://ukenback.vercel.app/events/`);
+   // const response = await axios.get(`/events/`);
+       
    //   console.log(response.data, "response.data");
       localStorage.setItem('events', JSON.stringify(response.data))
       return response.data;
     } catch (error) {
-      debugger
+       
       throw error;
     }
   };
 
   export const getEventById = async (id:string) => {
     try {
-      const response = await axios.get(
-        `https://ukenback.vercel.app/events/${id}`
-      );
-    //  console.log(response.data, "response.data");
+      const response = await axios.get(`https://ukenback.vercel.app/events/${id}`);    
+   // const response = await axios.get(`/events/${id}`); 
+    // //  console.log(response.data, "response.data");
       return response.data;
     } catch (error) {
       throw error;
@@ -32,10 +30,8 @@ export const getAllEvents = async () => {
 
   export const updateEventAPi = async (event: EventTypeDB)=>{
     try {
-      const response = await axios.put(
-        `https://ukenback.vercel.app/events/${event._id}`,
-        event
-      );
+      const response = await axios.put(`https://ukenback.vercel.app/events/${event._id}`, event);
+   //   const response = await axios.put(`/events/${event._id}`, event);
     //  console.log(response.data);
       return response.data;
     } catch (error) {

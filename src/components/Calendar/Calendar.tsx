@@ -35,6 +35,7 @@ import ArrowCircleRightIcon from '@mui/icons-material/ArrowCircleRight';
   // Фетчим ивенты при первом рендере
   useEffect(() => {
     dispatch(fetchAllEvents());
+    
   }, [dispatch]);
 
   useEffect(() => {

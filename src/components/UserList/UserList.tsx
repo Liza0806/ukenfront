@@ -2,7 +2,7 @@ import IconButton from "@mui/material/IconButton";
 import DeleteIcon from "@mui/icons-material/Delete";
 import AddCircleOutlineIcon from "@mui/icons-material/AddCircleOutline";
 import cls from "./UserList.module.scss";
-import { ChangeEventHandler, useState } from "react";
+import React, { ChangeEventHandler, useState } from "react";
 import {
   EventTypeDB,
   GroupType,
@@ -18,7 +18,7 @@ export interface UserListProps {
   existingUsers?: PartialUserWithRequiredFields[];
 }
 
-export const UserList: React.FC<UserListProps> = ({
+const UserList: React.FC<UserListProps> = ({
   smth,
   setSmth,
   existingUsers,
@@ -65,7 +65,7 @@ export const UserList: React.FC<UserListProps> = ({
             <IconButton
               data-testid="userInListAddBtn"
               onClick={() => {
-                debugger;
+                 ;
                 handleAddUser(user!, smth, setSmth);
               }}
             >
@@ -75,7 +75,7 @@ export const UserList: React.FC<UserListProps> = ({
             <button data-testid="userInListDeleteBtn"
             className={cls.deleteIcon}
             onClick={() => {
-              debugger
+               
               handleDeleteUser(user!._id, smth, setSmth)}}><DeleteIcon
              
             ></DeleteIcon></button>
@@ -85,3 +85,4 @@ export const UserList: React.FC<UserListProps> = ({
     </div>
   );
 };
+export default React.memo(UserList); 
