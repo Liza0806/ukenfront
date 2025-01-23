@@ -218,10 +218,10 @@ console.log(initialGroupData, 'initialGroupData')
       <div>
         <label>Schedule</label>
 
-        {groupFormState.schedule.map((sched, index) => (
+        {groupFormState.schedule.length>0 && groupFormState.schedule.map((sched, index) => (
           <div key={index}>
             <select
-              value={sched.day? sched.day : undefined}
+              value={sched.day}
               data-testid="group-scheduleDay-select"
               onChange={(e) =>
                 handleScheduleChange(index, "day", e.target.value)
