@@ -12,7 +12,7 @@
   padding: 10px;
   width: 100%;
   margin: 0 auto;
-  margin-top: 14vh;
+  margin-top: 7vh;
 }
 .containerHeader {
   display: flex;
@@ -41,8 +41,8 @@
   font-size: 16px;
   cursor: pointer;
   transition: background-color 0.3s, transform 0.2s;
-  margin-bottom: 5vh;
-  margin-top: 5vh;
+  margin-bottom: 20vh;
+ 
 
 
 }
@@ -50,6 +50,11 @@
   cursor: pointer;
   border: #ff6600;
   margin-left: auto;
+  
+}
+.deleteButton {
+  cursor: pointer;
+  margin-left: 1vh;
   
 }
 
@@ -131,4 +136,24 @@
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
+}
+
+
+@media (max-width: 768px) {
+  .containerGroups {
+    flex-direction: column; /* Устанавливаем направление колонкой */
+    gap: 20px; /* Уменьшаем отступы между элементами */
+    align-items: center; /* Центрируем элементы */
+  }
+  .oneGroupContainer {
+    width: auto;
+    height: auto;
+  }
+
+  .changeButton {
+    cursor: pointer;
+    border: #ff6600;
+    margin-left: 1vh;
+    
+  }
 }

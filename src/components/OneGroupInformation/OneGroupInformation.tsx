@@ -85,7 +85,7 @@ export const OneGroupInformation: React.FC<OneGroupInformationProps> = ({
             ))}
           </ul>
         ) : (
-          <p>Нет учасників</p>
+          <p> Немає учасників</p>
         )}
       </section>
     </div>

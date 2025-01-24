@@ -27,7 +27,7 @@ const GroupsPage = () => {
   }, [dispatch]);
 
   const groups = useAppSelector(selectGroups);
-  const error = useAppSelector(selectGroupsError);
+ 
 
   const handleDeleteGroup = async (groupId: string) => {
     try {
@@ -39,10 +39,13 @@ const GroupsPage = () => {
 
   return (
     <Container containerImage={containerImage} isCentre={false}>
+    
+
+
       <div className={cls.containerGradient}>
         <div className={cls.containerHeader}>
           <p className={cls.titleHead}>ГРУПИ</p>
-          {error && toast.error("Ошибка при удалении группы")}
+    
         </div>
 
         {/* Модалка для создания*/}
@@ -93,10 +96,14 @@ const GroupsPage = () => {
               <li>
                 <OneGroupInformation groupData={group} />
               </li>
+
+                
+
             </div>
+            
           ))}
         </ul>
-
+      
         <button
           className={cls.button}
           onClick={() => {
@@ -105,7 +112,9 @@ const GroupsPage = () => {
         >
           Створити групи
         </button>
+       <p>fdsfdsfd</p>
       </div>
+    
     </Container>
   );
 };
