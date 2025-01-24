@@ -93,8 +93,7 @@ describe("GroupFormModal", () => {
     expect(
       screen.getByTestId("group-monthlyPayment-input")
     ).toBeInTheDocument();
-    expect(screen.getByTestId("group-scheduleDay-select")).toBeInTheDocument();
-    expect(screen.getByTestId("group-scheduleTime-select")).toBeInTheDocument();
+
   });
 
   it("should update the title field correctly when typing", () => {

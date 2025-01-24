@@ -31,7 +31,6 @@ const GroupsPage = () => {
   }, [dispatch]);
 
   const groups = useAppSelector(selectGroups);
-  const error = useAppSelector(selectGroupsError);
 
   const handleDeleteGroup = async (groupId: string) => {
     try {
