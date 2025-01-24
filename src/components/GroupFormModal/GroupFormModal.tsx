@@ -40,7 +40,7 @@ export const handleSubmit = async (
   closeModal: () => void,
   _id?: string
 ) => {
-  debugger;
+  ;
   const groupForTh: AddGroupType = {
     title: groupFormState!.title!,
     coachId: "Kostya",
@@ -57,24 +57,24 @@ export const handleSubmit = async (
   try {
     let result;
     if (isEditMode && _id) {
-       //  debugger;
+       //  ;
         result = await appDispatch(
           updateGroupTh({ group: groupForTh, _id: _id })
         ).unwrap(); // Разворачиваем результат, чтобы проверить ошибки
-      //  debugger;
+      //  ;
         toast.success("Группа успешно обновлена");
         closeModal();   
     } else {
-   //   debugger;
+   //   ;
       console.log(groupForTh, "groupForTh");
       result = await appDispatch(addGroupTh(groupForTh)).unwrap(); // Разворачиваем результат
       toast.success("Группа успешно добавлена");
       closeModal();
     }
- //   debugger;
+ //   ;
     appDispatch(fetchAllGroups());
   } catch (error) {
-  //  debugger;
+  //  ;
     toast.error("Ошибка при сохранении группы");
   }
 };

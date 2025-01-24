@@ -94,14 +94,14 @@ beforeEach(() => {
   });
 
   it("renders the correct initial month", async () => {
-  debugger
+  
     mockedGetAllEvents.mockResolvedValue(mockEvents);
-    debugger
+    
     const result = await dispatch(fetchAllEvents());
-debugger
+
    expect(result.type).toBe("events/fetchAllEvents/fulfilled");
    expect(result.payload).toEqual(mockEvents);
-debugger
+
     render(
       <Provider store={store}>
         <Router>
@@ -189,11 +189,11 @@ debugger
   });
 
   it("selects an event and displays it", async () => {
-    debugger
+    
     mockedGetAllEvents.mockResolvedValue(mockEvents);
-    debugger
+    
     const result = await dispatch(fetchAllEvents());
-debugger
+
  
     render(
       <Provider store={store}>

@@ -2,18 +2,18 @@ import axios from "axios";
 import { EventTypeDB } from "../types/types";
 
 export const getAllEvents = async () => {
-  debugger
+  
     try {
-      debugger
+      
       const response = await axios.get(
         `https://ukenback.vercel.app/events/`
       );
-      debugger
+      
    //   console.log(response.data, "response.data");
       localStorage.setItem('events', JSON.stringify(response.data))
       return response.data;
     } catch (error) {
-      debugger
+      
       throw error;
     }
   };

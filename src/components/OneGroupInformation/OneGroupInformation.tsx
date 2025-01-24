@@ -5,6 +5,7 @@ import { useAppDispatch } from "../../redux/hooks/hooks";
 import { fetchAllUsers } from "../../redux/thunks/thunks";
 import { unwrapResult } from "@reduxjs/toolkit";
 
+
 interface OneGroupInformationProps {
   groupData: GroupType;
 }
@@ -50,14 +51,14 @@ export const OneGroupInformation: React.FC<OneGroupInformationProps> = ({
           getUsers();
         }}
       >
-        OPEN MODAL
+    
       </button>
       {/* <div>
         <p className={cls.title}>{groupData?.title ?? ""}</p>
       </div> */}
       {/* Секция оплаты */}
-      <section>
-        <h3 className={cls.title}>Оплата</h3>
+      <section className={cls.title}>
+        <h3 >Оплата</h3>
         <p>Оплата за день: {groupFormState.newDayPayment || 0} грн</p>
         <p>Оплата за місяць: {groupFormState.newMonthlyPayment ?? 0} грн</p>
       </section>

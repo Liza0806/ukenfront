@@ -29,18 +29,18 @@ const eventsSlice = createSlice({
   extraReducers: (builder) => {
     builder
     .addCase(fetchAllEvents.pending, (state) => {
-      debugger
+      
         state.isLoading = true
       //  console.log('pending')
     })
     .addCase(fetchAllEvents.fulfilled, (state, action) => {
-      debugger
+      
         state.isLoading = false
         state.events = action.payload
     //    console.log(action.payload)
     })
     .addCase(fetchAllEvents.rejected, (state, action) => {
-      debugger
+      
         state.isLoading = false
        state.error = action.payload
      //   console.log(action.payload, 'error')
@@ -57,10 +57,10 @@ const eventsSlice = createSlice({
    //     console.log(action.payload)
     })
     .addCase(fetchEventById.rejected, (state, action) => {
-      debugger
+      
         state.isLoading = false
        state.error = action.payload
-       debugger
+       
     //    console.log(action.payload, 'error')
     })
 }});

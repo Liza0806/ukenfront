@@ -33,7 +33,7 @@ const OneEventPage: React.FC = () => {
   // реф для контейнера
   // const { users, getUsers } = useManageUsers();
   const { getUsers } = useManageUsers();
-  debugger;
+  ;
   console.log(currentEvent, "currentEvent");
   let scrollTop = 0;
   const handleScroll = () => {
@@ -73,7 +73,7 @@ const OneEventPage: React.FC = () => {
     };
   }, [dispatch]);
 
-  debugger;
+  ;
 
   const submitEvent = (event: EventTypeDB) => {
     dispatch(updateEvent({ event })).then(() => {

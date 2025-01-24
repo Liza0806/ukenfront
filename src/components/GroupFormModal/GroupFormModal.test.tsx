@@ -86,7 +86,7 @@ describe("GroupFormModal", () => {
     // Проверка, что компонент отображает элемент, который должен быть всегда
     expect(screen.getByText("Название")).toBeInTheDocument();
 
-    expect(screen.getByText("Добавить группу")).toBeInTheDocument();
+    expect(screen.getByText("ппу")).toBeInTheDocument();
 
     expect(screen.getByTestId("group-title-input")).toBeInTheDocument();
     expect(screen.getByTestId("group-dailyPayment-input")).toBeInTheDocument();

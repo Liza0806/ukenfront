@@ -24,16 +24,16 @@ const groupsSlice = createSlice({
   extraReducers: (builder) => {
     builder
       .addCase(fetchAllGroups.pending, (state) => {
-        debugger
+      
         state.isLoading = true;
       })
       .addCase(fetchAllGroups.fulfilled, (state, action) => {
-        debugger
+      
         state.isLoading = false;
         state.groups = action.payload;
       })
       .addCase(fetchAllGroups.rejected, (state, action) => {
-        debugger
+      
         state.isLoading = false;
         state.error = action.payload;
       })
@@ -76,18 +76,18 @@ const groupsSlice = createSlice({
         state.error = action.payload;
       })
       .addCase(deleteGroupTh.pending, (state) => {
-        debugger
+      
         state.isLoading = true;
       })
       .addCase(deleteGroupTh.fulfilled, (state, action) => {
         state.isLoading = false;
         state.error = undefined;
-        debugger
+      
         console.log(state, action, action.payload, 'state, action, action.payload')
         // @ts-ignore
         console.log(action.payload, 'action.payload in groupSlice')
         state.groups = state.groups.filter(group => group._id !== action.payload._id);
-            debugger
+          
       })
       .addCase(deleteGroupTh.rejected, (state, action) => {
         state.isLoading = false;

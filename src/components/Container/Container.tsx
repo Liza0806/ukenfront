@@ -11,7 +11,6 @@ type CalendarTypeProps = {
     isCentre: boolean;
 }
 
-// Измените определение компонента на forwardRef
 const Container = forwardRef<HTMLDivElement, ContainerProps & CalendarTypeProps>(
     (props, ref) => {
         const { children, isCentre, containerImage } = props;

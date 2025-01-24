@@ -65,7 +65,7 @@ export const UserList: React.FC<UserListProps> = ({
             <IconButton
               data-testid="userInListAddBtn"
               onClick={() => {
-                debugger;
+              
                 handleAddUser(user!, smth, setSmth);
               }}
             >
@@ -75,7 +75,7 @@ export const UserList: React.FC<UserListProps> = ({
             <button data-testid="userInListDeleteBtn"
             className={cls.deleteIcon}
             onClick={() => {
-              debugger
+            
               handleDeleteUser(user!._id, smth, setSmth)}}><DeleteIcon
              
             ></DeleteIcon></button>

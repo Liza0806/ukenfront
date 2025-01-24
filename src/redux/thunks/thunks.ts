@@ -22,10 +22,10 @@ export const fetchAllGroups = createAsyncThunk<
   { rejectValue: string } // Тип значения для reject
 >("groups/fetchAllGroups", async (_, thunkAPI) => {
   const response = await getAllGroups();
-  debugger
+
   if (!response) {
     return thunkAPI.rejectWithValue("error");
-    debugger
+  
   }
   return response;
 });
@@ -35,11 +35,11 @@ export const fetchAllEvents = createAsyncThunk<
   void, // Тип аргументов (в данном случае ничего не передается)
   { rejectValue: string } // Тип значения для reject
 >("events/fetchAllEvents", async (_, thunkAPI) => {
-  debugger
+
   const response = await getAllEvents();
-debugger
+
   if (!response) {
-    debugger
+  
   //  console.log("fetchAllEvents");
     return thunkAPI.rejectWithValue("error");
   }
@@ -120,9 +120,9 @@ export const addGroupTh = createAsyncThunk<
   { rejectValue: string } // Тип для ошибки
 >("groups/addGroupTh", async (group: AddGroupType, thunkAPI) => {
   try {
-    debugger
+  
     const response = await addGroup(group);
-debugger
+
     if (response.status >= 200 && response.status < 300) {
       return response.data; // Успешный результат
     } // возвращаемый результат будет типа GroupType
@@ -150,12 +150,12 @@ export const updateGroupTh = createAsyncThunk<
   { group: AddGroupType; _id: string }, // Тип аргумента
   { rejectValue: string } // Тип для rejected value
 >("groups/updateGroupTh", async ({ group, _id }, thunkAPI) => {
-  debugger
+
   const response = await updateGroup(group, _id);
   if (!response) {
-    debugger
+  
     return thunkAPI.rejectWithValue("error");
   }
-  debugger
+
   return response;
 });
