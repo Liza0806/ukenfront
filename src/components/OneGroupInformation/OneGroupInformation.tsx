@@ -36,8 +36,8 @@ export const OneGroupInformation: React.FC<OneGroupInformationProps> = ({
       {/* Секция оплаты */}
       <section>
         <h3 className={cls.title}>Оплата</h3>
-        <p>Оплата за день: {groupFormState.newDayPayment || 0} грн</p>
-        <p>Оплата за місяць: {groupFormState.newMonthlyPayment ?? 0} грн</p>
+        <p className={cls.title}>Оплата за день: {groupFormState.newDayPayment || 0} грн</p>
+        <p className={cls.title}>Оплата за місяць: {groupFormState.newMonthlyPayment ?? 0} грн</p>
       </section>
 
       {/* Секция графика */}
