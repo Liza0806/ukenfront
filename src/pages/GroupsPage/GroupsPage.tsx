@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import { useAppDispatch, useAppSelector } from "../../redux/hooks/hooks";
-
+import { toast } from "react-toastify";
 import { OneGroupInformation } from "../../components/OneGroupInformation/OneGroupInformation";
 import cls from "./GroupsPage.module.scss";
 import { Container } from "../../components/Container/Container";
@@ -9,43 +9,43 @@ import {
   selectGroups,
   selectGroupsError,
 } from "../../redux/selectors/selectors";
-import {
-  deleteGroupTh,
-  fetchAllGroups,
-  fetchAllUsers,
-} from "../../redux/thunks/thunks";
+import { deleteGroupTh, fetchAllGroups } from "../../redux/thunks/thunks";
 import { Modal } from "../../components/Modal/Modal";
 import { GroupFormModal } from "../../components/GroupFormModal/GroupFormModal";
-import { toast } from "react-toastify";
+import EditIcon from "@mui/icons-material/Edit";
+import DeleteIcon from "@mui/icons-material/Delete";
 
 const GroupsPage = () => {
   const [showModalForUpdate, setShowModalForUpdate] = useState(false);
-  const _id = useRef("");
+  const id = useRef("");
   const [showModalForAdd, setShowModalForAdd] = useState(false);
 
   const dispatch = useAppDispatch();
 
   useEffect(() => {
     dispatch(fetchAllGroups());
-    dispatch(fetchAllUsers());
   }, [dispatch]);
 
   const groups = useAppSelector(selectGroups);
+ 
 
   const handleDeleteGroup = async (groupId: string) => {
     try {
       await dispatch(deleteGroupTh(groupId));
     } catch (error) {
-      toast.error('Ошибка при удалении группы')
       console.error("Ошибка при удалении группы:", error);
     }
   };
 
   return (
     <Container containerImage={containerImage} isCentre={false}>
+    
+
+
       <div className={cls.containerGradient}>
         <div className={cls.containerHeader}>
           <p className={cls.titleHead}>ГРУПИ</p>
+    
         </div>
 
         {/* Модалка для создания*/}
@@ -63,7 +63,7 @@ const GroupsPage = () => {
         >
           <GroupFormModal
             initialGroupData={groups.find(
-              (group) => _id && group._id === _id.current
+              (group) => id && group._id === String(id)
             )}
             isEditMode={true}
             closeModal={() => setShowModalForUpdate(false)}
@@ -72,31 +72,38 @@ const GroupsPage = () => {
 
         <ul className={cls.containerGroups}>
           {groups.map((group) => (
+
+            
             <div className={cls.oneGroupContainer} key={group._id}>
-              <button
-                className={cls.deleteButton}
+               <div className= {cls.edit}>
+              <p className={cls.title}>{group.title}</p>
+               <button
+                className={cls.changeButton }
                 onClick={() => {
-                  console.log(group._id);
                   setShowModalForUpdate(true);
-                  _id.current = group._id;
+                  id.current = group._id;
                 }}
               >
-                Редагувати групу
+                <EditIcon sx={{ color: "white" }} />
               </button>
-              <p className={cls.title}>{group.title}</p>
+              <button className={cls.deleteButton}
+                onClick={() => handleDeleteGroup(group._id)}
+              >
+                <DeleteIcon sx={{ color: "white" }} />
+              </button>
+             </div>
+
               <li>
                 <OneGroupInformation groupData={group} />
-                <button
-                  className={cls.deleteButton}
-                  onClick={() => handleDeleteGroup(group._id)}
-                >
-                  Удалити групу
-                </button>
               </li>
+
+                
+
             </div>
+            
           ))}
         </ul>
-
+      
         <button
           className={cls.button}
           onClick={() => {
@@ -105,7 +112,9 @@ const GroupsPage = () => {
         >
           Створити групи
         </button>
+       <p>fdsfdsfd</p>
       </div>
+    
     </Container>
   );
 };

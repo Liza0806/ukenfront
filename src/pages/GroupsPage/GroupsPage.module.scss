@@ -1,140 +1,160 @@
-/* GroupPage.module.scss */
-
-.containerGradient{
-    background: linear-gradient(to bottom, rgba(0, 0, 0, 1), rgba(0, 0, 0, 0));
-  position: relative;
-}
-
-.containerGroups {
-    
-    display: flex;
-    flex-wrap: wrap;
-    gap: 40px; /* Отступы между элементами */
-    font-family: 'Arial', sans-serif;
-    padding: 10px;
-    width: 100%;
-    margin: 0 auto;
-    margin-top: 14vh;
-} 
-.containerHeader {
-    display: flex;
-     /* Элементы равномерно распределены по горизонтали */
-    align-items: center; /* Вертикальное выравнивание по центру */
-    padding: 20px 30px; /* Увеличенные отступы для создания большего пространства */
-    justify-content: center;
-
-    border-radius: 10px; /* Закругленные углы для плавного вида */
-    
-    margin-bottom: 40px; /* Отступ снизу, чтобы отделить заголовок от контента */
-    color: #f1f1f1; /* Светлый цвет текста для контраста */
-
-}
-.button {
-  
-    background-color: #ff6600; /* Основной оранжевый цвет проекта */
-    color: white;
-    border: none;
-    border-radius: 5px; /* Легкое закругление */
-    padding: 10px 20px;
-    font-size: 16px;
-    cursor: pointer;
-    transition: background-color 0.3s, transform 0.2s;
-    margin-bottom: 5vh;
-    margin-top: 5vh;
+.containerGradient {
+   background: linear-gradient(to bottom, rgba(0, 0, 0, 1), rgba(0, 0, 0, 0));
+   position: relative;
+   flex: 1;
   }
-
-.titleHead {
+  
+  .containerGroups {
+   display: flex;
+   flex-wrap: wrap;
+   gap: 40px; /* Отступы между элементами */
+   font-family: "Arial", sans-serif;
+   padding: 10px;
+   width: 100%;
+   margin: 0 auto;
+   margin-top: 7vh;
+  }
+  .containerHeader {
+   display: flex;
+   align-items: center; /* Вертикальное выравнивание по центру */
+   padding: 20px 30px; /* Увеличенные отступы для создания большего пространства */
+   justify-content: center;
+  
+   border-radius: 10px; /* Закругленные углы для плавного вида */
+  
+   margin-bottom: 40px; /* Отступ снизу, чтобы отделить заголовок от контента */
+   color: #f1f1f1; /* Светлый цвет текста для контраста */
+  }
+  
+  .edit{
+  display: flex;
+  flex-wrap: nowrap;
+  margin-bottom: 2vh;
+  }
+  
+  .button {
+   background-color: #ff6600; /* Основной оранжевый цвет проекта */
+   color: white;
+   border: none;
+   border-radius: 5px; /* Легкое закругление */
+   padding: 10px 20px;
+   font-size: 16px;
+   cursor: pointer;
+   transition: background-color 0.3s, transform 0.2s;
+   margin-bottom: 20vh;
+  
+  
+  }
+  .changeButton {
+   cursor: pointer;
+   border: #ff6600;
+   margin-left: auto;
    
-    color: #ff6600; /* Яркий оранжевый цвет для заголовка, чтобы привлечь внимание */
-    font-size: 2.5rem; /* Увеличенный размер шрифта для большего акцента */
-    font-weight: 700; /* Сделать текст более жирным */
-    text-transform: uppercase; /* Превращение текста в заглавные буквы */
-    letter-spacing: 2.5px; /* Увеличенное расстояние между буквами для стиля */
-    padding: 15px 0; /* Дополнительные отступы для создания большего пространства */
-    font-family: 'Poppins', 'Roboto', sans-serif; /* Современный шрифт для заголовка */
-    position: absolute;
-    left: 50%; /* Сместим элемент на середину */
-    transform: translateX(-50%); /* Выравнивание элемента по центру */
-    text-align: center; /* Центрирование текста */
-    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.4); /* Добавляем легкую тень для объема */
-    border-bottom: 3px solid #ff6600; /* Добавляем нижнюю границу оранжевого цвета для акцента */
-    margin-top: 5vh;
-}
-
-
-    .oneGroupContainer {
-        position: relative;
-        width: calc((100% - 80px) / 3); 
-        height: 230px;
-        padding: 30px 25px 10px 25px;
-        border-radius: 4px;
-        border:  1px solid #808080;;
-        
-       
-    
-        background-color: rgba(106, 100, 100, 0);
-        box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.2);
-        position: relative;
-        overflow: visible;
-    
+  }
+  .deleteButton {
+   cursor: pointer;
+   margin-left: 1vh;
    
-} 
-
-.title {
-    position: absolute;
-    color: rgb(253, 252, 252);
-    font-size: 18px;
-    font-family: "Roboto", "Arial", sans-serif;
-    text-align: center;
-    padding: 10px;
-    text-transform: lowercase;
-    margin-bottom: 0;
-    border-radius: 3px;
-    cursor: pointer;
-    position: absolute; 
-    top: 0; 
-    left: 0;
-    letter-spacing: 1px; /* Добавить небольшое расстояние между буквами */
-    font-weight: 500; /* Сделать текст чуть более жирным */
-    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5); /* Добавить легкую тень для глубины */
-    transition: transform 0.2s ease; /* Добавить эффект плавного изменения при наведении */
-    top: -30px; /* Смещаем элемент вверх за границы контейнера */
-    right: 13px; /* Смещаем элемент вправо за границы контейнера */
-    width: 250px;
-    height: 50px;
-    background-color:rgba(128, 128, 128, 1);
-    border: 1px solid #808080;
-    z-index: 10; /* Ставим элемент ближе к зрителю */
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3); /* Добавляем тень для глубины */
-}
-
-
+  }
+  
+  .titleHead {
+   color: #ff6600; /* Яркий оранжевый цвет для заголовка, чтобы привлечь внимание */
+   font-size: 2.5rem; /* Увеличенный размер шрифта для большего акцента */
+   font-weight: 700; /* Сделать текст более жирным */
+   text-transform: uppercase; /* Превращение текста в заглавные буквы */
+   letter-spacing: 2.5px; /* Увеличенное расстояние между буквами для стиля */
+   padding: 15px 0; /* Дополнительные отступы для создания большего пространства */
+   font-family: "Poppins", "Roboto", sans-serif; /* Современный шрифт для заголовка */
+   position: absolute;
+   text-align: center; /* Центрирование текста */
+   text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.4); /* Добавляем легкую тень для объема */
+   border-bottom: 3px solid #ff6600; /* Добавляем нижнюю границу оранжевого цвета для акцента */
+   margin-top: 5vh;
+  }
+  
+  .oneGroupContainer {
+   position: relative;
+   width: calc((100% - 80px) / 3);
+   height: auto;
+   padding: 3vh;
+   border-radius: 4px;
+   border: 1px solid #808080;
+   background-color: rgba(106, 100, 100, 0);
+   box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.2);
+   position: relative;
+   overflow: visible;
+  }
+  
+  .title {
+   color: rgb(253, 252, 252);
+   font-size: 18px;
+   font-family: "Roboto", "Arial", sans-serif;
+   text-align: center;
+   padding: 10px;
+   text-transform: lowercase;
+   margin-bottom: 0;
+   border-radius: 3px;
+   cursor: pointer;
+  
+   letter-spacing: 1px; /* Добавить небольшое расстояние между буквами */
+   font-weight: 500; /* Сделать текст чуть более жирным */
+   text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5); /* Добавить легкую тень для глубины */
+   transition: transform 0.2s ease; /* Добавить эффект плавного изменения при наведении */
+   top: -30px; /* Смещаем элемент вверх за границы контейнера */
+   right: 13px; /* Смещаем элемент вправо за границы контейнера */
+   width: 250px;
+   height: 50px;
+   background-color: rgba(128, 128, 128, 1);
+   border: 1px solid #808080;
+   z-index: 10; /* Ставим элемент ближе к зрителю */
+   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3); /* Добавляем тень для глубины */
+  }
+  
   .modalOverlay {
-    position: fixed;
-    
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-color: rgba(0, 0, 0, 0.75); // Притемненный фон
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    z-index: 999;
+   position: fixed;
   
+   top: 0;
+   left: 0;
+   width: 100%;
+   height: 100%;
+   background-color: rgba(0, 0, 0, 0.75); // Притемненный фон
+   display: flex;
+   align-items: center;
+   justify-content: center;
+   z-index: 999;
   }
-
-  .modalContent {            
-    background-color:rgba(106, 100, 100, 0.8);
-    padding: 20px;
-    border-radius: 10px;
-    max-width: 900px;
-    width: 100%; 
+  
+  .modalContent {
+   background-color: rgba(106, 100, 100, 0.8);
+   padding: 20px;
+   border-radius: 10px;
+   max-width: 900px;
+   width: 100%;
+   height: auto;
+   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+   display: flex;
+   flex-wrap: wrap;
+   justify-content: center;
+  }
+  
+  @media (max-width: 768px) {
+   .containerGroups {
+    flex-direction: column; /* Устанавливаем направление колонкой */
+    gap: 20px; /* Уменьшаем отступы между элементами */
+    align-items: center; /* Центрируем элементы */
+   }
+   .oneGroupContainer {
+    width: auto;
     height: auto;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
-    display: flex; 
-    flex-wrap: wrap;
-    justify-content: center;
-
-
+   }
+  
+   .changeButton {
+    cursor: pointer;
+    border: #ff6600;
+    margin-left: 1vh;
+    
+   }
   }
+  
+  
+  
