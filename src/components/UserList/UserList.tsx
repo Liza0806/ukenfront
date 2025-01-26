@@ -60,7 +60,7 @@ const UserList: React.FC<UserListProps> = ({
       </label>
       <ul>
         {usersForList.map((user) => (
-          <li key={user!._id} data-testid="userInList">
+          <li className={cls.nameOfUser} key={user!._id} data-testid="userInList">
             {user!.name}
             <IconButton
               data-testid="userInListAddBtn"

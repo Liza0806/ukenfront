@@ -17,8 +17,9 @@ export const Modal: React.FC<ModalProps> = ({ open, onClose, children }) => {
   return ReactDOM.createPortal(
     <div className={cls.overlay}>
       <div className={cls.modal}>
-        <button onClick={onClose}>Close</button>
+      <button onClick={onClose}>Close</button>
         {children}
+       
       </div>
     </div>,
     modalRootElement // Используем напрямую DOM-элемент
