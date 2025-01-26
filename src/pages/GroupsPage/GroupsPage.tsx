@@ -16,8 +16,9 @@ import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
 
 const GroupsPage = () => {
+  ////////// утро 26.01
   const [showModalForUpdate, setShowModalForUpdate] = useState(false);
-  const id = useRef("");
+  const _id = useRef("");
   const [showModalForAdd, setShowModalForAdd] = useState(false);
 
   const dispatch = useAppDispatch();
@@ -27,7 +28,6 @@ const GroupsPage = () => {
   }, [dispatch]);
 
   const groups = useAppSelector(selectGroups);
- 
 
   const handleDeleteGroup = async (groupId: string) => {
     try {
@@ -39,13 +39,9 @@ const GroupsPage = () => {
 
   return (
     <Container containerImage={containerImage} isCentre={false}>
-    
-
-
       <div className={cls.containerGradient}>
         <div className={cls.containerHeader}>
           <p className={cls.titleHead}>ГРУПИ</p>
-    
         </div>
 
         {/* Модалка для создания*/}
@@ -63,7 +59,7 @@ const GroupsPage = () => {
         >
           <GroupFormModal
             initialGroupData={groups.find(
-              (group) => id && group._id === String(id)
+              (group) => _id?.current && group._id === _id.current
             )}
             isEditMode={true}
             closeModal={() => setShowModalForUpdate(false)}
@@ -72,38 +68,33 @@ const GroupsPage = () => {
 
         <ul className={cls.containerGroups}>
           {groups.map((group) => (
-
-            
             <div className={cls.oneGroupContainer} key={group._id}>
-               <div className= {cls.edit}>
-              <p className={cls.title}>{group.title}</p>
-               <button
-                className={cls.changeButton }
-                onClick={() => {
-                  setShowModalForUpdate(true);
-                  id.current = group._id;
-                }}
-              >
-                <EditIcon sx={{ color: "white" }} />
-              </button>
-              <button className={cls.deleteButton}
-                onClick={() => handleDeleteGroup(group._id)}
-              >
-                <DeleteIcon sx={{ color: "white" }} />
-              </button>
-             </div>
+              <div className={cls.edit}>
+                <p className={cls.title}>{group.title}</p>
+                <button
+                  className={cls.changeButton}
+                  onClick={() => {
+                    setShowModalForUpdate(true);
+                    id.current = group._id;
+                  }}
+                >
+                  <EditIcon sx={{ color: "white" }} />
+                </button>
+                <button
+                  className={cls.deleteButton}
+                  onClick={() => handleDeleteGroup(group._id)}
+                >
+                  <DeleteIcon sx={{ color: "white" }} />
+                </button>
+              </div>
 
               <li>
                 <OneGroupInformation groupData={group} />
               </li>
-
-                
-
             </div>
-            
           ))}
         </ul>
-      
+
         <button
           className={cls.button}
           onClick={() => {
@@ -112,9 +103,8 @@ const GroupsPage = () => {
         >
           Створити групи
         </button>
-       <p>fdsfdsfd</p>
+        <p>fdsfdsfd</p>
       </div>
-    
     </Container>
   );
 };
