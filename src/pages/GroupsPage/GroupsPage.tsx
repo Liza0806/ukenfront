@@ -75,7 +75,7 @@ const GroupsPage = () => {
                   className={cls.changeButton}
                   onClick={() => {
                     setShowModalForUpdate(true);
-                    id.current = group._id;
+                    _id.current = group._id;
                   }}
                 >
                   <EditIcon sx={{ color: "white" }} />
