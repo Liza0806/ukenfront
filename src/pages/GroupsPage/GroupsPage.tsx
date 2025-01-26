@@ -103,7 +103,6 @@ const GroupsPage = () => {
         >
           Створити групи
         </button>
-        <p>fdsfdsfd</p>
       </div>
     </Container>
   );

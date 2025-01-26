@@ -26,6 +26,7 @@
    color: #f1f1f1; /* Светлый цвет текста для контраста */
   }
   
+  
   .edit{
   display: flex;
   flex-wrap: nowrap;
@@ -49,13 +50,28 @@
    cursor: pointer;
    border: #ff6600;
    margin-left: auto;
+
    
   }
+
   .deleteButton {
    cursor: pointer;
    margin-left: 1vh;
    
   }
+
+  .changeButton:hover svg {
+    fill: #ff6600; /* Изменяем цвет иконки на оранжевый */
+    transform: scale(1.2); /* Увеличиваем иконку при наведении */
+    transition: transform 0.2s ease, fill 0.3s ease; /* Плавный переход */
+  }
+
+  .deleteButton:hover svg {
+    fill: #ff6600; /* Изменяем цвет иконки на оранжевый */
+    transform: scale(1.2); /* Увеличиваем иконку при наведении */
+    transition: transform 0.2s ease, fill 0.3s ease; /* Плавный переход */
+  }
+
   
   .titleHead {
    color: #ff6600; /* Яркий оранжевый цвет для заголовка, чтобы привлечь внимание */

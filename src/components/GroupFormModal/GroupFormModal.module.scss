@@ -1,0 +1,177 @@
+$black: #000;
+$white: #fff;
+$gray: #808080;
+$orange: #ff9900;
+$dark-gray: #1a1a1a;
+
+
+
+.modalContent {
+  background-color: rgba(0, 0, 0, 0.8);
+  padding: 20px;
+  border-radius: 10px;
+  width: auto;
+  max-height: 90vh;
+  height: auto;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+  display: inline-block; 
+  padding: 5vh;
+  justify-content: center; // Центрируем содержимое по горизонтали
+  align-items: center; // Центрируем содержимое по вертикали
+}
+
+.title {
+    font-size: 1.25rem;
+    font-weight: bold;
+    color: white; // Цвет текста белый
+    @media screen and (max-width: 768px) {
+      flex-direction: column;
+      gap: 1vh;
+      align-items: center;
+    }
+  }
+
+
+.buttonOperation {
+    background-color: #ff6600; /* Основной оранжевый цвет проекта */
+    color: white;
+    border: none;
+    border-radius: 5px; /* Легкое закругление */
+    padding: 10px 20px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s, transform 0.2s;
+    display: block;
+    margin: auto;
+
+    @media screen and (max-width: 768px) {
+      margin-top: 2vh;
+  
+    }
+  }
+  .input {
+    margin-top: 1.6vh;
+    padding: 1.25vh;
+    border: 0.1vw solid #ccc;
+    border-radius: 0.5vh;
+    font-size: 14px;
+    transition: border-color 0.3s ease;
+    width:30vh;
+    color: #ccc;
+    margin-left: 0.7vh;
+    flex-grow: 1;
+  
+    &:focus {
+      border-color: #007bff;
+      outline: none;
+      box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
+    }
+
+    @media screen and (max-width: 768px) {
+      width: 40vh;
+      margin-bottom: 2vh;
+      margin-left: 2vh;
+    }
+  }
+  .inputNum1[type="number"] {
+    margin-top: 1.6vh;
+    padding: 1.25vh;
+    border: 0.1vw solid #ccc;
+    border-radius: 0.5vh;
+    font-size: 14px;
+    transition: border-color 0.3s ease;
+    width:40vh;
+    color: #f9f7f7;
+    flex-grow: 1;
+    margin-left: 3.5vh;
+  
+    &:focus {
+      border-color: #007bff;
+      outline: none;
+      box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
+    }
+    @media screen and (max-width: 768px) {
+      width: 40vh;
+      margin-bottom: 2vh;
+      margin-left: 2vh;
+    }
+  }
+
+  .inputNum2[type="number"] {
+    margin-top: 1.6vh;
+    padding: 1.25vh;
+    border: 0.1vw solid #ccc;
+    border-radius: 0.5vh;
+    font-size: 14px;
+    transition: border-color 0.3s ease;
+    width:40vh;
+    color: #f9f7f7;
+    flex-grow: 1;
+    margin-left: 2vh;
+    margin-bottom: 2vh;
+  
+    &:focus {
+      border-color: #007bff;
+      outline: none;
+      box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
+    }
+    @media screen and (max-width: 768px) {
+      width: 40vh;
+      margin-bottom: 2vh;
+    }
+  }
+  .inputTime {
+background-color: $black;
+color:$white;
+margin-left: 5vh;
+  }
+
+  .name{
+    display: flex;
+    text-align: center;
+    align-items: center;
+    gap: 2vh;
+    @media screen and (max-width: 768px) {
+      flex-direction: column;
+      gap: 0.5vh;
+    }
+  }
+
+  .event{
+    display: flex;
+    gap: 2vh;
+    margin-bottom: 2vh;
+  }
+
+  .timeAndDate{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    @media screen and (max-width: 768px) {
+      margin-top: 2vh;
+      margin-bottom: 1vh;
+  
+    }
+
+  }
+
+  .select{
+    background-color: #000;
+    color: #ccc;
+   border: none;
+
+  }
+
+  .deleteIcon {
+    color: #ccc;
+    font-size: 18px;
+    cursor: pointer;
+    transition: color 0.3s;
+    
+}
+
+.deleteIcon:hover {
+    color: rgb(244, 6, 6);
+}
+

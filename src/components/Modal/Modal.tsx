@@ -1,6 +1,7 @@
 import React from "react";
 import ReactDOM from "react-dom"; 
 import cls from './Modal.module.scss';
+import CloseIcon from '@mui/icons-material/Close';
 
 interface ModalProps {
   open: boolean;
@@ -17,8 +18,12 @@ export const Modal: React.FC<ModalProps> = ({ open, onClose, children }) => {
   return ReactDOM.createPortal(
     <div className={cls.overlay}>
       <div className={cls.modal}>
-        <button onClick={onClose}>Close</button>
+      <CloseIcon sx={{ color: "#ff9900",  cursor: "pointer", marginLeft: 'auto', transition: "transform 0.3s ease",
+              ":hover": {
+                transform: "scale(1.2)", 
+              },}} onClick={onClose}>Close</CloseIcon>
         {children}
+       
       </div>
     </div>,
     modalRootElement // Используем напрямую DOM-элемент

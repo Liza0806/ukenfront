@@ -19,6 +19,10 @@ import {
   updateGroupTh,
 } from "../../redux/thunks/thunks";
 import { AppDispatch } from "../../redux/store/store";
+import AddCircleOutlineIcon from "@mui/icons-material/AddCircleOutline";
+import AddIcon from "@mui/icons-material/Add";
+import DeleteIcon from "@mui/icons-material/Delete";
+
 
 interface GroupFormProps {
   initialGroupData?: GroupType;
@@ -40,30 +44,38 @@ export const handleSubmit = async (
   closeModal: () => void,
   _id?: string
 ) => {
-   ;
-if(!groupFormState.title){
-  toast.error("Title")
-  return
-}
-if(!groupFormState.dailyPayment && !groupFormState.monthlyPayment){
-  toast.error("один из платежей должен быть заполнен")
-  return
-}
+  if (!groupFormState.title) {
+    toast.error("Title");
+    return;
+  }
+  if (!groupFormState.dailyPayment && !groupFormState.monthlyPayment) {
+    toast.error("один из платежей должен быть заполнен");
+    return;
+  }
 
-if(!groupFormState.schedule.map(el=>{
- if(el.day && el.time){return true}
- return false
-}) || groupFormState.schedule.length === 0){
-  toast.error("не верный формат расписания")
-  return
-}
+  if (
+    !groupFormState.schedule.map((el) => {
+      if (el.day && el.time) {
+        return true;
+      }
+      return false;
+    }) ||
+    groupFormState.schedule.length === 0
+  ) {
+    toast.error("не верный формат расписания");
+    return;
+  }
   const groupForTh: AddGroupType = {
     title: groupFormState.title,
     coachId: "Kostya",
     payment: [
       {
-        dailyPayment: groupFormState.dailyPayment? groupFormState.dailyPayment : 0,
-        monthlyPayment: groupFormState.monthlyPayment? groupFormState.monthlyPayment : 0,
+        dailyPayment: groupFormState.dailyPayment
+          ? groupFormState.dailyPayment
+          : 0,
+        monthlyPayment: groupFormState.monthlyPayment
+          ? groupFormState.monthlyPayment
+          : 0,
       },
     ],
     schedule: [...groupFormState.schedule],
@@ -73,24 +85,24 @@ if(!groupFormState.schedule.map(el=>{
   try {
     let result;
     if (isEditMode && _id) {
-       //   ;
-        result = await appDispatch(
-          updateGroupTh({ group: groupForTh, _id: _id })
-        ).unwrap(); // Разворачиваем результат, чтобы проверить ошибки
       //   ;
-        toast.success("Группа успешно обновлена");
-        closeModal();   
+      result = await appDispatch(
+        updateGroupTh({ group: groupForTh, _id: _id })
+      ).unwrap(); // Разворачиваем результат, чтобы проверить ошибки
+      //   ;
+      toast.success("Группа успешно обновлена");
+      closeModal();
     } else {
-   //    ;
+      //    ;
       console.log(groupForTh, "groupForTh");
       result = await appDispatch(addGroupTh(groupForTh)).unwrap(); // Разворачиваем результат
       toast.success("Группа успешно добавлена");
       closeModal();
     }
- //    ;
+    //    ;
     appDispatch(fetchAllGroups());
   } catch (error) {
-  //   ;
+    //   ;
     toast.error("Ошибка при сохранении группы");
   }
 };
@@ -102,28 +114,26 @@ export const GroupFormModal: React.FC<GroupFormProps> = ({
 }) => {
   const appDispatch = useAppDispatch();
   const usersInBase = useAppSelector(selectUsers);
-console.log(initialGroupData, 'initialGroupData')
+  console.log(initialGroupData, "initialGroupData");
   const [groupId, setGroupId] = useState(initialGroupData?._id);
 
-  const [groupFormState, setGroupFormState] = useState<groupFormStateType>((isEditMode && initialGroupData)?{
-
-        title: initialGroupData.title,
-        dailyPayment: initialGroupData.payment[0].dailyPayment,
-        monthlyPayment: initialGroupData.payment[0].monthlyPayment,
-        schedule: initialGroupData.schedule,
-        participants: initialGroupData.participants
-  
-   } :{ 
-
-          title: '',
+  const [groupFormState, setGroupFormState] = useState<groupFormStateType>(
+    isEditMode && initialGroupData
+      ? {
+          title: initialGroupData.title,
+          dailyPayment: initialGroupData.payment[0].dailyPayment,
+          monthlyPayment: initialGroupData.payment[0].monthlyPayment,
+          schedule: initialGroupData.schedule,
+          participants: initialGroupData.participants,
+        }
+      : {
+          title: "",
           dailyPayment: 0,
           monthlyPayment: 0,
           schedule: [],
-          participants:[]
-     
-      })
-
-  
+          participants: [],
+        }
+  );
 
   const handleInputChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
@@ -159,10 +169,7 @@ console.log(initialGroupData, 'initialGroupData')
   const handleAddSchedule = () => {
     setGroupFormState((prevState) => ({
       ...prevState,
-      schedule: [
-        ...prevState.schedule,
-        { day: '', time: "00:00" },
-      ],
+      schedule: [...prevState.schedule, { day: "", time: "00:00" }],
     }));
   };
 
@@ -174,78 +181,109 @@ console.log(initialGroupData, 'initialGroupData')
   };
 
   return (
-    <div>
-      <label htmlFor="title">Название</label>
-      <p>{groupFormState.title}</p>
-      <input
-        id="title"
-        className={cls.input}
-        type="text"
-        value={groupFormState.title}
-        name="title"
-        onChange={handleInputChange}
-       // onBlur={onUnfocus}
-        data-testid="group-title-input"
-        required
-      />
+    <div className={cls.modalContent}>
+      <div>
+        <label className={cls.name} htmlFor="title">
+          <p className={cls.title}>Назва</p>
+          <input
+            id="title"
+            className={cls.input}
+            type="text"
+            value={groupFormState.title}
+            name="title"
+            onChange={handleInputChange}
+            // onBlur={onUnfocus}
+            data-testid="group-title-input"
+            required
+          />
+        </label>
+      </div>
 
-      <label htmlFor="dailyPayment">Ежедневный платеж</label>
-      <input
-        id="dailyPayment"
-        className={cls.input}
-        type="number"
-        name="dailyPayment"
-        placeholder="Ежедневный платеж"
-        value={groupFormState.dailyPayment? groupFormState.dailyPayment : undefined}
-        onChange={handleInputChange}
-        data-testid="group-dailyPayment-input"
-        required
-      />
-
-      <label htmlFor="monthlyPayment">Ежемесячный платеж</label>
-      <input
-        id="monthlyPayment"
-        className={cls.input}
-        type="number"
-        name="monthlyPayment"
-        placeholder="Ежемесячный платеж"
-        value={groupFormState.monthlyPayment? groupFormState.monthlyPayment: undefined}
-        onChange={handleInputChange}
-        data-testid="group-monthlyPayment-input"
-        required
-      />
+      <div className={cls.pay}>
+        <label className={cls.name} htmlFor="dailyPayment">
+          <p className={cls.title}>Разова плата</p>
+          <input
+            id="dailyPayment"
+            className={cls.inputNum1}
+            type="number"
+            name="dailyPayment"
+            placeholder="Ежедневный платеж"
+            value={
+              groupFormState.dailyPayment
+                ? groupFormState.dailyPayment
+                : undefined
+            }
+            onChange={handleInputChange}
+            data-testid="group-dailyPayment-input"
+            required
+          />
+        </label>
+      </div>
+      <div className={cls.pay}>
+        <label className={cls.name}  htmlFor="monthlyPayment">
+          <p className={cls.title}>Місячна плата</p>
+          <input
+            id="monthlyPayment"
+            className={cls.inputNum2}
+            type="number"
+            name="monthlyPayment"
+            placeholder="Ежемесячный платеж"
+            value={
+              groupFormState.monthlyPayment
+                ? groupFormState.monthlyPayment
+                : undefined
+            }
+            onChange={handleInputChange}
+            data-testid="group-monthlyPayment-input"
+            required
+          />
+        </label>
+      </div>
 
       <div>
-        <label>Schedule</label>
+        <label className={cls.event}>
+          <p className={cls.title}> Додати час та дату тренувань</p>
+          <AddIcon sx={{ color: "#ff9900" }} onClick={handleAddSchedule}>
+      
+      </AddIcon>
+        </label>
+       
 
-        {groupFormState.schedule.length>0 && groupFormState.schedule.map((sched, index) => (
-          <div key={index}>
-            <select
-              value={sched.day}
-              data-testid="group-scheduleDay-select"
-              onChange={(e) =>
-                handleScheduleChange(index, "day", e.target.value)
-              }
-            >
-              {daysOfWeekUk.map((day) => (
-                <option key={day} value={day}>
-                  {day}
-                </option>
-              ))}
-            </select>
+        {groupFormState.schedule.length > 0 &&
+          groupFormState.schedule.map((sched, index) => (
+            <div key={index} className={cls.timeAndDate}>
+              <select
+              className={cls.select}
+                value={sched.day}
+                data-testid="group-scheduleDay-select"
+                onChange={(e) =>
+                  handleScheduleChange(index, "day", e.target.value)
+                }
+              >
+                {daysOfWeekUk.map((day) => (
+                  <option key={day} value={day}>
+                    {day}
+                  </option>
+                ))}
+              </select>
+              
 
-            <input
-              type="time"
-              value={sched.time}
-              data-testid="group-scheduleTime-select"
-              onChange={(e) =>
-                handleScheduleChange(index, "time", e.target.value)
-              }
-            />
-            <button onClick={() => handleDeleteSchedule(index)}>Удалить</button>
-          </div>
-        ))}
-        <button onClick={handleAddSchedule}>Добавить расписание</button>
+              <input 
+                className={cls.inputTime}
+                type="time"
+                value={sched.time}
+                data-testid="group-scheduleTime-select"
+                onChange={(e) =>
+                  handleScheduleChange(index, "time", e.target.value)
+                }
+              />
+
+              <DeleteIcon className={cls.deleteIcon} onClick={() => handleDeleteSchedule(index)}>
+                Удалить
+              </DeleteIcon>
+            </div>
+          ))}
+
         <div>
           {usersInBase?.length > 0 ? (
             <UserList smth={groupFormState} setSmth={setGroupFormState} />
@@ -255,6 +293,7 @@ console.log(initialGroupData, 'initialGroupData')
         </div>
       </div>
       <button
+        className={cls.buttonOperation}
         onClick={() => {
           handleSubmit(
             isEditMode,
@@ -265,7 +304,7 @@ console.log(initialGroupData, 'initialGroupData')
           );
         }}
       >
-        {isEditMode ? "Обновить группу" : "Добавить группу"}
+        {isEditMode ? "Обновити" : "додати"}
       </button>
     </div>
   );
