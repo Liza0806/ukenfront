@@ -9,6 +9,8 @@ import {
   PartialUserWithRequiredFields,
 } from "../../redux/types/types";
 import { useManageUsers } from "../../hooks/hooks";
+import AddIcon from "@mui/icons-material/Add";
+import { hover } from "@testing-library/user-event/dist/hover";
 
 export interface UserListProps {
   smth: EventTypeDB | GroupType | any;
@@ -61,24 +63,34 @@ const UserList: React.FC<UserListProps> = ({
       <ul>
         {usersForList.map((user) => (
           <li className={cls.nameOfUser} key={user!._id} data-testid="userInList">
-            {user!.name}
-            <IconButton
+           
+           <div className={cls.buttonAddAndDelete}>
+           <AddIcon
+            sx={{ color: "#ff9900", cursor: 'pointer',  transition: "transform 0.3s ease",
+              ":hover": {
+                transform: "scale(1.2)", 
+              }, }}
               data-testid="userInListAddBtn"
               onClick={() => {
                  ;
                 handleAddUser(user!, smth, setSmth);
               }}
             >
-              <AddCircleOutlineIcon color="primary" fontSize="inherit" />
-            </IconButton>
+            
+            </AddIcon>
 
-            <button data-testid="userInListDeleteBtn"
-            className={cls.deleteIcon}
-            onClick={() => {
+          
+           
+          <DeleteIcon
+          data-testid="userInListDeleteBtn"
+          onClick={() => {
                
-              handleDeleteUser(user!._id, smth, setSmth)}}><DeleteIcon
+            handleDeleteUser(user!._id, smth, setSmth)}}
+              className={cls.deleteIcon}
              
-            ></DeleteIcon></button>
+            ></DeleteIcon>
+             {user!.name}
+           </div>
           </li>
         ))}
       </ul>

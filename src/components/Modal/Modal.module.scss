@@ -12,13 +12,10 @@
 }
 .modal {
   margin-top: 80px;
-  display: inline-block;
-  background-color: #1b1b1b;
- 
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: column;
   border-radius: 8px;
   width: auto;
   height: auto;
-  align-items: center;
-  justify-content: center;
- 
 }

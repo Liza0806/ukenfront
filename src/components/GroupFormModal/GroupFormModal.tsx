@@ -21,6 +21,8 @@ import {
 import { AppDispatch } from "../../redux/store/store";
 import AddCircleOutlineIcon from "@mui/icons-material/AddCircleOutline";
 import AddIcon from "@mui/icons-material/Add";
+import DeleteIcon from "@mui/icons-material/Delete";
+
 
 interface GroupFormProps {
   initialGroupData?: GroupType;
@@ -197,9 +199,9 @@ export const GroupFormModal: React.FC<GroupFormProps> = ({
         </label>
       </div>
 
-      <div>
-        <label className={cls.title} htmlFor="dailyPayment">
-          Разова плата
+      <div className={cls.pay}>
+        <label className={cls.name} htmlFor="dailyPayment">
+          <p className={cls.title}>Разова плата</p>
           <input
             id="dailyPayment"
             className={cls.inputNum1}
@@ -217,9 +219,9 @@ export const GroupFormModal: React.FC<GroupFormProps> = ({
           />
         </label>
       </div>
-      <div>
-        <label className={cls.title} htmlFor="monthlyPayment">
-          Місячна плата
+      <div className={cls.pay}>
+        <label className={cls.name}  htmlFor="monthlyPayment">
+          <p className={cls.title}>Місячна плата</p>
           <input
             id="monthlyPayment"
             className={cls.inputNum2}
@@ -249,8 +251,9 @@ export const GroupFormModal: React.FC<GroupFormProps> = ({
 
         {groupFormState.schedule.length > 0 &&
           groupFormState.schedule.map((sched, index) => (
-            <div key={index}>
+            <div key={index} className={cls.timeAndDate}>
               <select
+              className={cls.select}
                 value={sched.day}
                 data-testid="group-scheduleDay-select"
                 onChange={(e) =>
@@ -265,8 +268,8 @@ export const GroupFormModal: React.FC<GroupFormProps> = ({
               </select>
               
 
-              <input
-                className={cls.input}
+              <input 
+                className={cls.inputTime}
                 type="time"
                 value={sched.time}
                 data-testid="group-scheduleTime-select"
@@ -275,9 +278,9 @@ export const GroupFormModal: React.FC<GroupFormProps> = ({
                 }
               />
 
-              <button onClick={() => handleDeleteSchedule(index)}>
+              <DeleteIcon className={cls.deleteIcon} onClick={() => handleDeleteSchedule(index)}>
                 Удалить
-              </button>
+              </DeleteIcon>
             </div>
           ))}
 
@@ -290,7 +293,7 @@ export const GroupFormModal: React.FC<GroupFormProps> = ({
         </div>
       </div>
       <button
-        className={cls.button}
+        className={cls.buttonOperation}
         onClick={() => {
           handleSubmit(
             isEditMode,
