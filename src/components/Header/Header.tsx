@@ -53,13 +53,16 @@ export const Header = () => {
               Главная
             </NavLink>
             <li>
-              <NavLink  className={cls.link}  to="groups">Groups</NavLink>
+              <NavLink  className={cls.link}  to="/admin">Admin</NavLink>
             </li>
             <li>
-              <NavLink  className={cls.link}  to="payment">Payment</NavLink>
+              <NavLink  className={cls.link}  to="admin/groups">Groups</NavLink>
             </li>
             <li>
-              <NavLink  className={cls.link}  to="events">Schedule</NavLink>
+              <NavLink  className={cls.link}  to="admin/payment">Payment</NavLink>
+            </li>
+            <li>
+              <NavLink  className={cls.link}  to="admin/events">Schedule</NavLink>
             </li>
           </ul>}
           {/* <li>

@@ -35,12 +35,10 @@ const groups: GroupType[] = [
     _id: "1",
     title: "Group 1",
     coachId: "coach1",
-    payment: [
-      {
+
         dailyPayment: 10,
         monthlyPayment: 100,
-      },
-    ],
+    
     schedule: [
       { day: "Monday", time: "10:00" },
       { day: "Wednesday", time: "12:00" },
@@ -51,12 +49,10 @@ const groups: GroupType[] = [
     _id: "2",
     title: "Group 2",
     coachId: "coach1",
-    payment: [
-      {
+ 
         dailyPayment: 12,
         monthlyPayment: 122,
-      },
-    ],
+    
     schedule: [
       { day: "Sunday", time: "11:00" },
       { day: "Freeday", time: "13:00" },
@@ -263,12 +259,10 @@ describe("GroupsPage", () => {
       _id: "3",
       title: "Group 3",
       coachId: "coach2",
-      payment: [
-        {
+    
           dailyPayment: 100,
           monthlyPayment: 1000,
-        },
-      ],
+       
       schedule: [],
       participants: [],
     };

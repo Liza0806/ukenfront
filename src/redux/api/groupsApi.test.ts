@@ -62,7 +62,8 @@ describe("addGroup", () => {
     const mockGroup: AddGroupType = {
         title: "Group 1",
         coachId: "coach1",
-        payment: [],
+        dailyPayment: 0, 
+        monthlyPayment:0,
         schedule: [],
         participants: [],
       };
@@ -77,7 +78,8 @@ describe("addGroup", () => {
     expect(group.data).toEqual({
       title: mockGroup.title,
       coachId: mockGroup.coachId,
-      payment: mockGroup.payment,
+      dailyPayment: 0, 
+      monthlyPayment:0,
       schedule: mockGroup.schedule,
       participants: [],
     }); // Проверяем, что данные соответствуют мокам
@@ -89,7 +91,8 @@ describe("addGroup", () => {
         _id: "1",
         title: "Group 1",
         coachId: "coach1",
-        payment: [],
+        dailyPayment: 0, 
+        monthlyPayment:0,
         schedule: [],
         participants: [],
       };
@@ -121,7 +124,8 @@ describe("updateGroup", () => {
         _id: "1",
         title: "Group 1",
         coachId: "coach1",
-        payment: [],
+        dailyPayment: 0,
+        monthlyPayment:0,
         schedule: [],
         participants: [],
       };
@@ -143,7 +147,8 @@ describe("updateGroup", () => {
         _id: "1",
         title: "Group 1",
         coachId: "coach1",
-        payment: [],
+        dailyPayment: 0, 
+        monthlyPayment:0,
         schedule: [],
         participants: [],
       };

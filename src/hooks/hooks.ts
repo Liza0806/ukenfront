@@ -29,7 +29,7 @@ export const useManageUsers = (props?: useManageUsersProps) => {
       }, [props?.users]);
 
   
-  // console.log(users, 'users')
+  
     const findUsers = (name: string) => {
       if (users.length === 0) {
         console.log("Users are still loading.");

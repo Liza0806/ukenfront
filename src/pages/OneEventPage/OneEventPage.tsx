@@ -7,15 +7,18 @@ import cls from "./OneEventPage.module.scss";
 import { useParams } from "react-router-dom";
 import { useAppDispatch, useAppSelector } from "../../redux/hooks/hooks";
 import { fetchEventById, updateEvent } from "../../redux/thunks/thunks";
-import { EventTypeDB, GroupType } from "../../redux/types/types";
-import  UserList from "../../components/UserList/UserList";
+import { EventTypeDB, ParticipantType } from "../../redux/types/types";
+import UserList from "../../components/UserList/UserList";
 import { uk } from "date-fns/locale";
 import { Container } from "../../components/Container/Container";
 import containerImage from "../../assets/PhoneForPagIvent.jpg";
 import UpdateIcon from "@mui/icons-material/Update";
 import { useRef } from "react";
 import { useManageUsers } from "../../hooks/hooks";
-import { selectCurrentEvent } from "../../redux/selectors/selectors";
+import {
+  selectCurrentEvent,
+  selectUsers,
+} from "../../redux/selectors/selectors";
 import { clearCurrentEvent } from "../../redux/slices/eventsSlice";
 
 const OneEventPage: React.FC = () => {
@@ -30,29 +33,17 @@ const OneEventPage: React.FC = () => {
   const [showCalendar, setShowCalendar] = useState(false);
   const [showTimer, setShowTimer] = useState(false);
 
-  // реф для контейнера
-  // const { users, getUsers } = useManageUsers();
-  const { getUsers } = useManageUsers();
-   ;
-  console.log(currentEvent, "currentEvent");
-  let scrollTop = 0;
-  const handleScroll = () => {
-    if (containerRef.current) {
-      scrollTop = containerRef.current.scrollTop; // Получите значение скролла
-    }
-  };
+  const [date, setDate] = useState(currentEvent?.date || "");
+  const [groupTitle, setGroupTitle] = useState(currentEvent?.groupTitle || "");
+  const [groupId, setGroupId] = useState(currentEvent?.groupId || "");
+  const [isCancelled, setIsCanselled] = useState(
+    currentEvent?.isCancelled || false
+  );
+  const [participants, setParticipants] = useState(
+    currentEvent?.participants || []
+  );
 
-  const inputRef = useRef<HTMLInputElement>(null); // Используем useRef для инпута
-
-  const scrollToInput = () => {
-    if (inputRef.current) {
-      inputRef.current.scrollIntoView({
-        behavior: "smooth",
-        block: "center", // Прокрутка к началу элемента
-        inline: "nearest",
-      });
-    }
-  };
+  const usersInBase = useAppSelector(selectUsers);
 
   useEffect(() => {
     if (id) {
@@ -73,26 +64,23 @@ const OneEventPage: React.FC = () => {
     };
   }, [dispatch]);
 
-   ;
-
   const submitEvent = (event: EventTypeDB) => {
-    dispatch(updateEvent({ event })).then(() => {
-      getUsers(); // Фетч участников после успешного обновления
-    });
+    dispatch(
+      updateEvent({
+        _id: event._id,
+        date: event.date,
+        groupId: event.groupId,
+        groupTitle: event.groupTitle,
+        isCancelled: event.isCancelled,
+        participants: event.participants,
+      })
+    );
     setShowUpdateEvent(false);
-  };
-
-  const updateEventDate = (newDate: Date) => {
-    if (editedEvent) {
-      // Создаем новый объект с обновленным значением даты
-      const updatedEvent = { ...editedEvent, date: newDate.toISOString() };
-      setEditedEvent(updatedEvent);
-    }
   };
 
   const handleDateChange = (date: Date | null) => {
     if (date) {
-      updateEventDate(date);
+      setDate(date.toISOString());
     }
   };
   console.log("render one event page");
@@ -103,134 +91,126 @@ const OneEventPage: React.FC = () => {
       isCentre={true}
       containerImage={containerImage}
     >
-      {editedEvent && (
-        <div className={cls.trainingContainer}>
-          <div className={cls.header}>
-            <h3 className={cls.title}>Група: {editedEvent.groupTitle}</h3>
-            {showUpdateEvent && (
-              <button
-                data-testid="updateIcon"
-                onClick={() => submitEvent(editedEvent!)}
-              >
-                <UpdateIcon
-                  style={{ color: "blue", fontSize: "36px", cursor: "pointer" }}
-                  className={cls.upIcon}
-                ></UpdateIcon>
-              </button>
-            )}
-          </div>
-
-          <div className={cls.date}>
-            <span className={cls.text}>Тренування відбудеться</span>
-            <p onClick={() => setShowCalendar(!showCalendar)}>
-              {new Date(editedEvent?.date).toLocaleString("uk-UA", {
-                day: "numeric",
-                month: "long",
-                year: "numeric",
-              })}
-            </p>
-
-            <p onClick={() => setShowTimer(!showTimer)}>
-              {new Date(editedEvent?.date).toLocaleString("uk-UA", {
-                hour: "2-digit",
-                minute: "2-digit",
-              })}
-            </p>
-          </div>
-
-          {showCalendar && (
-            <div
-              className={cls.modalOverlay}
-              onClick={() => setShowCalendar(false)}
-            >
-              <div
-                className={cls.modalContent}
-                onClick={(e) => e.stopPropagation()}
-              >
-                <DatePicker
-                  selected={
-                    editedEvent?.date ? new Date(editedEvent.date) : null
-                  }
-                  onChange={handleDateChange}
-                  dateFormat="Pp"
-                  inline
-                  locale={uk}
-                />
-              </div>
-            </div>
-          )}
-
-          {showTimer && (
-            <div
-              className={cls.modalOverlay}
-              onClick={() => setShowTimer(false)}
-            >
-              <div
-                className={cls.modalContent}
-                onClick={(e) => e.stopPropagation()}
-              >
-                <DatePicker
-                  selected={
-                    editedEvent?.date ? new Date(editedEvent.date) : null
-                  }
-                  onChange={handleDateChange}
-                  showTimeSelect
-                  showTimeSelectOnly
-                  timeIntervals={1}
-                  timeFormat="HH:mm"
-                  dateFormat="HH:mm"
-                  inline
-                  locale={uk}
-                />
-              </div>
-            </div>
-          )}
-
-          {/* участники: */}
-          <div className={cls.participants}>
-            {editedEvent.participants.length !== 0 && (
-              <UserList
-                existingUsers={editedEvent.participants}
-                smth={editedEvent}
-                setSmth={
-                  setEditedEvent as React.Dispatch<
-                    React.SetStateAction<EventTypeDB | GroupType | undefined>
-                  >
-                }
-              />
-            )}
-          </div>
-          {editedEvent.participants.length === 0 && (
-            <p>На тренировку пока никто не записался</p>
-          )}
-
-          {/* возможные участники: */}
-
-          <div className={cls.participants}>
-            {showAdditionalUsers && (
-              <UserList
-                smth={editedEvent}
-                setSmth={
-                  setEditedEvent as React.Dispatch<
-                    React.SetStateAction<EventTypeDB | GroupType | undefined>
-                  >
-                }
-              />
-            )}
-          </div>
-
-          {!showAdditionalUsers && (
+      <div className={cls.trainingContainer}>
+        <div className={cls.header}>
+          <h3 className={cls.title}>Група: {groupTitle}</h3>
+          {showUpdateEvent && (
             <button
-              data-testid="ShowAdditionalUsers"
-              type="button"
-              className={cls.buttonOpen}
-              onClick={() => setShowAdditionalUsers(true)}
+              data-testid="updateIcon"
+              onClick={() =>
+                submitEvent({
+                  _id: id!.toString(),
+                  date,
+                  groupTitle,
+                  groupId,
+                  isCancelled,
+                  participants,
+                })
+              }
             >
-              показать дополнительных юзеров
+              <UpdateIcon
+                style={{ color: "blue", fontSize: "36px", cursor: "pointer" }}
+                className={cls.upIcon}
+              ></UpdateIcon>
             </button>
           )}
         </div>
-      )}
+
+        <div className={cls.date}>
+          <span className={cls.text}>Тренування відбудеться</span>
+          <p onClick={() => setShowCalendar(!showCalendar)}>
+            {new Date(date).toLocaleString("uk-UA", {
+              day: "numeric",
+              month: "long",
+              year: "numeric",
+            })}
+          </p>
+
+          <p onClick={() => setShowTimer(!showTimer)}>
+            {new Date(date).toLocaleString("uk-UA", {
+              hour: "2-digit",
+              minute: "2-digit",
+            })}
+          </p>
+        </div>
+
+        {showCalendar && (
+          <div
+            className={cls.modalOverlay}
+            onClick={() => setShowCalendar(false)}
+          >
+            <div
+              className={cls.modalContent}
+              onClick={(e) => e.stopPropagation()}
+            >
+              <DatePicker
+                selected={date ? new Date(date) : null}
+                onChange={handleDateChange}
+                dateFormat="Pp"
+                inline
+                locale={uk}
+              />
+            </div>
+          </div>
+        )}
+
+        {showTimer && (
+          <div className={cls.modalOverlay} onClick={() => setShowTimer(false)}>
+            <div
+              className={cls.modalContent}
+              onClick={(e) => e.stopPropagation()}
+            >
+              <DatePicker
+                selected={date ? new Date(date) : null}
+                onChange={handleDateChange}
+                showTimeSelect
+                showTimeSelectOnly
+                timeIntervals={1}
+                timeFormat="HH:mm"
+                dateFormat="HH:mm"
+                inline
+                locale={uk}
+              />
+            </div>
+          </div>
+        )}
+
+        {/* участники: */}
+        <div className={cls.participants}>
+          <h3 className={cls.h3}>Учасники:</h3>
+          {participants.length > 0 ? (
+            <ul>
+              {participants.map((participant, index) => (
+                <li key={index}>{participant.name || "Не вказано"}</li>
+              ))}
+            </ul>
+          ) : (
+            <p>На тренировку пока никто не записался</p>
+          )}
+        </div>
+        {/* возможные участники: */}
+
+        <div className={cls.participants}>
+          {showAdditionalUsers && (
+            <UserList
+              usersInComponent={participants}
+              usersInBase={usersInBase}
+              setUsersInComponent={setParticipants}
+            />
+          )}
+        </div>
+
+        {!showAdditionalUsers && (
+          <button
+            data-testid="ShowAdditionalUsers"
+            type="button"
+            className={cls.buttonOpen}
+            onClick={() => setShowAdditionalUsers(true)}
+          >
+            показать дополнительных юзеров
+          </button>
+        )}
+      </div>
     </Container>
   );
 };

@@ -13,10 +13,10 @@ describe("Selectors", () => {
         {_id: "1",
           title: "Boxing",
           coachId: "123",
-          payment: [{
+         
               dailyPayment: 5,
           monthlyPayment: 10,
-          }],
+         
           schedule: [
             {
               day: "Понеділок",

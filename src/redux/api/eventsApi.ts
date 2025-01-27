@@ -1,5 +1,6 @@
 import axios from "axios";
 import { EventTypeDB } from "../types/types";
+import { group } from "console";
 
 export const getAllEvents = async () => {
    
@@ -30,9 +31,10 @@ export const getAllEvents = async () => {
 
   export const updateEventAPi = async (event: EventTypeDB)=>{
     try {
+      console.log(event, 'event in updateEventAPi')
       const response = await axios.put(`https://ukenback.vercel.app/events/${event._id}`, event);
-   //   const response = await axios.put(`/events/${event._id}`, event);
-    //  console.log(response.data);
+    // const response = await axios.put(`/events/${event._id}`, {_id: event._id, date: event.date, groupId: event.groupId, groupTitle: event.groupTitle, isCancelled: event.isCancelled, participants: event.participants});
+
       return response.data;
     } catch (error) {
       throw error;

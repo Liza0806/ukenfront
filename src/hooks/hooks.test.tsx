@@ -31,7 +31,7 @@ const mockUsers = [
     groups: [],
     balance: 11,
     telegramId: 111,
-    discount: 11,
+
     visits: [],
   },
   {
@@ -43,7 +43,7 @@ const mockUsers = [
     groups: [],
     balance: 22,
     telegramId: 222,
-    discount: 22,
+
     visits: [],
   },
 ];
@@ -164,7 +164,7 @@ describe("findUsers in useManageUsers hook", () => {
         groups: [],
         balance: 11,
         telegramId: 111,
-        discount: 11,
+
         visits: [],
       },
     ]);
@@ -178,7 +178,7 @@ describe("findUsers in useManageUsers hook", () => {
         groups: [],
         balance: 11,
         telegramId: 111,
-        discount: 11,
+
         visits: [],
       },
     ]);
@@ -265,7 +265,7 @@ describe("handleAddUser useManageUsers hook", () => {
       groups: [],
       balance: 11,
       telegramId: 111,
-      discount: 11,
+
       visits: [],
     };
 

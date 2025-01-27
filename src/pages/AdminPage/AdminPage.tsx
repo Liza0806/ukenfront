@@ -3,7 +3,7 @@ import { NavLink } from "react-router-dom";
 import { Outlet } from "react-router-dom";
 
 const AdminPage: React.FC = () => {
-
+console.log('ADMIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIINNNNNNNNNNNNNNNNNN')
   return (
     <div >
       СТОРІНКА АДМІНІСТРАЦІЇ
