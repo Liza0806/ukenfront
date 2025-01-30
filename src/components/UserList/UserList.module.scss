@@ -24,10 +24,11 @@
 
   .nameOfUser {
     font-size: 1.0rem;
-     color: white; // Цвет текста белый
+     color: white; 
      display: flex;
      align-items: center;
      gap: 4vh;
+    
 
      @media screen and (max-width: 768px) {
       margin-top: 1vh;
@@ -70,4 +71,4 @@
     display: flex;
     align-items: center;
   }
-
+ 

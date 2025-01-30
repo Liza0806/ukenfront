@@ -1,81 +1,72 @@
 @import "../../styles/variables.scss";
 
-.hero {
-    position: relative;
-    width: 100%;
-    height: 100vh;
-    background-size: cover;
-    background-position: center;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    color: white;
-    background-size: cover;
-    background-position: bottom;
-    margin-top: $header-height-mobile;
-  }
+.heroContent {
+  background: 
+    linear-gradient(180deg, rgba(0, 0, 1, 0.91) 10%, rgba(0, 0, 0, 0.2275) 47.5%, rgba(0, 0, 0, 0) 73.5%),
+    url('../../assets/ufc-sport-mix-fight-draki-boi-bez-pravil-594108.jpg');
+  background-size: cover; 
+  background-position: center;
+  background-repeat: no-repeat; 
+  display: flex;
+  position: relative;
+  align-items: center;
+  z-index: 2;
+  height: 90vh;
+  flex-direction: column;
+  padding-top: 7vh;
 
-  
-  .heroContent {
-    display: flex;
-    position: relative;
-    justify-content: center; /* Центрирование по горизонтали */
    
-    z-index: 2;
+  @media (max-width: 738px) {
+    background: 
+    linear-gradient(180deg, rgba(0, 0, 1, 0.91) 10%, rgba(0, 0, 0, 0.2275) 47.5%, rgba(0, 0, 0, 0) 73.5%),
+    url('../../assets/zal.webp');
+    background-repeat: no-repeat; 
     height: 90vh;
-    background: linear-gradient(180deg, rgba(0, 0, 1, 0.91) 10%, rgba(0, 0, 0, 0.2275) 47.5%, rgba(0, 0, 0, 0) 73.5%);
-   /* Rectangle 1 */
+     }
+}
 
+.title {
+  text-transform: uppercase;
+  max-width: 602px;
+  font-family: 'Roboto', sans-serif;
+  font-style: normal;
+  font-weight: 700;
+  font-size: 64px;
+  line-height: 64px;
+  text-align: center;
+  color:$color-primary; 
+  text-shadow: 3px 3px 8px rgba(0, 0, 0, 0.5);
 
-
+  /* Адаптация для маленьких экранов */
+  @media (max-width: 768px) {
+    font-size: 48px;
+    margin-top: 30px;
   }
-  
-  .title {
-text-transform: uppercase;
-position: absolute;
-width: 602px;
-height: 114px;
-font-family: 'Roboto';
-font-style: normal;
-font-weight: 700;
-font-size: 64px;
-line-height: 64px;
-text-align: center;
-color: #FF6600;
-margin-top: 60px;
-transform: scale(0.8);
-transform-origin: center;
-text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
-  }
-  
-  .hero p {
-    font-size: 1.5rem;
-    margin-bottom: 2rem;
-  }
-  
-  .buttonJoin {
-    background: #FF6600;
-    color: white;
-    padding: 0.75rem 2rem;
-    font-size: 1.25rem;
-    text-transform: uppercase;
-    border: none;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
-    text-decoration: none;
-    width: 210px;
-    height: 48px;
-    border-radius: 4px;
-    margin-top: 152px;
-    transform: scale(0.8);
-    transform-origin: center;
+}
 
+.buttonJoin {
+  background: $color-primary; /* Цвет кнопки из переменной */
+  color: white;
+  padding: 0.75rem 2rem;
+  font-size: 1.25rem;
+  text-transform: uppercase;
+  border: none;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  text-decoration: none;
+  width: 210px;
+  height: 48px;
+  border-radius: 4px;
+  margin-top: 5vh;
 
-
-  }
-  
-  .buttonJoin:hover {
+  &:hover {
     background-color: darkorange;
   }
-  
- 
+
+  /* Адаптация для маленьких экранов */
+  @media (max-width: 1180x) {
+    padding: 0.5rem 1.5rem;
+    margin-top: 100px;
+    font-size: 1rem;
+  }
+}
