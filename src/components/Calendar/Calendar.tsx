@@ -58,7 +58,7 @@ import ArrowCircleRightIcon from '@mui/icons-material/ArrowCircleRight';
   // };
 
   const handleSelectEvent = (event: EventTypeDB) => {
-    navigate(`/events/${event._id}`, { state: { event } });
+    navigate(`${event._id}`, { state: { event } });
   };
 
   const lastMonth = () => {
