@@ -23,7 +23,7 @@ export const fetchAllGroups = createAsyncThunk<
   { rejectValue: string } // Тип значения для reject
 >("groups/fetchAllGroups", async (_, thunkAPI) => {
   const response = await getAllGroups();
-   
+   console.log(response, 'response in fetchAllGroups')
   if (!response) {
     return thunkAPI.rejectWithValue("error");
      

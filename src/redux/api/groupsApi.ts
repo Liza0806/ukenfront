@@ -8,7 +8,7 @@ export const getAllGroups = async () => {
     const response = await axios.get(`https://ukenback.vercel.app/groups/`);
   //  const response = await axios.get(`/groups/`);
      
-    //   console.log(response.data, "response.data");
+      console.log(response.data, "response.data in getAllGroups");
     localStorage.setItem("groups", JSON.stringify(response.data));
     return response.data;
   } catch (error) {
