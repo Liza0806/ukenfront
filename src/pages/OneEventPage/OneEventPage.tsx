@@ -192,6 +192,7 @@ const OneEventPage: React.FC = () => {
               />
             </div>
           </div>
+        )}
 
         {/* участники: */}
         <div className={cls.participants}>
@@ -219,8 +220,7 @@ const OneEventPage: React.FC = () => {
               ))}
             </ul>
           ) : (
-         <p>Поки що ніхто не записався</p>
-
+            <p>На тренировку пока никто не записался</p>
           )}
         </div>
         {/* возможные участники: */}
