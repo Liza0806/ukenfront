@@ -19,8 +19,8 @@ describe('eventsSlice', () => {
 
   it('should handle getGroups', () => {
     const groups: User[] = [
-      { _id: '1', name: 'userName 1', password: '111', phone: '11111', isAdmin: false, groups: [], balance: 11, telegramId: 111, discount: 11, visits: [] }, 
-      { _id: '2', name: 'userName 2',  password: '222', phone: '22222', isAdmin: true, groups: [],  balance: 22, telegramId: 222, discount: 22, visits: []  }
+      { _id: '1', name: 'userName 1', password: '111', phone: '11111', isAdmin: false, groups: [], balance: 11, telegramId: 111,  visits: [] }, 
+      { _id: '2', name: 'userName 2',  password: '222', phone: '22222', isAdmin: true, groups: [],  balance: 22, telegramId: 222, visits: []  }
     ];
    
     const nextState = userReducer(initialState, getUsers(groups));
@@ -36,8 +36,8 @@ describe('eventsSlice', () => {
 
     it('should handle fetchAllEvents.fulfilled', () => {
       const groups: User[] = [
-        { _id: '1', name: 'userName 1', password: '111', phone: '11111', isAdmin: false, groups: [], balance: 11, telegramId: 111, discount: 11, visits: [] }, 
-        { _id: '2', name: 'userName 2',  password: '222', phone: '22222', isAdmin: true, groups: [],  balance: 22, telegramId: 222, discount: 22, visits: []  }
+        { _id: '1', name: 'userName 1', password: '111', phone: '11111', isAdmin: false, groups: [], balance: 11, telegramId: 111, visits: [] }, 
+        { _id: '2', name: 'userName 2',  password: '222', phone: '22222', isAdmin: true, groups: [],  balance: 22, telegramId: 222,visits: []  }
       ];
 
       (getAllUsers as jest.Mock).mockResolvedValue(groups);

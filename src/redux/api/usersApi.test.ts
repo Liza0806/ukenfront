@@ -72,7 +72,7 @@ describe("getUsersByUserId", () => {
       groups: [],
       balance: 11,
       telegramId: 111,
-      discount: 11,
+  
       visits: [],
     };
     const userId = "1";
@@ -122,7 +122,7 @@ describe("getUsersByName", () => {
       groups: [],
       balance: 11,
       telegramId: 111,
-      discount: 11,
+
       visits: [],
     };
     const userName = "userName";

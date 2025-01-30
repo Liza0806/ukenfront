@@ -12,11 +12,6 @@ export interface ApiResponse {
   status: number;
 }
 
-export type PaymentType = {
-  dailyPayment: number | undefined;
-  monthlyPayment: number | undefined;
-};
-
 export type ScheduleType = {
   day: string;
   time: string;
@@ -26,21 +21,24 @@ export type ParticipantType = {
   _id: string;
   name: string;
   telegramId: number;
+  discount?: number;
 };
 
 export type GroupType = {
   _id: string;
   title: string;
   coachId?: string;
-  payment: PaymentType[];
+  dailyPayment: number,  
+  monthlyPayment: number,
   schedule: ScheduleType[];
-  participants: ParticipantType[];
+  participants: ParticipantType[] | Set<ParticipantType>;
 };
 
 export type AddGroupType = {
   title: string;
   coachId?: string | "Костя";
-  payment: PaymentType[];
+  dailyPayment: number,  
+  monthlyPayment: number,
   schedule: ScheduleType[];
   participants: ParticipantType[];
 };
@@ -70,9 +68,16 @@ export type EventTypeDB = {
   groupTitle: string;
   groupId: string;
   isCancelled: boolean;
+  participants: ParticipantType[] | Set<ParticipantType>;
+};
+export type AddEventTypeDB = {
+  _id: string;
+  date: string;
+  groupTitle: string;
+  groupId: string;
+  isCancelled: boolean;
   participants: ParticipantType[];
 };
-
 export type EventStateType = {
   isLoading: boolean;
   error: string | undefined;
@@ -102,7 +107,7 @@ export interface User {
   groups: string[];
   balance: number;
   telegramId: number;
-  discount?: number;
+discount?: number;
   visits: Visit[];
 }
 

@@ -68,7 +68,8 @@ const mockUpdateGroupFormState = {
 };
 const mockGroup = {
   title: "Test Group",
-  payment: [{ dailyPayment: 50, monthlyPayment: 1000 }],
+ dailyPayment: 50, 
+ monthlyPayment: 1000,
   schedule: [
     {
       day: "Понеділок",
@@ -99,7 +100,8 @@ const mockGroup = {
 
 const mockUpdateGroup = {
   title: "Test New Group",
-  payment: [{ dailyPayment: 5, monthlyPayment: 10 }],
+ dailyPayment: 5, 
+ monthlyPayment: 10 ,
   schedule: [
     {
       day: "Понеділок",
@@ -181,7 +183,7 @@ describe("Функция handleSubmit", () => {
       expect(state.groups.groups).toHaveLength(1); // Например, если должна быть одна группа в state
     });
     expect(state.groups.groups[0].title).toBe("Test Group");
-    expect(state.groups.groups[0].payment[0].dailyPayment).toBe(50);
+    expect(state.groups.groups[0].dailyPayment).toBe(50);
 
     //Проверяем, что модальное окно закрывается
     expect(mockCloseModal).toHaveBeenCalled();
@@ -213,7 +215,7 @@ describe("Функция handleSubmit", () => {
     expect(updatedGroup).toBeDefined(); // Проверяем, что группа существует
 
     expect(updatedGroup?.title).toBe("Test New Group"); // Проверка title
-    expect(updatedGroup?.payment[0].dailyPayment).toBe(5); // Проверка dailyPayment
+    expect(updatedGroup?.dailyPayment).toBe(5); // Проверка dailyPayment
 
     //Проверяем, что модальное окно закрывается
     expect(mockCloseModal).toHaveBeenCalled();

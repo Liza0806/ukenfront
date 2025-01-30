@@ -1,9 +1,15 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { NavLink } from "react-router-dom";
 import { Outlet } from "react-router-dom";
+import { useAppDispatch } from "../../redux/hooks/hooks";
+import { fetchAllEvents, fetchAllUsers } from "../../redux/thunks/thunks";
 
 const AdminPage: React.FC = () => {
-
+  const dispatch = useAppDispatch()
+useEffect(()=> {
+dispatch(fetchAllUsers());
+//dispatch(fetchAllEvents())
+},[dispatch])
   return (
     <div >
       СТОРІНКА АДМІНІСТРАЦІЇ

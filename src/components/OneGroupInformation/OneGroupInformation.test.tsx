@@ -25,12 +25,10 @@ const mockGroupData: GroupType = {
   _id: "1",
   title: "Group 1",
   coachId: "coach1",
-  payment: [
-    {
+
       dailyPayment: 10,
       monthlyPayment: 100,
-    },
-  ],
+  
   schedule: [{ day: "Понеділок", time: "10:00" }],
   participants: [
     { _id: "101", name: "Иван", telegramId: 11 },

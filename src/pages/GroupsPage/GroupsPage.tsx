@@ -14,20 +14,20 @@ import { Modal } from "../../components/Modal/Modal";
 import { GroupFormModal } from "../../components/GroupFormModal/GroupFormModal";
 import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
+import { GroupType } from "../../redux/types/types";
 
 const GroupsPage = () => {
-  ////////// утро 26.01
+  ////////// вечер 26.01
   const [showModalForUpdate, setShowModalForUpdate] = useState(false);
   const _id = useRef("");
+  const [groupData, setGroupData] = useState<GroupType | undefined>();
   const [showModalForAdd, setShowModalForAdd] = useState(false);
-
+  const groups = useAppSelector(selectGroups);
   const dispatch = useAppDispatch();
 
   useEffect(() => {
     dispatch(fetchAllGroups());
   }, [dispatch]);
-
-  const groups = useAppSelector(selectGroups);
 
   const handleDeleteGroup = async (groupId: string) => {
     try {
@@ -36,6 +36,7 @@ const GroupsPage = () => {
       console.error("Ошибка при удалении группы:", error);
     }
   };
+  console.log("render GroupsPage", groupData);
 
   return (
     <Container containerImage={containerImage} isCentre={false}>
@@ -58,11 +59,11 @@ const GroupsPage = () => {
           onClose={() => setShowModalForUpdate(false)}
         >
           <GroupFormModal
-            initialGroupData={groups.find(
-              (group) => _id?.current && group._id === _id.current
-            )}
+            initialGroupData={groupData}
             isEditMode={true}
-            closeModal={() => setShowModalForUpdate(false)}
+            closeModal={() => {
+              setShowModalForUpdate(false);
+            }}
           />
         </Modal>
 
@@ -76,6 +77,7 @@ const GroupsPage = () => {
                   onClick={() => {
                     setShowModalForUpdate(true);
                     _id.current = group._id;
+                    setGroupData(group);
                   }}
                 >
                   <EditIcon sx={{ color: "white" }} />
@@ -89,7 +91,13 @@ const GroupsPage = () => {
               </div>
 
               <li>
-                <OneGroupInformation groupData={group} />
+                <OneGroupInformation
+                  title={group.title}
+                  dailyPayment={group.dailyPayment}
+                  monthlyPayment={group.monthlyPayment}
+                  participants={[...group.participants]}
+                  schedule={group.schedule}
+                />
               </li>
             </div>
           ))}
