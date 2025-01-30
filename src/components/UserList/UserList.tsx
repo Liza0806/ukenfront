@@ -1,17 +1,13 @@
-import IconButton from "@mui/material/IconButton";
 import DeleteIcon from "@mui/icons-material/Delete";
-import AddCircleOutlineIcon from "@mui/icons-material/AddCircleOutline";
 import cls from "./UserList.module.scss";
 import React, { ChangeEventHandler, useState } from "react";
 import {
   EventTypeDB,
-  GroupType,
+
   PartialUserWithRequiredFields,
   ParticipantType,
 } from "../../redux/types/types";
-import { useManageUsers } from "../../hooks/hooks";
 import AddIcon from "@mui/icons-material/Add";
-import { hover } from "@testing-library/user-event/dist/hover";
 
 export interface UserListProps {
   usersInBase: ParticipantType[],
@@ -82,13 +78,13 @@ const UserList: React.FC<UserListProps> = ({
           }}}
         />
 
-        <DeleteIcon
+        {/* <DeleteIcon
           data-testid="userInListDeleteBtn"
           onClick={() => {
             setUsersInComponent(usersInBase.filter((u) => u._id !== user._id));
           }}
           className={cls.deleteIcon}
-        />
+        /> */}
         {user!.name}
       </div>
     </li>

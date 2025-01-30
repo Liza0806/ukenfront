@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import DatePicker from "react-datepicker";
-
+import DeleteIcon from "@mui/icons-material/Delete";
 import "react-datepicker/dist/react-datepicker.css";
 import "./Styles.css";
 import cls from "./OneEventPage.module.scss";
@@ -181,7 +181,17 @@ const OneEventPage: React.FC = () => {
           {participants.length > 0 ? (
             <ul>
               {participants.map((participant, index) => (
-                <li key={index}>{participant.name || "Не вказано"}</li>
+                <li key={index}>{participant.name || "Не вказано"}
+                
+                  <DeleteIcon
+                          data-testid="userInListDeleteBtn"
+                          onClick={() => {
+                            setParticipants(participants.filter((u) => u._id !== participant._id));
+                          }}
+                          className={cls.deleteIcon}
+                        />
+
+                </li>
               ))}
             </ul>
           ) : (

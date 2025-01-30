@@ -232,7 +232,17 @@ const handleScheduleChange = (index: number, field: keyof ScheduleType, value: s
 {participants.length > 0 ? (
             <ul>
               {participants.map((participant, index) => (
-                <li key={index}>{participant.name || "Не вказано"}</li>
+                <li key={index}>{participant.name || "Не вказано"}
+                
+                <DeleteIcon
+                          data-testid="userInListDeleteBtn"
+                          onClick={() => {
+                            setParticipants(participants.filter((u) => u._id !== participant._id));
+                          }}
+                          className={cls.deleteIcon}
+                        />
+                
+                </li>
               ))}
             </ul>
           ) : (
