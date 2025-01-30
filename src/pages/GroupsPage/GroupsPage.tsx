@@ -95,7 +95,7 @@ const GroupsPage = () => {
                   title={group.title}
                   dailyPayment={group.dailyPayment}
                   monthlyPayment={group.monthlyPayment}
-                  participants={group.participants}
+                  participants={[...group.participants]}
                   schedule={group.schedule}
                 />
               </li>

@@ -14,7 +14,7 @@ import { Container } from "../../components/Container/Container";
 import containerImage from "../../assets/PhoneForPagIvent.jpg";
 import UpdateIcon from "@mui/icons-material/Update";
 import { useRef } from "react";
-import { useManageUsers } from "../../hooks/hooks";
+//import { useManageUsers } from "../../hooks/hooks";
 import {
   selectCurrentEvent,
   selectUsers,
@@ -39,12 +39,14 @@ const OneEventPage: React.FC = () => {
   const [isCancelled, setIsCanselled] = useState(
     currentEvent?.isCancelled || false
   );
-  const [participants, setParticipants] = useState(
-    currentEvent?.participants || []
+ 
+  const [participants, setParticipants] = useState<Set<ParticipantType>>(
+    new Set(currentEvent?.participants || [])
   );
-
   const usersInBase = useAppSelector(selectUsers);
-
+  const availableParticipants = usersInBase.filter(
+    user => ![...participants].some(p => p._id === user._id)
+  );
   useEffect(() => {
     if (id) {
       dispatch(fetchEventById(id)); // Загружаем ивент
@@ -72,10 +74,12 @@ const OneEventPage: React.FC = () => {
         groupId: event.groupId,
         groupTitle: event.groupTitle,
         isCancelled: event.isCancelled,
-        participants: event.participants,
+        participants: [...event.participants],
       })
     );
     setShowUpdateEvent(false);
+    setShowAdditionalUsers(false);
+    dispatch(fetchEventById(event._id))
   };
 
   const handleDateChange = (date: Date | null) => {
@@ -83,7 +87,7 @@ const OneEventPage: React.FC = () => {
       setDate(date.toISOString());
     }
   };
-  console.log("render one event page");
+ // console.log("render one event page");
 
   return (
     <Container
@@ -178,15 +182,15 @@ const OneEventPage: React.FC = () => {
         {/* участники: */}
         <div className={cls.participants}>
           <h3 className={cls.h3}>Учасники:</h3>
-          {participants.length > 0 ? (
+          {participants.size > 0 ? (
             <ul>
-              {participants.map((participant, index) => (
+              {[...participants].map((participant, index) => (
                 <li key={index}>{participant.name || "Не вказано"}
                 
                   <DeleteIcon
                           data-testid="userInListDeleteBtn"
                           onClick={() => {
-                            setParticipants(participants.filter((u) => u._id !== participant._id));
+                            setParticipants(new Set([...participants].filter((u) => u._id !== participant._id)));
                           }}
                           className={cls.deleteIcon}
                         />
@@ -204,7 +208,7 @@ const OneEventPage: React.FC = () => {
           {showAdditionalUsers && (
             <UserList
               usersInComponent={participants}
-              usersInBase={usersInBase}
+              usersInBase={availableParticipants}
               setUsersInComponent={setParticipants}
             />
           )}

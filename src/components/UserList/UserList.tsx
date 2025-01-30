@@ -11,7 +11,7 @@ import AddIcon from "@mui/icons-material/Add";
 
 export interface UserListProps {
   usersInBase: ParticipantType[],
-  usersInComponent: ParticipantType[],
+  usersInComponent: ParticipantType[] | Set<ParticipantType>,
   setUsersInComponent:
     | React.Dispatch<React.SetStateAction<EventTypeDB | ParticipantType[] | undefined>>
     | any;
@@ -73,9 +73,12 @@ const UserList: React.FC<UserListProps> = ({
           }}
           data-testid="userInListAddBtn"
           onClick={() => {
-            if(!usersInComponent.find(u=>u._id === user._id)){
-            setUsersInComponent([...usersInComponent, {_id: user._id, name: user.name, telegramId: user.telegramId}]);
-          }}}
+            if (![...usersInComponent].some(u => u._id === user._id)) {
+              setUsersInComponent(
+                new Set([...usersInComponent, { _id: user._id, name: user.name, telegramId: user.telegramId }])
+              );
+            }
+          }}
         />
 
         {/* <DeleteIcon

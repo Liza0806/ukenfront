@@ -1,4 +1,5 @@
 import {
+  AddEventTypeDB,
   AddGroupType,
   ApiResponse,
   EventTypeDB,
@@ -99,7 +100,7 @@ interface UpdateGroupThPayload {
 // Функция для отправки PUT-запроса на сервер
 export const updateEvent = createAsyncThunk<
   EventTypeDB, // Тип возвращаемого значения
-  EventTypeDB, // Тип аргументов
+  AddEventTypeDB, // Тип аргументов
   { rejectValue: string } // Тип значения для reject
 >(
   "events/updateEvent",

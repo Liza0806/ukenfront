@@ -22,7 +22,6 @@ import { AppDispatch } from "../../redux/store/store";
 import AddCircleOutlineIcon from "@mui/icons-material/AddCircleOutline";
 import AddIcon from "@mui/icons-material/Add";
 import DeleteIcon from "@mui/icons-material/Delete";
-import { group } from "console";
 
 interface GroupFormProps {
   initialGroupData?: GroupType | undefined;
@@ -42,6 +41,7 @@ export const handleSubmit = async (
     toast.error("Title");
     return;
   }
+  
   if (!groupFormState.dailyPayment && !groupFormState.monthlyPayment) {
     toast.error("один из платежей должен быть заполнен");
     return;
@@ -109,9 +109,13 @@ const [title, setTitle] = useState<string>(initialGroupData?.title || '')
 const [dailyPayment, setDailyPayment] = useState<number>(initialGroupData?.dailyPayment || 0)
 const [monthlyPayment, setMonthlyPayment] = useState<number>(initialGroupData?.monthlyPayment || 0)
 const [schedule, setSchedule] = useState<ScheduleType[]>(initialGroupData?.schedule || [])
-const [participants, setParticipants] = useState<ParticipantType[]>(initialGroupData?.participants || [])
 
 
+//const [participants, setParticipants] = useState<ParticipantType[]>(initialGroupData?.participants || [])
+
+  const [participants, setParticipants] = useState<Set<ParticipantType>>(
+    new Set(initialGroupData?.participants || [])
+  );
 const handleAddSchedule = () => {
   setSchedule((prevSchedule) => [
     ...prevSchedule,
@@ -229,15 +233,15 @@ const handleScheduleChange = (index: number, field: keyof ScheduleType, value: s
           ))}
 
           {/* ///////////////НОВОЕ - 27.01 вечер///////////////// */}
-{participants.length > 0 ? (
+{participants.size > 0 ? (
             <ul>
-              {participants.map((participant, index) => (
+              {[...participants].map((participant, index) => (
                 <li key={index}>{participant.name || "Не вказано"}
                 
                 <DeleteIcon
                           data-testid="userInListDeleteBtn"
                           onClick={() => {
-                            setParticipants(participants.filter((u) => u._id !== participant._id));
+                            setParticipants(new Set([...participants].filter((u) => u._id !== participant._id)));
                           }}
                           className={cls.deleteIcon}
                         />
@@ -266,7 +270,7 @@ const handleScheduleChange = (index: number, field: keyof ScheduleType, value: s
               dailyPayment,
               monthlyPayment,
               schedule, 
-              participants,
+              participants: [...participants],
             },
             appDispatch,
             closeModal,
@@ -276,7 +280,7 @@ const handleScheduleChange = (index: number, field: keyof ScheduleType, value: s
             dailyPayment,
             monthlyPayment,
             schedule, 
-            participants,
+            participants: [...participants],
           })
         }}
       >

@@ -102,7 +102,7 @@ import ArrowCircleRightIcon from '@mui/icons-material/ArrowCircleRight';
                           onClick={() => handleSelectEvent(event)}
                         >
                           <strong>{event.groupTitle}</strong>
-                          <p> {event.participants.length}</p>
+                          {/* <p> {event.participants.length}</p> */}
                         </div>
                       ))
                     ) : (
