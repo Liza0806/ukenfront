@@ -23,6 +23,9 @@ import { clearCurrentEvent } from "../../redux/slices/eventsSlice";
 
 const OneEventPage: React.FC = () => {
   const { id } = useParams<string>();
+
+  const isLoading = useAppSelector((state) => state.events.isLoading);
+
   const currentEvent = useAppSelector(selectCurrentEvent);
   const dispatch = useAppDispatch();
   const containerRef = useRef<HTMLDivElement>(null);
@@ -39,13 +42,13 @@ const OneEventPage: React.FC = () => {
   const [isCancelled, setIsCanselled] = useState(
     currentEvent?.isCancelled || false
   );
- 
+
   const [participants, setParticipants] = useState<Set<ParticipantType>>(
     new Set(currentEvent?.participants || [])
   );
   const usersInBase = useAppSelector(selectUsers);
   const availableParticipants = usersInBase.filter(
-    user => ![...participants].some(p => p._id === user._id)
+    (user) => ![...participants].some((p) => p._id === user._id)
   );
   useEffect(() => {
     if (id) {
@@ -79,7 +82,7 @@ const OneEventPage: React.FC = () => {
     );
     setShowUpdateEvent(false);
     setShowAdditionalUsers(false);
-    dispatch(fetchEventById(event._id))
+    dispatch(fetchEventById(event._id));
   };
 
   const handleDateChange = (date: Date | null) => {
@@ -87,14 +90,26 @@ const OneEventPage: React.FC = () => {
       setDate(date.toISOString());
     }
   };
- // console.log("render one event page");
 
+  console.log(editedEvent, "editedEvent");
+  console.log(currentEvent, "currentEvent");
+  console.log(
+    date,
+    groupId,
+    groupTitle,
+    participants,
+    isCancelled,
+    "date, groupId, groupTitle, participants, isCancelled,"
+  );
   return (
     <Container
       ref={containerRef}
       isCentre={true}
       containerImage={containerImage}
     >
+     {isLoading ? (
+      <p>Loading...</p> // пока данные загружаются
+    ) : (
       <div className={cls.trainingContainer}>
         <div className={cls.header}>
           <h3 className={cls.title}>Група: {groupTitle}</h3>
@@ -185,16 +200,22 @@ const OneEventPage: React.FC = () => {
           {participants.size > 0 ? (
             <ul>
               {[...participants].map((participant, index) => (
-                <li key={index}>{participant.name || "Не вказано"}
-                
-                  <DeleteIcon
-                          data-testid="userInListDeleteBtn"
-                          onClick={() => {
-                            setParticipants(new Set([...participants].filter((u) => u._id !== participant._id)));
-                          }}
-                          className={cls.deleteIcon}
-                        />
+                <li key={index}>
+                  {participant.name || "Не вказано"}
 
+                  <DeleteIcon
+                    data-testid="userInListDeleteBtn"
+                    onClick={() => {
+                      setParticipants(
+                        new Set(
+                          [...participants].filter(
+                            (u) => u._id !== participant._id
+                          )
+                        )
+                      );
+                    }}
+                    className={cls.deleteIcon}
+                  />
                 </li>
               ))}
             </ul>
@@ -224,7 +245,7 @@ const OneEventPage: React.FC = () => {
             показать дополнительных юзеров
           </button>
         )}
-      </div>
+      </div>)}
     </Container>
   );
 };

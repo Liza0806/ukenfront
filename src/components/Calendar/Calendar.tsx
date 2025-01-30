@@ -29,9 +29,7 @@ import ArrowCircleRightIcon from '@mui/icons-material/ArrowCircleRight';
   const events = useAppSelector((state) => state.events.events);
   const isLoading = useAppSelector((state) => state.events.isLoading);
   const error = useAppSelector((state) => state.events.error);
-  console.log(error, 'error MyCalendar')
-  console.log(isLoading, 'isLoading MyCalendar')
-  console.log(events, 'events MyCalendar')
+
   // Фетчим ивенты при первом рендере
   useEffect(() => {
     dispatch(fetchAllEvents());
