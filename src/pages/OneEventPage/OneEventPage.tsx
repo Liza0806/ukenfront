@@ -201,7 +201,7 @@ const OneEventPage: React.FC = () => {
             )}
           </div>
           {editedEvent.participants.length === 0 && (
-            <p>На тренировку пока никто не записался</p>
+            <p>Поки, що ніхто не записався</p>
           )}
 
           {/* возможные участники: */}

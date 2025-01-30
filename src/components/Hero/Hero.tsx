@@ -5,7 +5,7 @@ import { Container } from '../Container/Container';
 
 export const Hero = () => {
     return(
-       <Container isCentre={false} containerImage={heroImage}>
+       
 
   <div className={cls.heroContent}>
     <h1 className={cls.title}>UKEN TEAM</h1>
@@ -13,6 +13,6 @@ export const Hero = () => {
     <button className={cls.buttonJoin}><a href="#signup">ПРИЄДНАТИСЯ</a></button>
   
   </div>
-</Container>
+
     )
 }
