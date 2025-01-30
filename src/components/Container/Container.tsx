@@ -18,7 +18,7 @@ const Container = forwardRef<HTMLDivElement, ContainerProps & CalendarTypeProps>
 
         return (
             <div 
-                ref={ref} // Убедитесь, что ref установлен на div
+                ref={ref} 
                 className={isCentre ? cls.container : cls.containerForCalendar} 
                 style={{ 
                     backgroundImage: `url(${containerImage})`, 
