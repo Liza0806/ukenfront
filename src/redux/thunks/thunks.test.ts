@@ -80,7 +80,7 @@ describe("fetchAllGroups thunk", () => {
         _id: "1",
         title: "Group 1",
         coachId: "coach1",
-        payment: [],
+        dailyPayment: 0, monthlyPayment:0,
         schedule: [],
         participants: [],
       },
@@ -88,7 +88,7 @@ describe("fetchAllGroups thunk", () => {
         _id: "2",
         title: "Group 2",
         coachId: "coach2",
-        payment: [],
+        dailyPayment: 0, monthlyPayment:0,
         schedule: [],
         participants: [],
       },
@@ -253,7 +253,7 @@ describe("fetchAllUsers thunk", () => {
         groups: [],
         balance: 11,
         telegramId: 111,
-        discount: 11,
+
         visits: [],
       },
       {
@@ -265,7 +265,7 @@ describe("fetchAllUsers thunk", () => {
         groups: [],
         balance: 22,
         telegramId: 222,
-        discount: 22,
+      
         visits: [],
       },
     ];
@@ -319,7 +319,7 @@ describe("fetchUsersByName thunk", () => {
       groups: [],
       balance: 11,
       telegramId: 111,
-      discount: 11,
+
       visits: [],
     };
 
@@ -425,7 +425,7 @@ describe("addGroup thunk", () => {
     const group: AddGroupType = {
       title: "Group 1",
       coachId: "coach1",
-      payment: [],
+      dailyPayment: 0, monthlyPayment:0,
       schedule: [],
       participants: [],
     };
@@ -446,7 +446,7 @@ describe("addGroup thunk", () => {
     const group: AddGroupType = {
       title: "Group 1",
       coachId: "coach1",
-      payment: [],
+      dailyPayment: 0, monthlyPayment:0,
       schedule: [],
       participants: [],
     };
@@ -484,7 +484,7 @@ describe("deleteGroupTh thunk", () => {
       _id: "1",
       title: "Group 1",
       coachId: "coach1",
-      payment: [],
+      dailyPayment: 0, monthlyPayment:0,
       schedule: [],
       participants: [],
     };
@@ -507,7 +507,7 @@ describe("deleteGroupTh thunk", () => {
       _id: "1",
       title: "Group 1",
       coachId: "coach1",
-      payment: [],
+      dailyPayment: 0, monthlyPayment:0,
       schedule: [],
       participants: [],
     };
@@ -544,7 +544,7 @@ describe("updateGroupTh thunk", () => {
       _id: "1",
       title: "Group 1",
       coachId: "coach1",
-      payment: [],
+      dailyPayment: 0, monthlyPayment:0,
       schedule: [],
       participants: [],
     };

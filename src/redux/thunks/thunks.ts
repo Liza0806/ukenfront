@@ -1,4 +1,5 @@
 import {
+  AddEventTypeDB,
   AddGroupType,
   ApiResponse,
   EventTypeDB,
@@ -99,14 +100,14 @@ interface UpdateGroupThPayload {
 // Функция для отправки PUT-запроса на сервер
 export const updateEvent = createAsyncThunk<
   EventTypeDB, // Тип возвращаемого значения
-  UpdateEventParticipantsPayload, // Тип аргументов
+  AddEventTypeDB, // Тип аргументов
   { rejectValue: string } // Тип значения для reject
 >(
   "events/updateEvent",
-  async ({ event }: UpdateEventParticipantsPayload, thunkAPI) => {
+  async ({_id, date, groupId, groupTitle, isCancelled, participants}, thunkAPI) => {
   
   console.log('updateEventTH')  
-  const response = await updateEventAPi(event);
+  const response = await updateEventAPi({_id, date, groupId, groupTitle, isCancelled, participants}); 
     if (!response) {
       return thunkAPI.rejectWithValue("error");
     }

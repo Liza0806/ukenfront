@@ -20,12 +20,10 @@ const initialGroupData: GroupType = {
   _id: "1",
   title: "Group 1",
   coachId: "coach1",
-  payment: [
-    {
-      dailyPayment: 0,
-      monthlyPayment: 1100,
-    },
-  ],
+
+  dailyPayment: 0,
+  monthlyPayment: 1100,
+
   schedule: [
     {
       day: "monday",
@@ -93,7 +91,6 @@ describe("GroupFormModal", () => {
     expect(
       screen.getByTestId("group-monthlyPayment-input")
     ).toBeInTheDocument();
-
   });
 
   it("should update the title field correctly when typing", () => {
@@ -225,10 +222,7 @@ describe("GroupFormModal", () => {
   it("вызывается санк с новыми значениями при изменении значений", async () => {
     render(
       <Provider store={store}>
-        <GroupFormModal
-          isEditMode={false}
-          closeModal={mockCloseModal}
-        />
+        <GroupFormModal isEditMode={false} closeModal={mockCloseModal} />
       </Provider>
     );
 
@@ -253,17 +247,15 @@ describe("GroupFormModal", () => {
       expect(addGroupTh).toHaveBeenCalledWith({
         title: "New Group",
         coachId: "Kostya",
-        payment: [
-          {
-            dailyPayment: 10,
-            monthlyPayment: 100,
-          },
-        ],
+
+        dailyPayment: 10,
+        monthlyPayment: 100,
+
         schedule: [
           {
             day: "",
             time: "00:00",
-          }
+          },
         ],
         participants: [],
       });
@@ -290,7 +282,8 @@ describe("GroupFormModalw", () => {
       _id: "1",
       title: "Group 1",
       coachId: "coach1",
-      payment: [{ dailyPayment: 0, monthlyPayment: 1100 }],
+      dailyPayment: 0, 
+      monthlyPayment: 1100,
       schedule: [
         { day: "monday", time: "16:00" },
         { day: "wednesday", time: "16:00" },
@@ -331,6 +324,5 @@ describe("GroupFormModalw", () => {
     expect(screen.getByDisplayValue("Group 1")).toBeInTheDocument();
     // Проверяем, что поля оплаты отображается с начальными данными
     expect(screen.getByDisplayValue("1100")).toBeInTheDocument();
- 
   });
 });

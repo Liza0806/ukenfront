@@ -19,8 +19,8 @@ describe('eventsSlice', () => {
 
   it('should handle setGroups', () => {
     const groups: GroupType[] = [
-      { _id: '1', title: 'groupTitle 1', coachId: 'Костя', payment: [], schedule: [], participants: [] }, 
-      { _id: '2', title: 'groupTitle 2',  coachId: 'Костя', payment: [], schedule: [], participants: [] }
+      { _id: '1', title: 'groupTitle 1', coachId: 'Костя',  dailyPayment: 0, monthlyPayment:0, schedule: [], participants: [] }, 
+      { _id: '2', title: 'groupTitle 2',  coachId: 'Костя',  dailyPayment:0, monthlyPayment:0, schedule: [], participants: [] }
     ];
     const nextState = groupReducer(initialState, setGroups(groups));
     expect(nextState.groups).toEqual(groups);
@@ -35,8 +35,8 @@ describe('eventsSlice', () => {
 
     it('should handle fetchAllEvents.fulfilled', () => {
       const groups: GroupType[] = [
-        { _id: '1', title: 'groupTitle 1', coachId: 'Костя', payment: [], schedule: [], participants: [] }, 
-        { _id: '2', title: 'groupTitle 2',  coachId: 'Костя', payment: [], schedule: [], participants: [] }
+        { _id: '1', title: 'groupTitle 1', coachId: 'Костя', dailyPayment: 0, monthlyPayment:0, schedule: [], participants: [] }, 
+        { _id: '2', title: 'groupTitle 2',  coachId: 'Костя', dailyPayment: 0, monthlyPayment:0, schedule: [], participants: [] }
       ];
 
       (getAllGroups as jest.Mock).mockResolvedValue(groups);
