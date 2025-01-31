@@ -1,93 +1,236 @@
 @import "../../styles/variables.scss";
 
+.container {
+  background: linear-gradient(
+      180deg,
+      rgba(0, 0, 1, 0.91) 10%,
+      rgba(0, 0, 0, 0.2275) 47.5%,
+      rgba(0, 0, 0, 0) 73.5%
+    ),
+    url("../../assets/fon-oktagona-ufc.jpg");
 
-
-
+  @media (max-width: 738px) {
+    background: linear-gradient(
+      180deg,
+      rgba(0, 0, 1, 0.91) 10%,
+      rgba(0, 0, 0, 0.2275) 47.5%,
+      rgba(0, 0, 0, 0) 73.5%
+    );
+  }
+}
 
 .containerCoach {
-    height:auto;
-    width: auto;
-    display: flex;
+  height: auto;
+  width: auto;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  background: linear-gradient(
+    180deg,
+    rgba(0, 0, 0, 1) 0%,
+    rgba(0, 0, 0, 0.3) 50%,
+    rgba(2, 2, 2, 0.4) 100%
+  );
+  padding-right: 5vh;
+  padding-left: 5vh;
+  position: relative;
+  gap: 40px;
+
+  @media (max-width: 738px) {
     flex-direction: column;
-    align-items: flex-start; 
-    background: linear-gradient(180deg, rgba(0, 0, 0, 1) 0%, rgba(0, 0, 0, 0.3) 50%, rgba(2, 2, 2, 0.4) 100%);
-    padding-right:90px;
-    padding-left: 90px;
-    position: relative; 
-    gap: 70px;
+    background: linear-gradient(
+  180deg,
+  rgba(10, 10, 10, 1) 0%,
+  rgba(15, 15, 15, 0.85) 35%,
+  rgba(20, 20, 20, 0.8) 65%,
+  rgba(10, 10, 10, 1) 100%
+);
+padding: 3vh;
+    gap: 2vh;
+  }
 
-    .titleHead {
-        display: flex;
-        align-items: center;
-        margin-left: auto; 
-        text-align: center;
+  .titleHead {
+    display: flex;
+    margin-top: 5vh;
+    margin-bottom:2vh;
+    gap: 70vh;
 
-        .headerTitle {
-            text-transform: uppercase;
-            font-family: 'Roboto';
-            font-weight: 700;
-            font-size: 64px;
-            line-height: 64px;
-            color: #FF6600;
-            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
-            scale: 80%;
-        }
-
-        .headerTitle::before {
-            content: '';
-            width: 358px;
-            height: 2px; // Высота псевдоэлемента
-            background: #FF6600; // Цвет фона
-            position: absolute; // Установлено на absolute
-            top: 100%; // Позиционирование
-            right: 6.5%; // Слева от заголовка
-            transform: translateY(-50%); // Центрируем по вертикали
-        }
+    @media (max-width: 738px) {
+      flex-direction: column;
+      flex-direction: column-reverse;
+      gap: 2vh;
     }
+
+    .headerNameTitle {
+      text-transform: uppercase;
+      font-family: "Roboto";
+      font-weight: 700;
+      font-size: 48px;
+      text-align: center;
+      color: #ff6600;
+      text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+
+      @media (max-width: 738px) {
+        text-transform: uppercase;
+        font-family: "Roboto";
+        font-weight: 700;
+        font-size: 40.96px;
+        line-height: 40.96px;
+        color: #ff6600;
+        text-shadow: 1.28px 1.28px 2.56px rgba(0, 0, 0, 0.3);
+        margin: auto;
+      }
+    }
+
+    .headerTitle {
+      text-transform: uppercase;
+      font-family: "Roboto";
+      font-weight: 700;
+      font-size: 64px;
+      line-height: 64px;
+      color: #ff6600;
+      text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+      scale: 80%;
+      margin-left: auto;
+
+      @media (max-width: 738px) {
+        text-transform: uppercase;
+        font-family: "Roboto";
+        font-weight: 700;
+        font-size: 51.2px;
+        line-height: 51.2px;
+        color: #ff6600;
+        text-shadow: 1.6px 1.6px 3.2px rgba(0, 0, 0, 0.3);
+        margin: auto;
+      }
+    }
+
+    .headerTitle::before {
+      content: "";
+      width: 358px;
+      height: 2px; // Высота псевдоэлемента
+      background: #ff6600; // Цвет фона
+      position: absolute; // Установлено на absolute
+      top: 100%; // Позиционирование
+      right: 6.5%; // Слева от заголовка
+      transform: translateY(-50%); // Центрируем по вертикали
+      @media (max-width: 738px) {
+        display: none;
+      }
+    }
+  }
 }
 
 .coachBody {
-    display: flex;
-    flex-direction: row; // Изменено на row
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  gap: 4vh;
+  background-color: rgba(0, 0, 0, 0.7);
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.4);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  border: 7px;
 
-    justify-content: space-between; // Равномерное распределение пространства между элементами
-    width: 100%; // Установите ширину на 100%, если нужно
-    .headerNameTitle {
-        text-transform: uppercase;
-        font-family: 'Roboto';
-        font-weight: 700;
-        font-size: 48px;
-        text-align: center;
-        color: #FF6600;
-        text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
-        margin-bottom: 20px;
-        scale: 90%;
-    }
+  @media (max-width: 738px) {
+   
+    background-color: rgba(0, 0, 0, 0.7);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.4);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    border-radius: 7px;
+    flex-direction: column;
+    padding: 1vh;
+  }
 
-    .coachHero{
-        display: flex;
-        flex-direction: column;
-        width: 80%;   
-        
-    }
+  .photo {
+    display: inline-block;
+    width: auto;
+    height: auto;
+    max-height: fit-content;
+    align-items: center;
+    border-radius: 12px;
+    background: none;
+    padding: 2vh;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    margin-right: auto;
+    z-index: 2;
 
-    .imageCoach {
-        width: 390px;
-        height: 560px;
-        margin-left: auto;
-        padding-bottom: 30px;
-    }
+    @media (max-width: 738px) {
+      background: none;
+      box-shadow: none;
+      width: 100%;
+      padding: 0vh;
+      border-radius: 5px;
+      transition: transform 0.3s none, box-shadow 0.3s none;
 
-    .titleCoach {
-        color: #fbfbfa;
-        font-family: 'Roboto';
-        font-weight: 600;
-        font-size: 31px;
-        line-height: 36px;
-        text-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
-        margin-right: 20px;
-        scale: 90%;
-        padding-left: 20px;
-        
     }
+  }
+
+  .imageCoach {
+    width: 100%;
+    max-width: 900px;
+    height: auto;
+    border-radius: 12px;
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.4);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+
+    @media (max-width: 738px) {
+      width: 100%;
+      border-radius: 5px;
+      height: auto;
+      box-shadow: none;
+    }
+  }
+
+  .coachHero {
+    display: inline-block;
+    width: 80%;
+    height: auto;
+    max-height: auto;
+    align-items: center;
+    border-radius: 12px;
+    background: none;
+    padding: 4vh;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.4);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    z-index: 0;
+
+    @media (max-width: 738px) {
+      background: none;
+      box-shadow: none;
+      padding: 0vh;
+      width: 100%;
+      max-width: 400px; /* Ограничиваем ширину в мобильном */
+    }
+  }
+
+
+
+  .titleCoach {
+    color: #e0e0e0;
+    font-family: "Roboto", sans-serif;
+    font-weight: 600;
+    font-size: 30px;
+    line-height: 36px;
+    letter-spacing: 0.8px;
+    text-shadow: 2px 2px 6px rgba(0, 0, 0, 0.4);
+    padding-left: 20px;
+    transition: all 0.3s ease-in-out;
+    @media (max-width: 1024px) {
+        font-size: 20px;
+        line-height: 26px;
+      }
+  
+      @media (max-width: 768px) {
+        font-size: 18px;
+        line-height: 24px;
+        padding: 0;
+        text-shadow: 1px 1px 4px rgba(0, 0, 0, 0.3);
+      }
+  
+      @media (max-width: 480px) {
+        font-size: 16px;
+        line-height: 22px;
+        letter-spacing: 0.5px;
+      }
+}
 }
