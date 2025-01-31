@@ -10,6 +10,12 @@
   padding-left: 90px;
   padding-top: 30px;
   gap: 5px;
+
+  @media (max-width: 768px) {
+    padding: 4vh;
+    gap: 5vh;
+    height: 55vh;
+      }
 }
 
 .containerTitle{
@@ -59,6 +65,15 @@
   border-radius: 0px;
   transition: transform 0.3s ease;
   z-index: 2;
+
+  @media (max-width: 768px) {
+    width: 100%;
+    height: auto;
+    transform: none;
+    border-radius: 12px;
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.4);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+      }
 }
 
 .centerImage:hover {
@@ -73,6 +88,11 @@
   box-shadow: 0 10px 15px rgba(0, 0, 0, 0.3);
   transform: translateX(-25.5%) scale(0.6); 
   z-index: 1;
+  
+  @media (max-width: 768px) {
+    display: none;
+    
+      }
 }
 
 /* Правое боковое изображение */
@@ -83,15 +103,29 @@
   box-shadow: 0 10px 15px rgba(0, 0, 0, 0.3);
   transform: translateX(110px) scale(0.6); 
   z-index: 1; 
+
+  @media (max-width: 768px) {
+display: none;
+  }
 }
 
-.buttonRight{
-z-index: 3;
-transform: translateX(-100%);
-cursor: pointer;
+.buttonRight {
+  z-index: 3;
+  transform: translateX(-100%);
+  cursor: pointer;
+
+  @media (max-width: 768px) {
+    transform: translateX(-214%) translateY(333%);
+  }
 }
+
+
 .buttonLeft{
 z-index: 3;
 cursor: pointer;
 transform: translateX(133%);
+
+@media (max-width: 768px) {
+  transform: translateX(239%) translateY(129px);
+}
 }
