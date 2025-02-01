@@ -14,12 +14,11 @@ import { Container } from "../../components/Container/Container";
 import containerImage from "../../assets/PhoneForPagIvent.jpg";
 import UpdateIcon from "@mui/icons-material/Update";
 import { useRef } from "react";
-//import { useManageUsers } from "../../hooks/hooks";
 import {
   selectCurrentEvent,
   selectUsers,
 } from "../../redux/selectors/selectors";
-import { clearCurrentEvent } from "../../redux/slices/eventsSlice";
+import { clearCurrentEvent, setCurrentEvent, updateCurrentEvent } from "../../redux/slices/eventsSlice";
 
 const OneEventPage: React.FC = () => {
   const { id } = useParams<string>();
@@ -31,17 +30,9 @@ const OneEventPage: React.FC = () => {
   const containerRef = useRef<HTMLDivElement>(null);
 
   const [editedEvent, setEditedEvent] = useState<EventTypeDB | null>(null);
-  const [showUpdateEvent, setShowUpdateEvent] = useState(true);
   const [showAdditionalUsers, setShowAdditionalUsers] = useState(false);
   const [showCalendar, setShowCalendar] = useState(false);
   const [showTimer, setShowTimer] = useState(false);
-
-  const [date, setDate] = useState(currentEvent?.date || "");
-  const [groupTitle, setGroupTitle] = useState(currentEvent?.groupTitle || "");
-  const [groupId, setGroupId] = useState(currentEvent?.groupId || "");
-  const [isCancelled, setIsCanselled] = useState(
-    currentEvent?.isCancelled || false
-  );
 
   const [participants, setParticipants] = useState<Set<ParticipantType>>(
     new Set(currentEvent?.participants || [])
@@ -80,49 +71,40 @@ const OneEventPage: React.FC = () => {
         participants: [...event.participants],
       })
     );
-    setShowUpdateEvent(false);
     setShowAdditionalUsers(false);
     dispatch(fetchEventById(event._id));
   };
 
-  const handleDateChange = (date: Date | null) => {
-    if (date) {
-      setDate(date.toISOString());
-    }
-  };
+const handleDateChange = (date: Date | null) => {
+  if (date) {
+dispatch(updateCurrentEvent({date: date.toISOString()}))
+   
+  }
+};
 
-  console.log(editedEvent, "editedEvent");
-  console.log(currentEvent, "currentEvent");
-  console.log(
-    date,
-    groupId,
-    groupTitle,
-    participants,
-    isCancelled,
-    "date, groupId, groupTitle, participants, isCancelled,"
-  );
+
   return (
     <Container
       ref={containerRef}
       isCentre={true}
       containerImage={containerImage}
     >
-     {isLoading ? (
+     {!currentEvent ? (
       <p>Loading...</p> // пока данные загружаются
     ) : (
       <div className={cls.trainingContainer}>
         <div className={cls.header}>
-          <h3 className={cls.title}>Група: {groupTitle}</h3>
-          {showUpdateEvent && (
+          <h3 className={cls.title}>Група: {currentEvent.groupTitle}</h3>
+       
             <button
               data-testid="updateIcon"
               onClick={() =>
                 submitEvent({
-                  _id: id!.toString(),
-                  date,
-                  groupTitle,
-                  groupId,
-                  isCancelled,
+                  _id: currentEvent._id.toString(),
+                 date: currentEvent.date,
+                 groupTitle: currentEvent.groupTitle,
+                 groupId: currentEvent.groupId,
+                 isCancelled: currentEvent.isCancelled,
                   participants,
                 })
               }
@@ -132,13 +114,13 @@ const OneEventPage: React.FC = () => {
                 className={cls.upIcon}
               ></UpdateIcon>
             </button>
-          )}
+          
         </div>
 
         <div className={cls.date}>
           <span className={cls.text}>Тренування відбудеться</span>
           <p onClick={() => setShowCalendar(!showCalendar)}>
-            {new Date(date).toLocaleString("uk-UA", {
+            {new Date(currentEvent.date).toLocaleString("uk-UA", {
               day: "numeric",
               month: "long",
               year: "numeric",
@@ -146,7 +128,7 @@ const OneEventPage: React.FC = () => {
           </p>
 
           <p onClick={() => setShowTimer(!showTimer)}>
-            {new Date(date).toLocaleString("uk-UA", {
+            {new Date(currentEvent.date).toLocaleString("uk-UA", {
               hour: "2-digit",
               minute: "2-digit",
             })}
@@ -163,7 +145,7 @@ const OneEventPage: React.FC = () => {
               onClick={(e) => e.stopPropagation()}
             >
               <DatePicker
-                selected={date ? new Date(date) : null}
+                selected={currentEvent.date ? new Date(currentEvent.date) : null}
                 onChange={handleDateChange}
                 dateFormat="Pp"
                 inline
@@ -180,7 +162,7 @@ const OneEventPage: React.FC = () => {
               onClick={(e) => e.stopPropagation()}
             >
               <DatePicker
-                selected={date ? new Date(date) : null}
+                selected={currentEvent.date ? new Date(currentEvent.date) : null}
                 onChange={handleDateChange}
                 showTimeSelect
                 showTimeSelectOnly

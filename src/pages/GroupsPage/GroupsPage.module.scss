@@ -7,6 +7,7 @@
   .containerGroups {
    display: flex;
    flex-wrap: wrap;
+   justify-content: center;
    gap: 40px; /* Отступы между элементами */
    font-family: "Arial", sans-serif;
    padding: 10px;
@@ -90,7 +91,8 @@
   
   .oneGroupContainer {
    position: relative;
-   width: calc((100% - 80px) / 3);
+  //  width: calc((100% - 80px) / 3);
+  min-width: 300px;
    height: auto;
    padding: 3vh;
    border-radius: 4px;
@@ -170,8 +172,14 @@
     margin-left: 1vh;
     
    }
+ 
   }
-
+  @media screen and (max-width: 400px)  {
+    .oneGroupContainer {
+      width: 100%; 
+      height: auto; 
+    }
+  }
   
   
   
