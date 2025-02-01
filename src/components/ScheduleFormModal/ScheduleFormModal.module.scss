@@ -1,0 +1,68 @@
+$black: #000;
+$white: #fff;
+$gray: #808080;
+$orange: #ff9900;
+$dark-gray: #1a1a1a;
+
+
+
+.modalContent {
+  background-color: rgba(0, 0, 0, 0.8);
+  padding: 20px;
+  border-radius: 10px;
+  width: auto;
+  max-height: 90vh;
+  height: auto;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+  display: inline-block; 
+  padding: 5vh;
+  justify-content: center; 
+  align-items: center; 
+  overflow: auto; /* Добавлено свойство для включения прокрутки */
+
+}
+
+.title {
+    font-size: 1.25rem;
+    font-weight: bold;
+    color: white; // Цвет текста белый
+    margin: auto;
+  }
+
+
+
+.days{
+    display: flex;
+    gap: 5vh;
+}
+
+.oneDay{
+    background-color: #ff6600; /* Основной оранжевый цвет проекта */
+    color: white;
+    border: none;
+    border-radius: 5px; /* Легкое закругление */
+    padding: 10px 20px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s, transform 0.2s;
+    display: block;
+    margin: auto;
+
+    @media screen and (max-width: 768px) {
+      margin-top: 2vh;
+  
+    }
+}
+
+.oneTime{
+
+    color: white;
+    border: none;
+    border-radius: 5px; /* Легкое закругление */
+    padding: 19px 2px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s, transform 0.2s;
+    display: block;
+    margin: auto;
+}
