@@ -18,6 +18,7 @@ import eventReducer, {
 } from "../../redux/slices/eventsSlice";
 import userReducer from "../../redux/slices/userSlice";
 import {
+  AddEventTypeDB,
   EventTypeDB,
   PartialUserWithRequiredFields,
   User,
@@ -27,7 +28,7 @@ import {
   fetchAllUsers,
   updateEvent,
 } from "../../redux/thunks/thunks";
-import * as hooks from "../../hooks/hooks";
+
 import "@testing-library/jest-dom";
 import { selectCurrentEvent } from "../../redux/selectors/selectors";
 
@@ -37,11 +38,6 @@ jest.mock("../../redux/api/usersApi");
 jest.mock("../../redux/hooks/hooks", () => ({
   ...jest.requireActual("../../redux/hooks/hooks"),
   useAppSelector: jest.fn(),
-}));
-
-jest.mock("../../hooks/hooks", () => ({
-  ...jest.requireActual("../../hooks/hooks"),
-  useManageUsers: jest.fn(),
 }));
 
 jest.mock("react-router-dom", () => ({
@@ -54,9 +50,6 @@ const mockedGetEventById = getEventById as jest.MockedFunction<
 >;
 const mockedUpdateEventById = updateEventAPi as jest.MockedFunction<
   typeof updateEventAPi
->;
-const mockedGetUsers = hooks.useManageUsers as jest.MockedFunction<
-  typeof hooks.useManageUsers
 >;
 
 const mockGetEventById = mocked(getEventById);
@@ -88,7 +81,7 @@ const users: User[] | PartialUserWithRequiredFields[] = [
     visits: [],
   },
 ];
-const event: EventTypeDB = {
+const event: AddEventTypeDB = {
   _id: "123",
   groupTitle: "groupTitle 2",
   groupId: "2",
@@ -133,14 +126,14 @@ describe("OneEventPage", () => {
     jest.clearAllMocks();
     mockUseParams.mockReturnValue({ id: "123" });
 
-    mockedGetUsers.mockReturnValue({
-      users: users,
-      getUsers: jest.fn(),
-      usersN: [],
-      findUsers: jest.fn(),
-      handleAddUser: jest.fn(),
-      handleDeleteUser: jest.fn(),
-    });
+    // mockedGetUsers.mockReturnValue({
+    //   users: users,
+    //   getUsers: jest.fn(),
+    //   usersN: [],
+    //   findUsers: jest.fn(),
+    //   handleAddUser: jest.fn(),
+    //   handleDeleteUser: jest.fn(),
+    // });
 
     mockedGetEventById.mockResolvedValueOnce(event);
   });
@@ -152,10 +145,9 @@ describe("OneEventPage", () => {
       }
       return null;
     });
-
+    const availableParticipants = [];
     await dispatch(fetchAllEvents());
     await dispatch(fetchAllUsers());
-
     render(
       <Provider store={store}>
         <OneEventPage />
@@ -182,7 +174,7 @@ describe("OneEventPage", () => {
   it("должен обновить событие при нажатии на иконку обновления", async () => {
     //@ts-ignore
     mockedUpdateEventById.mockReturnValueOnce(event);
-    await dispatch(updateEvent({ event }) as any);
+    await dispatch(updateEvent(event) as any);
 
     render(
       <Provider store={store}>
@@ -270,6 +262,8 @@ describe("OneEventPage", () => {
     const store2 = configureStore({
       reducer: {
         events: eventReducer,
+        //@ts-ignore
+        users: userReducer,
       },
       preloadedState: {
         events: {
@@ -278,6 +272,27 @@ describe("OneEventPage", () => {
           error: undefined,
           currentEvent: event2,
         },
+        users: {
+          isLoading: false,
+          users: [
+            {
+              _id: "66d9b418cde50",
+              name: "Лиза",
+              password: "$2b$10$H26gwlhfIUr/eXXU.",
+              isAdmin: true,
+              balance: 0,
+              telegramId: 10182,
+            },
+            {
+              _id: "66bd730f",
+              name: "Индросий",
+              password: "$2b$",
+              isAdmin: false,
+              balance: 0,
+              telegramId: 41281,
+            },
+          ],
+        },
       },
     });
     render(
@@ -285,29 +300,70 @@ describe("OneEventPage", () => {
         <OneEventPage />
       </Provider>
     );
-     ;
     expect(
       screen.getByText(/На тренировку пока никто не записался/i)
     ).toBeInTheDocument();
   });
 
   it("должен отобразить дополнительных пользователей при нажатии на кнопку", async () => {
+    const event3: EventTypeDB = {
+      _id: "123",
+      groupTitle: "groupTitle 2",
+      groupId: "2",
+      isCancelled: false,
+      date: new Date().toISOString(),
+      participants: [
+        {_id:"66d9c628c0839ff5f3bd730f", name:"Индросий", telegramId:412631781},
+        {_id:"66d9b4e7e5e1b9e2718cde50", name:"Лиза", telegramId:1018007612}
+      ],
+    };
+  
+    const store3 = configureStore({
+      reducer: {
+        events: eventReducer,
+        //@ts-ignore
+        users: userReducer,
+      },
+      preloadedState: {
+        events: {
+          events: [],
+          isLoading: false,
+          error: undefined,
+          currentEvent: event3,
+        },
+        users: {
+          isLoading: false,
+          users: [
+            {_id:"66d9b418cde50", name:"Лиза", password:"$2b$10$H26gwlhfIUr/eXXU.", isAdmin:true, balance:0, telegramId:10182},
+            {_id:"66bd730f", name:"Индросий", password:"$2b$", isAdmin:false, balance:0, telegramId:41281}
+          ]
+        }
+      },
+    });
+  
     render(
-      <Provider store={store}>
+      <Provider store={store3}>
         <OneEventPage />
       </Provider>
     );
-
-    const button = screen.getByTestId(
-      "ShowAdditionalUsers"
-    ) as HTMLButtonElement;
+  
+    // Дожидаемся появления кнопки
+    const button = await screen.findByTestId("updateIcon");
+  
+    // Кликаем по кнопке
     act(() => {
       button.click();
     });
-
-    const users = screen.getAllByTestId("userInList");
-    expect(users.length).toBeGreaterThan(0);
+  
+    // Дожидаемся, когда пользователи отобразятся
+    await waitFor(() => {
+      const users = screen.queryAllByTestId("userInList");
+      // Убедимся, что хотя бы один пользователь появился
+      expect(users.length).toBeGreaterThan(0);
+    });
   });
+  
+  
 
   it("должен вызвать clearCurrentEvent при размонтировании", async () => {
     jest.spyOn(store, "dispatch");

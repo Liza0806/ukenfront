@@ -8,6 +8,7 @@ import {
   ParticipantType,
 } from "../../redux/types/types";
 import AddIcon from "@mui/icons-material/Add";
+import { useDispatch } from "react-redux";
 
 export interface UserListProps {
   usersInBase: ParticipantType[],
@@ -24,7 +25,7 @@ const UserList: React.FC<UserListProps> = ({
   setUsersInComponent,
 }) => {
   const [username, setUsername] = useState(""); /// 1
-
+const dispatch = useDispatch();
   // const { users, findUsers, handleAddUser, handleDeleteUser } =
   //   useManageUsers();
 
@@ -74,9 +75,9 @@ const UserList: React.FC<UserListProps> = ({
           data-testid="userInListAddBtn"
           onClick={() => {
             if (![...usersInComponent].some(u => u._id === user._id)) {
-              setUsersInComponent(
+              dispatch(setUsersInComponent({participants: 
                 new Set([...usersInComponent, { _id: user._id, name: user.name, telegramId: user.telegramId }])
-              );
+            }));
             }
           }}
         />

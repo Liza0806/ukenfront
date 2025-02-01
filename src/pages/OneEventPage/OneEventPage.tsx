@@ -34,13 +34,18 @@ const OneEventPage: React.FC = () => {
   const [showCalendar, setShowCalendar] = useState(false);
   const [showTimer, setShowTimer] = useState(false);
 
-  const [participants, setParticipants] = useState<Set<ParticipantType>>(
-    new Set(currentEvent?.participants || [])
+  const [participantsSet, setParticipants] = useState<Set<ParticipantType>>(
+    new Set(currentEvent?.participants)
   );
-  const usersInBase = useAppSelector(selectUsers);
-  const availableParticipants = usersInBase.filter(
-    (user) => ![...participants].some((p) => p._id === user._id)
-  );
+  // const usersInBase = useAppSelector(selectUsers);
+  // const availableParticipants = usersInBase?.filter(
+  //   (user) => ![...participants].some((p) => p._id === user._id)
+  // );
+
+  const usersInBase = useAppSelector(selectUsers) || []; // Защита от undefined
+const availableParticipants = usersInBase.filter(
+  (user) => ![...participantsSet].some((p) => p._id === user._id)
+);
   useEffect(() => {
     if (id) {
       dispatch(fetchEventById(id)); // Загружаем ивент
@@ -105,7 +110,7 @@ dispatch(updateCurrentEvent({date: date.toISOString()}))
                  groupTitle: currentEvent.groupTitle,
                  groupId: currentEvent.groupId,
                  isCancelled: currentEvent.isCancelled,
-                  participants,
+                 participants: currentEvent.participants,
                 })
               }
             >
@@ -179,22 +184,19 @@ dispatch(updateCurrentEvent({date: date.toISOString()}))
         {/* участники: */}
         <div className={cls.participants}>
           <h3 className={cls.h3}>Учасники:</h3>
-          {participants.size > 0 ? (
+          {[...currentEvent.participants].length > 0 ? (
             <ul>
-              {[...participants].map((participant, index) => (
+              {[...currentEvent.participants].map((participant, index) => (
                 <li key={index}>
                   {participant.name || "Не вказано"}
 
                   <DeleteIcon
                     data-testid="userInListDeleteBtn"
                     onClick={() => {
-                      setParticipants(
-                        new Set(
-                          [...participants].filter(
-                            (u) => u._id !== participant._id
-                          )
-                        )
-                      );
+                      //@ts-ignore
+                      dispatch(updateCurrentEvent({participants: currentEvent.participants.filter(
+                        (u:ParticipantType) => u._id !== participant._id
+                      )}))
                     }}
                     className={cls.deleteIcon}
                   />
@@ -208,13 +210,14 @@ dispatch(updateCurrentEvent({date: date.toISOString()}))
         {/* возможные участники: */}
 
         <div className={cls.participants}>
-          {showAdditionalUsers && (
+          {showAdditionalUsers && availableParticipants && availableParticipants.length > 0 && (
             <UserList
-              usersInComponent={participants}
+              usersInComponent={currentEvent.participants}
               usersInBase={availableParticipants}
-              setUsersInComponent={setParticipants}
+              setUsersInComponent={updateCurrentEvent}
             />
           )}
+        
         </div>
 
         {!showAdditionalUsers && (

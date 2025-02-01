@@ -11,7 +11,7 @@ import {
   deleteGroupTh,
   updateGroupTh,
 } from "./thunks";
-import { AddGroupType, EventTypeDB, GroupType, User } from "../types/types";
+import { AddEventTypeDB, AddGroupType, EventTypeDB, GroupType, User } from "../types/types";
 import { configureStore } from "@reduxjs/toolkit";
 import eventsReducer from "../slices/eventsSlice";
 import groupsReducer from "../slices/groupsSlice";
@@ -364,7 +364,7 @@ describe("updateEvent thunk", () => {
   });
 
   it("dispatches fulfilled action when updateEvent succeeds", async () => {
-    const newEvent: EventTypeDB = {
+    const newEvent: AddEventTypeDB = {
       _id: "1",
       groupTitle: "groupTitle 1",
       groupId: "1",
@@ -376,7 +376,7 @@ describe("updateEvent thunk", () => {
     mockedupdateEventAPi.mockResolvedValueOnce(newEvent);
 
     // Выполняем санк и ждем результата
-    const result = await dispatch(updateEvent({ event: newEvent }));
+    const result = await dispatch(updateEvent(newEvent));
 
     // Проверяем тип и данные результата
     expect(result.type).toBe("events/updateEvent/fulfilled");
@@ -385,7 +385,7 @@ describe("updateEvent thunk", () => {
 
   it("dispatches rejected action when updateEvent fails", async () => {
     mockedupdateEventAPi.mockResolvedValueOnce(null); // имитируем ошибку API
-    const newEvent: EventTypeDB = {
+    const newEvent: AddEventTypeDB = {
       _id: "1",
       groupTitle: "groupTitle 1",
       groupId: "1",
@@ -394,7 +394,7 @@ describe("updateEvent thunk", () => {
       participants: [],
     };
 
-    const result = await dispatch(updateEvent({ event: newEvent }));
+    const result = await dispatch(updateEvent(newEvent));
 
     // Проверяем тип и данные результата
     expect(result.type).toBe("events/updateEvent/rejected");
@@ -540,19 +540,19 @@ describe("updateGroupTh thunk", () => {
   });
 
   it("dispatches fulfilled action when updateGroupTh succeeds", async () => {
-    const group: GroupType = {
-      _id: "1",
+    const group: AddGroupType = {
+   
       title: "Group 1",
       coachId: "coach1",
       dailyPayment: 0, monthlyPayment:0,
       schedule: [],
       participants: [],
     };
-
+const id = '1'
     mockedupdateGroup.mockResolvedValueOnce(group);
 
     // Выполняем санк и ждем результата
-    const result = await dispatch(updateGroupTh({ group, _id: group._id }));
+    const result = await dispatch(updateGroupTh({ group, _id: id }));
 
     // Проверяем тип и данные результата
     expect(result.type).toBe("groups/updateGroupTh/fulfilled");
@@ -561,16 +561,17 @@ describe("updateGroupTh thunk", () => {
 
   it("dispatches rejected action when updateGroupTh fails", async () => {
     mockedupdateGroup.mockResolvedValueOnce(null); // имитируем ошибку API
-    const group: GroupType = {
-      _id: "1",
+    const group: AddGroupType = {
+  
       title: "Group 1",
       coachId: "coach1",
-      payment: [],
+      monthlyPayment: 0,
+      dailyPayment: 11,
       schedule: [],
       participants: [],
     };
-
-    const result = await dispatch(updateGroupTh({ group, _id: group._id }));
+const id = '1'
+    const result = await dispatch(updateGroupTh({ group, _id: id}));
 
     // Проверяем тип и данные результата
     expect(result.type).toBe("groups/updateGroupTh/rejected");
