@@ -44,7 +44,7 @@ const dispatch = useDispatch();
           type="text"
           data-testid="userListInput"
           value={username}
-      //    onChange={(e) => handleChange(e)}
+        onChange={(e) => setUsername(e.target.value)}
         />
       </label>
       <ul>
