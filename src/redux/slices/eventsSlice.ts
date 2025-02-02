@@ -1,6 +1,9 @@
 import { fetchAllEvents, fetchEventById } from '../thunks/thunks';
 import { EventStateType, EventTypeDB } from '../types/types';
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { enableMapSet } from "immer";
+
+enableMapSet();
 
 const persistedState = localStorage.getItem('events')
   ? JSON.parse(localStorage.getItem('events')!)
