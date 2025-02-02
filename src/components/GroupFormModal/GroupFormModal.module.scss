@@ -185,3 +185,18 @@ margin-left: 5vh;
     color: rgb(244, 6, 6);
 }
 
+.itemOfUsers{
+  display: flex;
+  flex-direction: column;
+  gap: 2vh;
+}
+
+.titleUsers {
+  font-size: 0.75rem;
+  font-weight: bold;
+  color: white; // Цвет текста белый
+  display: flex;
+  gap: 2vh;
+  align-items: center;
+  text-align: center;
+}

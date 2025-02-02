@@ -105,24 +105,23 @@ const OneEventPage: React.FC = () => {
           <div className={cls.header}>
             <h3 className={cls.title}>Група: {currentEvent.groupTitle}</h3>
 
-            <button
-              data-testid="updateIcon"
-              onClick={() =>
-                submitEvent({
-                  _id: currentEvent._id.toString(),
-                  date: currentEvent.date,
-                  groupTitle: currentEvent.groupTitle,
-                  groupId: currentEvent.groupId,
-                  isCancelled: currentEvent.isCancelled,
-                  participants: currentEvent.participants,
-                })
-              }
-            >
+          
               <UpdateIcon
+               data-testid="updateIcon"
                 style={{ color: "blue", fontSize: "36px", cursor: "pointer" }}
                 className={cls.upIcon}
+                onClick={() =>
+                  submitEvent({
+                    _id: currentEvent._id.toString(),
+                    date: currentEvent.date,
+                    groupTitle: currentEvent.groupTitle,
+                    groupId: currentEvent.groupId,
+                    isCancelled: currentEvent.isCancelled,
+                    participants: currentEvent.participants,
+                  })
+                }
               ></UpdateIcon>
-            </button>
+            
           </div>
 
           <div className={cls.date}>
@@ -192,24 +191,25 @@ const OneEventPage: React.FC = () => {
           )}
 
           {/* участники: */}
-          <div className={cls.participants}>
-            <h3 className={cls.h3}>Учасники:</h3>
+          <div className={cls.usersInTrain}>
+            <h3 className={cls.title}>Учасники: </h3>
             {[...currentEvent.participants].length > 0 ? (
               <ul>
                 {[...currentEvent.participants].map((participant, index) => (
-                  <li key={index}>
-                    {participant.name || "Не вказано"}
-
-                    <DeleteIcon
+                  <li className={cls.oneUser} key={index}>
+                     <DeleteIcon
                       data-testid="userInListDeleteBtn"
                       onClick={() => handleRemoveParticipant(participant._id)}
                       className={cls.deleteIcon}
                     />
+                    {participant.name || "Не вказано"}
+
+                   
                   </li>
                 ))}
               </ul>
             ) : (
-              <p>На тренировку пока никто не записался</p>
+              <p  className={cls.title} >На тренування ніхто не записався</p>
             )}
           </div>
           {/* возможные участники: */}
