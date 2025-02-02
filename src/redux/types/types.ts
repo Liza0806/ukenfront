@@ -31,7 +31,7 @@ export type GroupType = {
   dailyPayment: number,  
   monthlyPayment: number,
   schedule: ScheduleType[];
-  participants: ParticipantType[] | Set<ParticipantType>;
+  participants: ParticipantType[] // | Set<ParticipantType>;
 };
 
 export type AddGroupType = {
@@ -47,7 +47,7 @@ export type GroupStateType = {
   isLoading: boolean;
   error: string | undefined;
   groups: GroupType[];
-  newGroup?: GroupType | undefined;
+  currentGroup?: GroupType | undefined;
 };
 
 export const daysOfWeekUk = [
@@ -68,7 +68,7 @@ export type EventTypeDB = {
   groupTitle: string;
   groupId: string;
   isCancelled: boolean;
-  participants: ParticipantType[] | Set<ParticipantType>;
+  participants: ParticipantType[] //| Set<ParticipantType>;
 };
 export type AddEventTypeDB = {
   _id: string;

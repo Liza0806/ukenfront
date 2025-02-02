@@ -18,8 +18,8 @@ export const getAllGroups = async () => {
 
 export const addGroup = async (group: AddGroupType) => {
   try {
-    const response = await axios.post(`https://ukenback.vercel.app/groups/`, group);
-  //  const response = await axios.post(`/groups/`, group);
+     const response = await axios.post(`https://ukenback.vercel.app/groups/`, group);
+    // const response = await axios.post(`/groups/`, group);
 
  
     return response;
@@ -34,7 +34,7 @@ export const deleteGroup = async (_id: string) => {
     //  console.log('апи 1')
  
     const response = await axios.delete(`https://ukenback.vercel.app/groups/${_id}`);
-    //const response = await axios.delete(`/groups/${_id}`);
+    // const response = await axios.delete(`/groups/${_id}`);
 
     //  
     return response;

@@ -15,6 +15,7 @@ import { GroupFormModal } from "../../components/GroupFormModal/GroupFormModal";
 import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
 import { GroupType } from "../../redux/types/types";
+import { clearCurrentGroup, setCurrentGroup } from "../../redux/slices/groupsSlice";
 
 const GroupsPage = () => {
   ////////// вечер 26.01
@@ -49,7 +50,9 @@ const GroupsPage = () => {
         <Modal open={showModalForAdd} onClose={() => setShowModalForAdd(false)}>
           <GroupFormModal
             isEditMode={false}
-            closeModal={() => setShowModalForAdd(false)}
+            closeModal={() => {setShowModalForAdd(false)
+              dispatch(clearCurrentGroup())
+            }}
           />
         </Modal>
 
@@ -63,6 +66,7 @@ const GroupsPage = () => {
             isEditMode={true}
             closeModal={() => {
               setShowModalForUpdate(false);
+              dispatch(clearCurrentGroup())
             }}
           />
         </Modal>
@@ -78,6 +82,7 @@ const GroupsPage = () => {
                     setShowModalForUpdate(true);
                     _id.current = group._id;
                     setGroupData(group);
+                    dispatch(setCurrentGroup(group))
                   }}
                 >
                   <EditIcon sx={{ color: "white" }} />

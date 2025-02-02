@@ -6,42 +6,44 @@ import {
   ScheduleType,
 } from "../../redux/types/types";
 import UserList from "../UserList/UserList";
-import { selectUsers } from "../../redux/selectors/selectors";
+import {
+  selectCurrentGroup,
+  selectUsers,
+} from "../../redux/selectors/selectors";
 import { useAppSelector } from "../../redux/hooks/hooks";
 
-import React, { useState } from "react";
+import React, { useMemo, useState } from "react";
 import { GroupType } from "../../redux/types/types";
 import { useAppDispatch } from "../../redux/hooks/hooks";
 import { toast } from "react-toastify";
-import {
-  fetchAllGroups,
-  addGroupTh,
-  updateGroupTh,
-} from "../../redux/thunks/thunks";
+import { addGroupTh, updateGroupTh } from "../../redux/thunks/thunks";
 import { AppDispatch } from "../../redux/store/store";
-import AddCircleOutlineIcon from "@mui/icons-material/AddCircleOutline";
 import AddIcon from "@mui/icons-material/Add";
 import DeleteIcon from "@mui/icons-material/Delete";
+import {
+  setCurrentGroup,
+  updateCurrentGroup,
+} from "../../redux/slices/groupsSlice";
 
 interface GroupFormProps {
   initialGroupData?: GroupType | undefined;
   isEditMode: boolean;
   closeModal: () => void;
-  setGroupData?: (data:any) => void
+  setGroupData?: (data: any) => void;
 }
 
-export const handleSubmit = async (
-  isEditMode: boolean,
-  groupFormState: AddGroupType, 
-  appDispatch: AppDispatch,
-  closeModal: () => void,
-  _id?: string
+export const testGroupForHandleSubmit = (
+  //isEditMode: boolean,
+  groupFormState: AddGroupType
+  //appDispatch: AppDispatch,
+  // closeModal: () => void,
+  // _id?: string
 ) => {
   if (!groupFormState.title) {
     toast.error("Title");
     return;
   }
-  
+
   if (!groupFormState.dailyPayment && !groupFormState.monthlyPayment) {
     toast.error("один из платежей должен быть заполнен");
     return;
@@ -59,7 +61,7 @@ export const handleSubmit = async (
     toast.error("не верный формат расписания");
     return;
   }
-  const groupForTh: AddGroupType = {
+  const groupForTh = {
     title: groupFormState.title,
     coachId: "Kostya",
     dailyPayment: groupFormState.dailyPayment,
@@ -67,75 +69,92 @@ export const handleSubmit = async (
     schedule: [...groupFormState.schedule],
     participants: [...groupFormState.participants],
   };
-  // console.log(initialGroupData, 'initialGroupData')
-  try {
-  
-    if (isEditMode && _id) {
-      //   ;
-  await appDispatch(
-        updateGroupTh({ group: groupForTh, _id: _id })
-      ).unwrap(); // Разворачиваем результат, чтобы проверить ошибки
-      //   ;
-      toast.success("Группа успешно обновлена");
-      closeModal();
-    } else {
-      //    ;
-      console.log(groupForTh, "groupForTh");
-    await appDispatch(addGroupTh(groupForTh)).unwrap(); // Разворачиваем результат
-      toast.success("Группа успешно добавлена");
-      closeModal();
-    }
-    //    ;
-   // appDispatch(fetchAllGroups());
-    
-  } catch (error) {
-    //   ;
-    toast.error("Ошибка при сохранении группы");
-  }
+  return groupFormState;
+  // try {
+
+  //   if (isEditMode && _id) {
+
+  // await appDispatch(
+  //       updateGroupTh({ group: groupForTh, _id: _id })
+  //     ).unwrap(); // Разворачиваем результат, чтобы проверить ошибки
+
+  //     toast.success("Группа успешно обновлена");
+  //     closeModal();
+  //   } else {
+  //     //    ;
+  //     console.log(groupForTh, "groupForTh");
+  //   await appDispatch(addGroupTh(groupForTh)).unwrap(); // Разворачиваем результат
+  //     toast.success("Группа успешно добавлена");
+  //     closeModal();
+  //   }
+
+  // } catch (error) {
+  //   //   ;
+  //   toast.error("Ошибка при сохранении группы");
+  // }
 };
 
 export const GroupFormModal: React.FC<GroupFormProps> = ({
   initialGroupData,
   isEditMode,
   closeModal,
-  setGroupData,
 }) => {
   const appDispatch = useAppDispatch();
+  const dispatch = useAppDispatch();
+
   const usersInBase = useAppSelector(selectUsers);
-  console.log(initialGroupData, "initialGroupData");
+  const currentGroup = useAppSelector(selectCurrentGroup);
+
+  if (!currentGroup) {
+    //@ts-ignore
+    dispatch(setCurrentGroup([]));
+  }
+
   const [groupId, setGroupId] = useState(initialGroupData?._id);
-
-const [title, setTitle] = useState<string>(initialGroupData?.title || '')
-const [dailyPayment, setDailyPayment] = useState<number>(initialGroupData?.dailyPayment || 0)
-const [monthlyPayment, setMonthlyPayment] = useState<number>(initialGroupData?.monthlyPayment || 0)
-const [schedule, setSchedule] = useState<ScheduleType[]>(initialGroupData?.schedule || [])
-
-
-//const [participants, setParticipants] = useState<ParticipantType[]>(initialGroupData?.participants || [])
-
-  const [participants, setParticipants] = useState<Set<ParticipantType>>(
-    new Set(initialGroupData?.participants || [])
+  const [schedule, setSchedule] = useState<ScheduleType[]>(
+    currentGroup?.schedule || []
   );
-const handleAddSchedule = () => {
-  setSchedule((prevSchedule) => [
-    ...prevSchedule,
-    { day: "", time: "00:00" },
-  ]);
-};
 
-const handleDeleteSchedule = (index: number) => {
-  setSchedule((prevSchedule) =>
-    prevSchedule.filter((_, i) => i !== index)
-  );
-};
+  const availableParticipants = useMemo(() => {
+    return usersInBase.filter(
+      (user) => !currentGroup?.participants?.some((p) => p._id === user._id)
+    );
+  }, [usersInBase, currentGroup?.participants]);
 
-const handleScheduleChange = (index: number, field: keyof ScheduleType, value: string) => {
-  setSchedule((prevSchedule) =>
-    prevSchedule.map((sched, i) =>
-      i === index ? { ...sched, [field]: value } : sched
-    )
-  );
-};
+  const handleAddSchedule = () => {
+    setSchedule((prevSchedule) => [
+      ...prevSchedule,
+      { day: "", time: "00:00" },
+    ]);
+    dispatch(updateCurrentGroup({ schedule: schedule }));
+  };
+
+  const handleDeleteSchedule = (index: number) => {
+    setSchedule((prevSchedule) => prevSchedule.filter((_, i) => i !== index));
+    dispatch(updateCurrentGroup({ schedule: schedule }));
+  };
+
+  const handleScheduleChange = (
+    index: number,
+    field: keyof ScheduleType,
+    value: string
+  ) => {
+    setSchedule((prevSchedule) =>
+      prevSchedule.map((sched, i) =>
+        i === index ? { ...sched, [field]: value } : sched
+      )
+    );
+    dispatch(updateCurrentGroup({ schedule: schedule }));
+  };
+
+  const handleRemoveParticipant = (participantId: string) => {
+    if (!currentGroup?.participants) return;
+    const updatedParticipants = currentGroup.participants.filter(
+      (u) => u._id !== participantId
+    );
+
+    dispatch(updateCurrentGroup({ participants: updatedParticipants }));
+  };
   return (
     <div className={cls.modalContent}>
       <div>
@@ -145,9 +164,11 @@ const handleScheduleChange = (index: number, field: keyof ScheduleType, value: s
             id="title"
             className={cls.input}
             type="text"
-            value={title}
+            value={currentGroup?.title}
             name="title"
-            onChange={(e) => setTitle(e.target.value)}
+            onChange={(e) =>
+              dispatch(updateCurrentGroup({ title: e.target.value }))
+            }
             data-testid="group-title-input"
             required
           />
@@ -163,8 +184,12 @@ const handleScheduleChange = (index: number, field: keyof ScheduleType, value: s
             type="number"
             name="dailyPayment"
             placeholder="Ежедневный платеж"
-            value={dailyPayment}
-            onChange={(e) => setDailyPayment(Number(e.target.value))}
+            value={currentGroup?.dailyPayment}
+            onChange={(e) =>
+              dispatch(
+                updateCurrentGroup({ dailyPayment: Number(e.target.value) })
+              )
+            }
             data-testid="group-dailyPayment-input"
             required
           />
@@ -179,8 +204,12 @@ const handleScheduleChange = (index: number, field: keyof ScheduleType, value: s
             type="number"
             name="monthlyPayment"
             placeholder="Ежемесячный платеж"
-            value={monthlyPayment}
-            onChange={(e) => setMonthlyPayment(Number(e.target.value))}
+            value={currentGroup?.monthlyPayment}
+            onChange={(e) =>
+              dispatch(
+                updateCurrentGroup({ monthlyPayment: Number(e.target.value) })
+              )
+            }
             data-testid="group-monthlyPayment-input"
             required
           />
@@ -197,31 +226,35 @@ const handleScheduleChange = (index: number, field: keyof ScheduleType, value: s
         </label>
 
         {schedule.length > 0 &&
-       schedule.map((sched, index) => (
+          schedule.map((sched, index) => (
             <div key={index} className={cls.timeAndDate}>
-           <select
-  className={cls.select}
-  value={sched.day || ""}
-  data-testid="group-scheduleDay-select"
-  onChange={(e) => handleScheduleChange(index, "day", e.target.value)}
->
-  <option value="" disabled>
-    обери день
-  </option>
-  {daysOfWeekUk.map((day) => (
-    <option key={day} value={day}>
-      {day}
-    </option>
-  ))}
-</select>
+              <select
+                className={cls.select}
+                value={sched.day || ""}
+                data-testid="group-scheduleDay-select"
+                onChange={(e) =>
+                  handleScheduleChange(index, "day", e.target.value)
+                }
+              >
+                <option value="" disabled>
+                  обери день
+                </option>
+                {daysOfWeekUk.map((day) => (
+                  <option key={day} value={day}>
+                    {day}
+                  </option>
+                ))}
+              </select>
 
-<input
-  className={cls.inputTime}
-  type="time"
-  value={sched.time}
-  data-testid="group-scheduleTime-select"
-  onChange={(e) => handleScheduleChange(index, "time", e.target.value)}
-/>
+              <input
+                className={cls.inputTime}
+                type="time"
+                value={sched.time}
+                data-testid="group-scheduleTime-select"
+                onChange={(e) =>
+                  handleScheduleChange(index, "time", e.target.value)
+                }
+              />
 
               <DeleteIcon
                 className={cls.deleteIcon}
@@ -232,30 +265,33 @@ const handleScheduleChange = (index: number, field: keyof ScheduleType, value: s
             </div>
           ))}
 
-          {/* ///////////////НОВОЕ - 27.01 вечер///////////////// */}
-{participants.size > 0 ? (
-            <ul>
-              {[...participants].map((participant, index) => (
-                <li key={index}>{participant.name || "Не вказано"}
-                
+        {currentGroup?.participants && currentGroup?.participants.length > 0 ? (
+          <ul>
+            {currentGroup?.participants.map((participant, index) => (
+              <li key={index}>
+                {participant.name || "Не вказано"}
+
                 <DeleteIcon
-                          data-testid="userInListDeleteBtn"
-                          onClick={() => {
-                            setParticipants(new Set([...participants].filter((u) => u._id !== participant._id)));
-                          }}
-                          className={cls.deleteIcon}
-                        />
-                
-                </li>
-              ))}
-            </ul>
-          ) : (
-            <p>пока нет участников</p>
-          )}
-           {/* ///////////////НОВОЕ///////////////// */}
+                  data-testid="userInListDeleteBtn"
+                  onClick={() => {
+                    handleRemoveParticipant(participant._id);
+                  }}
+                  className={cls.deleteIcon}
+                />
+              </li>
+            ))}
+          </ul>
+        ) : (
+          <p>пока нет участников</p>
+        )}
+
         <div>
           {usersInBase?.length > 0 ? (
-            <UserList usersInComponent={participants} usersInBase={usersInBase} setUsersInComponent={setParticipants}/>
+            <UserList
+              usersInComponent={currentGroup?.participants || []}
+              usersInBase={availableParticipants}
+              setUsersInComponent={updateCurrentGroup}
+            />
           ) : (
             <p>Пользователи не найдены</p>
           )}
@@ -264,24 +300,26 @@ const handleScheduleChange = (index: number, field: keyof ScheduleType, value: s
       <button
         className={cls.buttonOperation}
         onClick={() => {
-          handleSubmit(
-            isEditMode,
-            {title,
-              dailyPayment,
-              monthlyPayment,
-              schedule, 
-              participants: [...participants],
-            },
-            appDispatch,
-            closeModal,
-            groupId
-          )
-          setGroupData &&  setGroupData({title,
-            dailyPayment,
-            monthlyPayment,
-            schedule, 
-            participants: [...participants],
-          })
+          const isGroupSuitable = testGroupForHandleSubmit({
+            title: currentGroup?.title ||"",
+            dailyPayment:
+              currentGroup?.dailyPayment|| 0,
+            monthlyPayment:
+              currentGroup?.monthlyPayment ||
+              0,
+            schedule,
+            participants:
+              currentGroup?.participants ||
+              [],
+          });
+          if (isEditMode && isGroupSuitable && currentGroup?._id) {
+            dispatch(updateGroupTh({ group: isGroupSuitable, _id: currentGroup?._id }));
+            closeModal();
+          }
+          if (!isEditMode && isGroupSuitable && currentGroup) {
+            dispatch(addGroupTh(currentGroup));
+            closeModal();
+          }
         }}
       >
         {isEditMode ? "Обновити" : "додати"}

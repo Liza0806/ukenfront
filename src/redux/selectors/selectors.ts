@@ -2,6 +2,7 @@ import { RootState } from "../store/store";
 import { EventTypeDB, GroupType, User } from "../types/types";
 
 export const selectGroups = (state: RootState): GroupType[] => state.groups.groups;
+export const selectCurrentGroup = (state: RootState): GroupType | undefined => state.groups.currentGroup;
 export const selectGroupsIsLoading = (state: RootState): boolean => state.groups.isLoading;
 export const selectGroupsError = (state: RootState): string | undefined => state.groups.error;
 

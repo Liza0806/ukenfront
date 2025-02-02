@@ -4,6 +4,9 @@ import eventReducer from "../slices/eventsSlice";
 import userReducer from "../slices/userSlice";
 import paymertReducer from "../slices/paymentSlice";
 import { useDispatch, useSelector, useStore } from 'react-redux'
+import { enableMapSet } from "immer";
+
+enableMapSet();
 
 const persistedState = localStorage.getItem('reduxState')
   ? JSON.parse(localStorage.getItem('reduxState')!)

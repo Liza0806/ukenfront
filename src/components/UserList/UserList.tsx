@@ -1,6 +1,5 @@
-import DeleteIcon from "@mui/icons-material/Delete";
 import cls from "./UserList.module.scss";
-import React, { ChangeEventHandler, useState } from "react";
+import React, { useState } from "react";
 import {
   EventTypeDB,
 
@@ -12,7 +11,7 @@ import { useDispatch } from "react-redux";
 
 export interface UserListProps {
   usersInBase: ParticipantType[],
-  usersInComponent: ParticipantType[] | Set<ParticipantType>,
+  usersInComponent: ParticipantType[],
   setUsersInComponent:
     | React.Dispatch<React.SetStateAction<EventTypeDB | ParticipantType[] | undefined>>
     | any;
@@ -26,22 +25,11 @@ const UserList: React.FC<UserListProps> = ({
 }) => {
   const [username, setUsername] = useState(""); /// 1
 const dispatch = useDispatch();
-  // const { users, findUsers, handleAddUser, handleDeleteUser } =
-  //   useManageUsers();
 
   const usersForList: ParticipantType[] = usersInBase
     && usersInBase.filter((user) =>
         user!.name.toLowerCase().includes(username.toLowerCase())
       );
-    // : users.filter((user) =>
-    //     user.name.toLowerCase().includes(username.toLowerCase())
-    //   );
-
-  // const handleChange: ChangeEventHandler<HTMLInputElement> = (event) => {
-  //   const name = event.target.value;
-  //   setUsername(name);
-  //   findUsers ? findUsers(name) : console.log("передай findUsers, а потом ищи");
-  // };
 
   return (
     <div>
@@ -74,21 +62,14 @@ const dispatch = useDispatch();
           }}
           data-testid="userInListAddBtn"
           onClick={() => {
-            if (![...usersInComponent].some(u => u._id === user._id)) {
+            if (!usersInComponent.some(u => u._id === user._id)) {
               dispatch(setUsersInComponent({participants: 
-                new Set([...usersInComponent, { _id: user._id, name: user.name, telegramId: user.telegramId }])
+               [...usersInComponent, { _id: user._id, name: user.name, telegramId: user.telegramId }]
             }));
             }
           }}
         />
 
-        {/* <DeleteIcon
-          data-testid="userInListDeleteBtn"
-          onClick={() => {
-            setUsersInComponent(usersInBase.filter((u) => u._id !== user._id));
-          }}
-          className={cls.deleteIcon}
-        /> */}
         {user!.name}
       </div>
     </li>

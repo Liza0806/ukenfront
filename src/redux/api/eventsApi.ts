@@ -33,7 +33,7 @@ export const getAllEvents = async () => {
     try {
       console.log(event, 'event in updateEventAPi')
       const response = await axios.put(`https://ukenback.vercel.app/events/${event._id}`, {_id: event._id, date: event.date, groupId: event.groupId, groupTitle: event.groupTitle, isCancelled: event.isCancelled, participants: event.participants});
-   //  const response = await axios.put(`/events/${event._id}`, {_id: event._id, date: event.date, groupId: event.groupId, groupTitle: event.groupTitle, isCancelled: event.isCancelled, participants: event.participants});
+     // const response = await axios.put(`/events/${event._id}`, {_id: event._id, date: event.date, groupId: event.groupId, groupTitle: event.groupTitle, isCancelled: event.isCancelled, participants: event.participants});
 
       return response.data;
     } catch (error) {
