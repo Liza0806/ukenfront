@@ -11,10 +11,16 @@
   padding-top: 30px;
   gap: 5px;
 
+  @media (max-width: 1024px) {
+    padding: 4vh;
+    gap: 5vh;
+    height: auto;
+      }
+
   @media (max-width: 768px) {
     padding: 4vh;
     gap: 5vh;
-    height: 55vh;
+    height: auto;
       }
 }
 
@@ -38,22 +44,20 @@
  
 }
 
-.galleryTitle::before {
-  content: '';
-  position: absolute;
-  top: 35px;
-  right: -50%;
-  transform: translateX(-50%) rotate(-0.16deg);
-  width: 1070px;
-  height: 1px;
-  background: #f7f7f7;
-}
+
 
 .galerryContent {
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 0; /* Убираем промежутки */
+  gap: 0; 
+
+  @media (max-width: 1024px) {
+display: flex;
+flex-direction: column;
+gap: 3vh;
+      }
+   
 }
 
 .centerImage {
@@ -65,6 +69,16 @@
   border-radius: 0px;
   transition: transform 0.3s ease;
   z-index: 2;
+
+
+  @media (max-width: 1024px) {
+    width: 100%;
+    height: auto;
+    transform: none;
+    border-radius: 12px;
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.4);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+      }
 
   @media (max-width: 768px) {
     width: 100%;
@@ -89,7 +103,7 @@
   transform: translateX(-25.5%) scale(0.6); 
   z-index: 1;
   
-  @media (max-width: 768px) {
+  @media (max-width: 1024px) {
     display: none;
     
       }
@@ -104,7 +118,7 @@
   transform: translateX(110px) scale(0.6); 
   z-index: 1; 
 
-  @media (max-width: 768px) {
+  @media (max-width: 1024px) {
 display: none;
   }
 }
@@ -128,4 +142,23 @@ transform: translateX(133%);
 @media (max-width: 768px) {
   transform: translateX(239%) translateY(129px);
 }
+}
+
+.buttons{
+  display: flex;
+  gap: 10vh;
+}
+
+.buttonRightMob {
+  z-index: 3;
+  transform: none;
+  cursor: pointer;
+}
+
+
+.buttonLeftMob{
+z-index: 3;
+cursor: pointer;
+transform: none;
+
 }
