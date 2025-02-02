@@ -314,11 +314,12 @@ export const GroupFormModal: React.FC<GroupFormProps> = ({
           });
           if (isEditMode && isGroupSuitable && currentGroup?._id) {
             dispatch(updateGroupTh({ group: isGroupSuitable, _id: currentGroup?._id }));
+            closeModal();
           }
           if (!isEditMode && isGroupSuitable && currentGroup) {
             dispatch(addGroupTh(currentGroup));
+            closeModal();
           }
-          closeModal();
         }}
       >
         {isEditMode ? "Обновити" : "додати"}
