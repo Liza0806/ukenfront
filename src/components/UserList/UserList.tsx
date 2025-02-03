@@ -2,8 +2,6 @@ import cls from "./UserList.module.scss";
 import React, { useState } from "react";
 import {
   EventTypeDB,
-
-  PartialUserWithRequiredFields,
   ParticipantType,
 } from "../../redux/types/types";
 import AddIcon from "@mui/icons-material/Add";
@@ -15,7 +13,6 @@ export interface UserListProps {
   setUsersInComponent:
     | React.Dispatch<React.SetStateAction<EventTypeDB | ParticipantType[] | undefined>>
     | any;
-  existingUsers?: PartialUserWithRequiredFields[];
 }
 
 const UserList: React.FC<UserListProps> = ({
@@ -44,14 +41,23 @@ const dispatch = useDispatch();
           type="text"
           data-testid="userListInput"
           value={username}
-      //    onChange={(e) => handleChange(e)}
+        onChange={(e) => setUsername(e.target.value)}
         />
       </label>
       <ul>
   {usersForList.map((user) => (
     <li className={cls.nameOfUser} key={user!._id} data-testid="userInList">
       <div className={cls.buttonAddAndDelete}>
-        <AddIcon
+        <button 
+        data-testid="userInListAddBtn"
+          onClick={() => {
+            if (!usersInComponent.some(u => u._id === user._id)) {
+              dispatch(setUsersInComponent({participants: 
+               [...usersInComponent, { _id: user._id, name: user.name, telegramId: user.telegramId }]
+            }));
+            }
+          }}>
+              <AddIcon
           sx={{
             color: "#ff9900",
             cursor: "pointer",
@@ -60,15 +66,9 @@ const dispatch = useDispatch();
               transform: "scale(1.2)",
             },
           }}
-          data-testid="userInListAddBtn"
-          onClick={() => {
-            if (!usersInComponent.some(u => u._id === user._id)) {
-              dispatch(setUsersInComponent({participants: 
-               [...usersInComponent, { _id: user._id, name: user.name, telegramId: user.telegramId }]
-            }));
-            }
-          }}
         />
+        </button>
+    
 
         {user!.name}
       </div>

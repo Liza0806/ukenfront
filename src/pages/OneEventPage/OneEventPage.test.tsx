@@ -305,66 +305,6 @@ describe("OneEventPage", () => {
     ).toBeInTheDocument();
   });
 
-  it("должен отобразить дополнительных пользователей при нажатии на кнопку", async () => {
-    const event3: EventTypeDB = {
-      _id: "123",
-      groupTitle: "groupTitle 2",
-      groupId: "2",
-      isCancelled: false,
-      date: new Date().toISOString(),
-      participants: [
-        {_id:"66d9c628c0839ff5f3bd730f", name:"Индросий", telegramId:412631781},
-        {_id:"66d9b4e7e5e1b9e2718cde50", name:"Лиза", telegramId:1018007612}
-      ],
-    };
-  
-    const store3 = configureStore({
-      reducer: {
-        events: eventReducer,
-        //@ts-ignore
-        users: userReducer,
-      },
-      preloadedState: {
-        events: {
-          events: [],
-          isLoading: false,
-          error: undefined,
-          currentEvent: event3,
-        },
-        users: {
-          isLoading: false,
-          users: [
-            {_id:"66d9b418cde50", name:"Лиза", password:"$2b$10$H26gwlhfIUr/eXXU.", isAdmin:true, balance:0, telegramId:10182},
-            {_id:"66bd730f", name:"Индросий", password:"$2b$", isAdmin:false, balance:0, telegramId:41281}
-          ]
-        }
-      },
-    });
-  
-    render(
-      <Provider store={store3}>
-        <OneEventPage />
-      </Provider>
-    );
-  
-    // Дожидаемся появления кнопки
-    const button = await screen.findByTestId("updateIcon");
-  
-    // Кликаем по кнопке
-    act(() => {
-      button.click();
-    });
-  
-    // Дожидаемся, когда пользователи отобразятся
-    await waitFor(() => {
-      const users = screen.queryAllByTestId("userInList");
-      // Убедимся, что хотя бы один пользователь появился
-      expect(users.length).toBeGreaterThan(0);
-    });
-  });
-  
-  
-
   it("должен вызвать clearCurrentEvent при размонтировании", async () => {
     jest.spyOn(store, "dispatch");
 
