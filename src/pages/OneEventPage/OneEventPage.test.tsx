@@ -301,7 +301,7 @@ describe("OneEventPage", () => {
       </Provider>
     );
     expect(
-      screen.getByText(/На тренировку пока никто не записался/i)
+      screen.getByText(/На тренування ніхто не записався/i)
     ).toBeInTheDocument();
   });
 

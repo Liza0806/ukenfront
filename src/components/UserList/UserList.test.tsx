@@ -107,7 +107,7 @@ import { render, screen, fireEvent, waitFor } from "@testing-library/react";
 import "@testing-library/jest-dom";
 import  UserList from "./UserList";
 import { User } from "../../redux/types/types";
-import * as hooks from "../../hooks/hooks";
+
 const mockUsers: User[] = [
   {
     _id: "1",
