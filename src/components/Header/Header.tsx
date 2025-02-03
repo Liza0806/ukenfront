@@ -16,9 +16,24 @@ const links = [
 export const Header = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [isAdmin, setIsAdmin] = useState(true);
+
+  const closeBurger = () => {
+    if(isOpen){
+      setIsOpen(false)
+    }
+    return
+  }
+  
+
+
   const toggleMenu = () => {
+    if(isOpen){
+      setIsOpen(false)
+    }
     setIsOpen(!isOpen);
   };
+  
+ 
 
   return (
     <header className={cls.header}>
@@ -49,13 +64,25 @@ export const Header = () => {
           </li>
           </ul>}
        {isAdmin &&   <ul className={cls.navList}>
-        <NavLink className={cls.link} to="/">
-              Главная
+        <NavLink className={cls.link} to="/" onClick={closeBurger}>
+              ГОЛОВНА
             </NavLink>
             <li>
-              <NavLink  className={cls.link}  to="/admin">Admin</NavLink>
+              <NavLink  className={cls.link}  to="/admin" onClick={closeBurger}>АДМІСТРАТОР</NavLink>
+            </li>
+            <li>
+              <NavLink  className={cls.link}  to="admin/groups" onClick={closeBurger}>ГРУПИ</NavLink>
+            </li>
+            <li>
+              <NavLink  className={cls.link}  to="admin/payment" onClick={closeBurger}>ОПЛАТА</NavLink>
+            </li>
+            <li>
+              <NavLink  className={cls.link}  to="admin/events" onClick={closeBurger}>ГРАФІК</NavLink>
             </li>
           </ul>}
+          {/* <li>
+            <a href="#contact-form" className={cls.ctaButton}>Записаться на тренировку</a>
+          </li> */}
        
       </nav>
     </header>

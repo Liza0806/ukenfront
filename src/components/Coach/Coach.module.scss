@@ -9,6 +9,7 @@
     ),
     url("../../assets/fon-oktagona-ufc.jpg");
 
+
   @media (max-width: 738px) {
     background: linear-gradient(
       180deg,
@@ -36,6 +37,20 @@
   position: relative;
   gap: 40px;
 
+
+  @media (max-width: 1024px) {
+    flex-direction: column;
+    background: linear-gradient(
+  180deg,
+  rgba(10, 10, 10, 1) 0%,
+  rgba(15, 15, 15, 0.85) 35%,
+  rgba(20, 20, 20, 0.8) 65%,
+  rgba(10, 10, 10, 1) 100%
+);
+padding: 3vh;
+    gap: 2vh;
+  }
+
   @media (max-width: 738px) {
     flex-direction: column;
     background: linear-gradient(
@@ -55,6 +70,15 @@ padding: 3vh;
     margin-bottom:2vh;
     gap: 70vh;
 
+
+    
+    @media (max-width: 1024px) {
+      flex-direction: column;
+      flex-direction: column-reverse;
+      gap: 2vh;
+      margin: auto;
+    }
+
     @media (max-width: 738px) {
       flex-direction: column;
       flex-direction: column-reverse;
@@ -69,6 +93,18 @@ padding: 3vh;
       text-align: center;
       color: #ff6600;
       text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+
+
+      @media (max-width: 1024px) {
+        text-transform: uppercase;
+        font-family: "Roboto";
+        font-weight: 700;
+        font-size: 40.96px;
+        line-height: 40.96px;
+        color: #ff6600;
+        text-shadow: 1.28px 1.28px 2.56px rgba(0, 0, 0, 0.3);
+        margin: auto;
+      }
 
       @media (max-width: 738px) {
         text-transform: uppercase;
@@ -93,6 +129,17 @@ padding: 3vh;
       scale: 80%;
       margin-left: auto;
 
+      @media (max-width: 1024px) {
+        text-transform: uppercase;
+        font-family: "Roboto";
+        font-weight: 700;
+        font-size: 51.2px;
+        line-height: 51.2px;
+        color: #ff6600;
+        text-shadow: 1.6px 1.6px 3.2px rgba(0, 0, 0, 0.3);
+        margin: auto;
+      }
+
       @media (max-width: 738px) {
         text-transform: uppercase;
         font-family: "Roboto";
@@ -114,7 +161,7 @@ padding: 3vh;
       top: 100%; // Позиционирование
       right: 6.5%; // Слева от заголовка
       transform: translateY(-50%); // Центрируем по вертикали
-      @media (max-width: 738px) {
+      @media (max-width: 1024px) {
         display: none;
       }
     }
@@ -131,7 +178,7 @@ padding: 3vh;
   transition: transform 0.3s ease, box-shadow 0.3s ease;
   border: 7px;
 
-  @media (max-width: 738px) {
+  @media (max-width: 1024px) {
    
     background-color: rgba(0, 0, 0, 0.7);
     box-shadow: 0 10px 20px rgba(0, 0, 0, 0.4);
@@ -194,12 +241,20 @@ padding: 3vh;
     transition: transform 0.3s ease, box-shadow 0.3s ease;
     z-index: 0;
 
+    @media (max-width: 1024px) {
+      background: none;
+      box-shadow: none;
+      padding: 3vh;
+      width: 100%;
+     
+    } 
+
     @media (max-width: 738px) {
       background: none;
       box-shadow: none;
       padding: 0vh;
       width: 100%;
-      max-width: 400px; /* Ограничиваем ширину в мобильном */
+   
     }
   }
 
@@ -218,6 +273,8 @@ padding: 3vh;
     @media (max-width: 1024px) {
         font-size: 20px;
         line-height: 26px;
+        margin: auto;
+        padding-left: 0px;
       }
   
       @media (max-width: 768px) {
@@ -225,6 +282,7 @@ padding: 3vh;
         line-height: 24px;
         padding: 0;
         text-shadow: 1px 1px 4px rgba(0, 0, 0, 0.3);
+        margin: auto;
       }
   
       @media (max-width: 480px) {

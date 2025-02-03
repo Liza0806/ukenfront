@@ -12,7 +12,6 @@ const LandingPage = () => {
     return (
         <div>
             <Hero/>
-           
             <About/>
             <Coach/>
             <Gallery/>

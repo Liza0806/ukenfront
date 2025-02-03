@@ -12,24 +12,26 @@ $dark-gray: #1a1a1a;
   border: 1px solid $gray;
   margin: 100px auto; 
   max-width: 1000px; 
-  width: 100%;
+  
+  width: auto;
   height: 100%;
 
   .header {
     display: flex;
-    justify-content: center; /* Горизонтальное центрирование .title */
-    text-align: center; /* Центрирование текста */
-    position: relative; /* Для абсолютного позиционирования .upIcon */
+    justify-content: center; 
+    text-align: center; 
+    position: relative; 
+    gap: 4vh;
+    padding-left: 10vh;
+    padding-right: 10vh;
+    padding-bottom: 7vh;
 
-    .upIcon {
-      position: absolute;  /* Абсолютное позиционирование */
-      right: 0;            /* Прижать к правому краю */
-      top: 0;              /* Прижать к верхнему краю */
-      display: flex;
-      justify-content: flex-end;
-      align-items: flex-end
+     @media(max-width: 738){
+      flex-direction: column;
+     }
+    
 
-    }
+   
   
     
 
@@ -39,10 +41,10 @@ $dark-gray: #1a1a1a;
       font-weight: bold;
       text-transform: uppercase;
       letter-spacing: 2px;
-      padding: 10px 0;
+      padding:  0;
       position: relative;
   }
-  
+
   @media screen and (max-width: 768px) {
       .title {
           font-size: 1.5rem;
@@ -101,12 +103,15 @@ $dark-gray: #1a1a1a;
     flex-direction: row; 
     align-items: center; 
     font-family: 'Arial', sans-serif;
-    color: #333;
+    color: #f3f3f3;
     margin-top: 3vw;
     justify-content: center; 
+    gap: 1vh;
+    
 
     @media screen and (max-width: 768px) {
       margin-right: -2vw;
+      flex-direction: column;
     }
     
     .titleElement {
@@ -137,7 +142,7 @@ $dark-gray: #1a1a1a;
 
       li {
         display: flex; 
-        justify-content: space-between;
+        justify-content: center;
         padding: 12px 16px;
         margin: auto;
         margin-bottom: 5px;
@@ -146,6 +151,9 @@ $dark-gray: #1a1a1a;
         font-size: inherit;
         transition: background-color 0.3s;
         width: 100%;
+         @media(max-width: 738px){
+          justify-content: center;
+         }
    
 
         &:hover {
@@ -223,4 +231,25 @@ $dark-gray: #1a1a1a;
   }
 
 
-  
+  .usersInTrain{
+    display: flex;
+    align-items: center;
+    text-align: center;
+    margin: auto;
+    flex-direction: column;
+    gap: 3vh;
+  }
+
+  .oneUser{
+    color: white;
+        font-size: inherit;
+        align-items: center;
+        display: flex;
+        gap: 1vh;
+  }
+  .deleteIcon{
+    cursor: pointer;
+    :hover{
+      color: red;
+    }
+  }

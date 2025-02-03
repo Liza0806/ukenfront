@@ -233,11 +233,10 @@ export const GroupFormModal: React.FC<GroupFormProps> = ({
           ))}
 
         {currentGroup?.participants && currentGroup?.participants.length > 0 ? (
-          <ul>
+          <ul className={cls.itemOfUsers}>
+            <p className={cls.title}>Будуть на тренуванні:</p>
             {currentGroup?.participants.map((participant, index) => (
-              <li key={index}>
-                {participant.name || "Не вказано"}
-
+              <li className={cls.titleUsers} key={index}>
                 <DeleteIcon
                   data-testid="userInListDeleteBtn"
                   onClick={() => {
@@ -245,6 +244,9 @@ export const GroupFormModal: React.FC<GroupFormProps> = ({
                   }}
                   className={cls.deleteIcon}
                 />
+                {participant.name || "Не вказано"}
+
+                
               </li>
             ))}
           </ul>
