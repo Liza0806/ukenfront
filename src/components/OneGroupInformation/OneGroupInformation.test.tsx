@@ -4,17 +4,11 @@ import { Provider } from "react-redux";
 import { configureStore } from "@reduxjs/toolkit";
 import groupReducer from "../../redux/slices/groupsSlice";
 import { OneGroupInformation } from "./OneGroupInformation";
-import { fetchAllUsers } from "../../redux/thunks/thunks";
 import "@testing-library/jest-dom";
-import { getAllGroups } from "../../redux/api/groupsApi";
 import { GroupType } from "../../redux/types/types";
 
 jest.mock("../../redux/api/groupsApi");
 jest.mock("../../redux/thunks/thunks");
-
-const mockedGetAllGroups = getAllGroups as jest.MockedFunction<
-  typeof getAllGroups
->;
 
 const mockStore = configureStore({
   reducer: {
@@ -40,7 +34,11 @@ describe("OneGroupInformation Component", () => {
   it("renders component with group data", () => {
     render(
       <Provider store={mockStore}>
-        <OneGroupInformation groupData={mockGroupData} />
+          <OneGroupInformation title={mockGroupData.title}
+                  dailyPayment={mockGroupData.dailyPayment}
+                  monthlyPayment={mockGroupData.monthlyPayment}
+                  participants={[...mockGroupData.participants]}
+                  schedule={mockGroupData.schedule}/>
       </Provider>
     );
 
@@ -58,7 +56,11 @@ describe("OneGroupInformation Component", () => {
 
     render(
       <Provider store={mockStore}>
-        <OneGroupInformation groupData={groupDataWithoutParticipants} />
+        <OneGroupInformation title={groupDataWithoutParticipants.title}
+                  dailyPayment={groupDataWithoutParticipants.dailyPayment}
+                  monthlyPayment={groupDataWithoutParticipants.monthlyPayment}
+                  participants={[...groupDataWithoutParticipants.participants]}
+                  schedule={groupDataWithoutParticipants.schedule}/>
       </Provider>
     );
 

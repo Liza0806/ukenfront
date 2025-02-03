@@ -18,7 +18,7 @@ import { GroupType } from "../../redux/types/types";
 import { clearCurrentGroup, setCurrentGroup } from "../../redux/slices/groupsSlice";
 
 const GroupsPage = () => {
-  ////////// вечер 26.01
+
   const [showModalForUpdate, setShowModalForUpdate] = useState(false);
   const _id = useRef("");
   const [groupData, setGroupData] = useState<GroupType | undefined>();
@@ -77,6 +77,7 @@ const GroupsPage = () => {
               <div className={cls.edit}>
                 <p className={cls.title}>{group.title}</p>
                 <button
+                 data-testid='editButton'
                   className={cls.changeButton}
                   onClick={() => {
                     setShowModalForUpdate(true);
@@ -88,6 +89,7 @@ const GroupsPage = () => {
                   <EditIcon sx={{ color: "white" }} />
                 </button>
                 <button
+              data-testid='deleteButton'
                   className={cls.deleteButton}
                   onClick={() => handleDeleteGroup(group._id)}
                 >

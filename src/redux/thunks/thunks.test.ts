@@ -406,7 +406,7 @@ describe("addGroup thunk", () => {
   // Создаем временный Redux store для тестов
   const store = configureStore({
     reducer: {
-      events: eventsReducer, // заменить на соответствующий редюсер для группы
+      groups: groupsReducer, // заменить на соответствующий редюсер для группы
     },
   });
 
@@ -462,7 +462,7 @@ describe("deleteGroupTh thunk", () => {
   // Создаем временный Redux store для тестов
   const store = configureStore({
     reducer: {
-      groups: groupsReducer, // заменить на соответствующий редюсер для группы
+      groups: groupsReducer, 
     },
   });
 
@@ -473,6 +473,7 @@ describe("deleteGroupTh thunk", () => {
   >;
   const dispatch: AppDispatch = store.dispatch;
 
+  
   beforeEach(() => {
     jest.clearAllMocks();
   });

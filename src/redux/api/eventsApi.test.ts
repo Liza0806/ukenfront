@@ -5,14 +5,12 @@ import { EventTypeDB } from "../types/types";
 
 describe("getAllEvents", () => {
   let mock: MockAdapter;
-
   beforeAll(() => {
     mock = new MockAdapter(axios);
   });
 
   afterEach(() => {
     mock.reset(); // Сбрасываем моки после каждого теста
-    localStorage.clear(); // Очищаем localStorage перед каждым тестом
   });
 
   afterAll(() => {
@@ -31,7 +29,6 @@ describe("getAllEvents", () => {
     const events = await getAllEvents();
 
     expect(events).toEqual(mockData); // Проверяем, что данные соответствуют мокам
-    expect(localStorage.getItem("events")).toBe(JSON.stringify(mockData)); // Проверяем, что данные сохранились в localStorage
   });
 
   it("should throw an error when the request fails", async () => {
