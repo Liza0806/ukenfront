@@ -25,7 +25,6 @@ describe("getAllGroups", () => {
       { id: 1, name: "Event 1" },
       { id: 2, name: "Event 2" },
     ];
-
     // Настраиваем мок для axios
     mock.onGet("https://ukenback.vercel.app/groups/").reply(200, mockData);
 
