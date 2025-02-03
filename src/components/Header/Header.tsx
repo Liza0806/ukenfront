@@ -70,20 +70,7 @@ export const Header = () => {
             <li>
               <NavLink  className={cls.link}  to="/admin" onClick={closeBurger}>АДМІСТРАТОР</NavLink>
             </li>
-            <li>
-              <NavLink  className={cls.link}  to="admin/groups" onClick={closeBurger}>ГРУПИ</NavLink>
-            </li>
-            <li>
-              <NavLink  className={cls.link}  to="admin/payment" onClick={closeBurger}>ОПЛАТА</NavLink>
-            </li>
-            <li>
-              <NavLink  className={cls.link}  to="admin/events" onClick={closeBurger}>ГРАФІК</NavLink>
-            </li>
-          </ul>}
-          {/* <li>
-            <a href="#contact-form" className={cls.ctaButton}>Записаться на тренировку</a>
-          </li> */}
-       
+          </ul>}       
       </nav>
     </header>
   );

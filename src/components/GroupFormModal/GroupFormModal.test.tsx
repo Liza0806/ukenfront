@@ -2,13 +2,20 @@ import React from "react";
 import { render, screen, fireEvent, waitFor } from "@testing-library/react";
 import { GroupFormModal } from "./GroupFormModal";
 import { Provider } from "react-redux";
-import configureStore from "redux-mock-store";
+
 import "@testing-library/jest-dom";
 import { GroupType } from "../../redux/types/types";
 import { addGroupTh } from "../../redux/thunks/thunks";
-import { addGroup } from "../../redux/api/groupsApi";
+import { addGroup, deleteGroup, getAllGroups } from "../../redux/api/groupsApi";
+import { configureStore } from "@reduxjs/toolkit";
+import groupsReducer from "../../redux/slices/groupsSlice";
+import usersReducer from "../../redux/slices/userSlice";
 
-const mockStore = configureStore([]);
+///const mockStore = configureStore([]);
+// Мокаем функцию API
+jest.mock("../../redux/api/groupsApi");
+jest.mock("../../redux/api/eventsApi");
+jest.mock("../../redux/api/usersApi");
 jest.mock("react-toastify", () => ({
   toast: {
     success: jest.fn(),
@@ -55,6 +62,9 @@ const initialGroupData: GroupType = {
 jest.mock("../../redux/api/groupsApi", () => ({
   addGroup: jest.fn() as jest.MockedFunction<typeof addGroup>,
 }));
+jest.mock("../../redux/api/groupsApi", () => ({
+  fetchAllGroups: jest.fn(() => Promise.resolve([{ _id: "1", title: "Group 1" }])),
+}));
 
 jest.mock("../../redux/thunks/thunks", () => ({
   addGroupTh: jest.fn(),
@@ -65,16 +75,22 @@ describe("GroupFormModal", () => {
 
   beforeEach(() => {
     jest.clearAllMocks(); // Очищаем моки перед каждым тестом
-
-    store = mockStore({
-      users: [
-        { id: "1", name: "User1" },
-        { id: "2", name: "User2" },
-      ],
+    const store = configureStore({
+      reducer: {
+        groups: groupsReducer,
+        users: usersReducer,
+      },
     });
   });
 
   it("renders without crashing", () => {
+  
+    const store = configureStore({
+      reducer: {
+        groups: groupsReducer, 
+        users: usersReducer
+      },
+    });
     // Рендеринг компонента с минимально необходимыми пропсами
     render(
       <Provider store={store}>
@@ -269,11 +285,17 @@ describe("GroupFormModalw", () => {
   beforeEach(() => {
     jest.clearAllMocks(); // Очищаем моки перед каждым тестом
 
-    store = mockStore({
-      users: [
-        { id: "1", name: "User1" },
-        { id: "2", name: "User2" },
-      ],
+    // store = mockStore({
+    //   users: [
+    //     { id: "1", name: "User1" },
+    //     { id: "2", name: "User2" },
+    //   ],
+    // });
+    const store = configureStore({
+      reducer: {
+        groups: groupsReducer, 
+        users: usersReducer
+      },
     });
   });
 
@@ -303,11 +325,17 @@ describe("GroupFormModalw", () => {
       ],
     };
 
-    const store = mockStore({
-      users: [
-        { id: "1", name: "User1" },
-        { id: "2", name: "User2" },
-      ],
+    // const store = mockStore({
+    //   users: [
+    //     { id: "1", name: "User1" },
+    //     { id: "2", name: "User2" },
+    //   ],
+    // });
+    const store = configureStore({
+      reducer: {
+        groups: groupsReducer, 
+        users: usersReducer
+      },
     });
 
     render(

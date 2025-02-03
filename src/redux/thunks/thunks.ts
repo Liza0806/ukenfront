@@ -87,85 +87,70 @@ export const fetchUsersByName = createAsyncThunk<
   return response;
 });
 
-
-
 export const updateEvent = createAsyncThunk<
-  EventTypeDB, // Тип успешного ответа
+  EventTypeDB, // Тип возвращаемого значения
   AddEventTypeDB, // Тип аргументов
-  { rejectValue: string } // Тип ошибки
+  { rejectValue: string } // Тип значения для reject
 >(
   "events/updateEvent",
-  async ({ _id, date, groupId, groupTitle, isCancelled, participants }, { rejectWithValue }) => {
-    try {
-      console.log("updateEventTH");
-
-      const response = await updateEventAPi({
-        _id,
-        date,
-        groupId,
-        groupTitle,
-        isCancelled,
-        participants,
-      });
-
-      if (!response || response.status < 200 || response.status >= 300) {
-        throw new Error("Невідома помилка сервера");
-      }
-
-      toast.success("Тренування успішно оновлено");
-      return response.data;
-    } catch (error: any) {
-      const errorMessage =
-        error.response?.data?.message || "При оновленні тренування виникла помилка";
-      toast.error(errorMessage);
-      return rejectWithValue(errorMessage);
+  async (
+    { _id, date, groupId, groupTitle, isCancelled, participants },
+    thunkAPI
+  ) => {
+    console.log("updateEventTH");
+    const response = await updateEventAPi({
+      _id,
+      date,
+      groupId,
+      groupTitle,
+      isCancelled,
+      participants,
+    });
+    if (!response) {
+      toast.error("При оновленні тренування виникла помилка");
+      return thunkAPI.rejectWithValue("error");
     }
+    toast.success("Тренування успішно оновлено");
+    return response;
   }
 );
 
 export const addGroupTh = createAsyncThunk<
-  GroupType, // Тип успешного ответа
-  AddGroupType, // Тип передаваемого аргумента
-  { rejectValue: string } // Тип ошибки
->("groups/addGroupTh", async (group: AddGroupType, { rejectWithValue }) => {
+  GroupType, // Тип данных при успешном выполнении
+  AddGroupType, // Тип аргументов, передаваемых в thunk
+  { rejectValue: string } // Тип для ошибки
+>("groups/addGroupTh", async (group: AddGroupType, thunkAPI) => {
   try {
+     
     const response = await addGroup(group);
-
-    if (response.status >= 200 && response.status < 300) {
-      toast.success("Група успішно додана");
-      return response.data;
-    } else {
-      throw new Error("Невідомий статус відповіді сервера");
-    }
-  } catch (error: any) {
-    const errorMessage =
-      error.response?.data?.message || "При додаванні групи виникла помилка";
-    toast.error(errorMessage);
-    return rejectWithValue(errorMessage);
+ 
+    if (response.status >= 200 && response.status < 300) {  
+      toast.success('Група успішно додана')
+      return response.data; 
+    } 
+  } catch (error) {
+    toast.error('При додаванні групи виникла помилка')
+    return thunkAPI.rejectWithValue("error");
   }
 });
 
 export const deleteGroupTh = createAsyncThunk<
-  { _id: string; message: string }, // Тип успешного ответа
-  string, // ID группы
-  { rejectValue: string } // Тип ошибки
->("groups/deleteGroupTh", async (_id: string, { rejectWithValue }) => {
+  {_id: string, message: string}, // Тип данных при успешном выполнении
+  string, // Тип аргументов, передаваемых в thunk
+  { rejectValue: string } // Тип для ошибки
+>("groups/deleteGroupTh", async (_id: string, thunkAPI) => {
   try {
     const response = await deleteGroup(_id);
-
-    if (response.status >= 200 && response.status < 300) {
-      toast.success("Група успішно видалена");
-      return response.data;
-    } else {
-      throw new Error("Невідомий статус відповіді сервера");
-    }
+    toast.success('Група успішно видалена')
+    //   console.log(response.data);
+    return response.data;
   } catch (error: any) {
-    const errorMessage =
-      error.response?.data?.message || "При видаленні групи виникла помилка";
-    toast.error(errorMessage);
-    return rejectWithValue(errorMessage);
+    toast.error('При видаленні групи виникла помилка')
+    return thunkAPI.rejectWithValue("error");
   }
 });
+
+
 export const updateGroupTh = createAsyncThunk<
   { _id: string; updatedGroup: GroupType }, // Тип возвращаемого значения
   { group: AddGroupType; _id: string }, // Тип аргумента
