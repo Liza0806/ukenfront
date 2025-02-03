@@ -18,7 +18,7 @@ import { GroupType } from "../../redux/types/types";
 import { clearCurrentGroup, setCurrentGroup } from "../../redux/slices/groupsSlice";
 
 const GroupsPage = () => {
-  ////////// вечер 26.01
+
   const [showModalForUpdate, setShowModalForUpdate] = useState(false);
   const _id = useRef("");
   const [groupData, setGroupData] = useState<GroupType | undefined>();

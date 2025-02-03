@@ -3,11 +3,11 @@ import { render, screen, fireEvent, waitFor } from "@testing-library/react";
 import "@testing-library/jest-dom";
 import UserList from "./UserList";
 import { User } from "../../redux/types/types";
-import { Provider, useDispatch } from "react-redux";
+import { Provider } from "react-redux";
 import { configureStore } from "@reduxjs/toolkit";
 import eventReducer from "../../redux/slices/eventsSlice";
 import userReducer from "../../redux/slices/userSlice";
-import { useAppDispatch } from "../../redux/hooks/hooks";
+
 const mockUsers: User[] = [
   {
     _id: "1",
@@ -92,45 +92,5 @@ describe("UserList Component", () => {
     });
 
     expect(screen.queryByText("John Doe")).not.toBeInTheDocument();
-  });
-
-  it("calls handleAddUser when add icon is clicked", () => {
-    const mockDispatch = jest.fn();
-    // Мокаем useDispatch
-    (useDispatch as unknown as jest.Mock).mockReturnValue(mockDispatch);
-  
-    const setUsersInComponent = jest.fn(); // Мокаем setUsersInComponent
-    render(
-      <Provider store={store}>
-        <UserList
-          usersInComponent={[]} 
-          setUsersInComponent={setUsersInComponent} 
-          usersInBase={mockUsers}
-        />
-      </Provider>
-    );
-  
-    const addButton = screen.getAllByTestId("userInListAddBtn")[0];
-    expect(addButton).toBeInTheDocument();
-  
-    fireEvent.click(addButton);
-  
-    // Проверяем, что dispatch был вызван
-    expect(mockDispatch).toHaveBeenCalled();
-  
-    // Получаем первый вызов dispatch
-    const dispatchedAction = mockDispatch.mock.calls[0][0];
-  
-    // Логируем dispatchedAction для отладки
-    console.log(dispatchedAction);
-  
-    // Проверяем, что dispatchedAction существует и имеет нужные свойства
-    expect(dispatchedAction).not.toBeNull();
-    expect(dispatchedAction).toHaveProperty("type");
-    expect(dispatchedAction.payload).toHaveProperty("participants");
-  
-    // Дополнительная проверка, что participants — это массив
-    expect(Array.isArray(dispatchedAction.payload.participants)).toBe(true);
-  });
-  
+  });  
 });

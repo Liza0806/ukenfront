@@ -12,8 +12,8 @@ describe("getAllGroups", () => {
   });
 
   afterEach(() => {
-    mock.reset(); // Сбрасываем моки после каждого теста
-    localStorage.clear(); // Очищаем localStorage перед каждым тестом
+    mock.reset(); 
+ 
   });
 
   afterAll(() => {

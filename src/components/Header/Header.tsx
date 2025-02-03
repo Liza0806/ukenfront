@@ -55,19 +55,7 @@ export const Header = () => {
             <li>
               <NavLink  className={cls.link}  to="/admin">Admin</NavLink>
             </li>
-            <li>
-              <NavLink  className={cls.link}  to="admin/groups">Groups</NavLink>
-            </li>
-            <li>
-              <NavLink  className={cls.link}  to="admin/payment">Payment</NavLink>
-            </li>
-            <li>
-              <NavLink  className={cls.link}  to="admin/events">Schedule</NavLink>
-            </li>
           </ul>}
-          {/* <li>
-            <a href="#contact-form" className={cls.ctaButton}>Записаться на тренировку</a>
-          </li> */}
        
       </nav>
     </header>
