@@ -65,6 +65,11 @@ $dark-gray: #1a1a1a;
   padding: 0;
   position: relative;
   gap: 3vh;
+  cursor: pointer;
+
+  :hover{
+  color:   #ff9900;
+  }
 }
 
 .titleOfAdminPage{
