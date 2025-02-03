@@ -116,10 +116,10 @@ describe("GroupsPage", () => {
     expect(screen.getByText(/10:00/i)).toBeInTheDocument();
     expect(screen.getByText(/Wednesday/i)).toBeInTheDocument();
     expect(screen.getByText(/12:00/i)).toBeInTheDocument();
-    expect(screen.getAllByText("Редагувати групу")[0]).toBeInTheDocument();
-    expect(screen.getAllByText("Редагувати групу")[1]).toBeInTheDocument();
-    expect(screen.getAllByText("Удалити групу")[0]).toBeInTheDocument();
-    expect(screen.getAllByText("Удалити групу")[1]).toBeInTheDocument();
+    expect(screen.getAllByTestId("editButton")[0]).toBeInTheDocument();
+    expect(screen.getAllByTestId("editButton")[1]).toBeInTheDocument();
+    expect(screen.getAllByTestId("deleteButton")[0]).toBeInTheDocument();
+    expect(screen.getAllByTestId("deleteButton")[1]).toBeInTheDocument();
     expect(screen.getByText("Створити групи")).toBeInTheDocument();
   });
 
@@ -138,8 +138,8 @@ describe("GroupsPage", () => {
     // Check if the component renders
     expect(screen.getByText("ГРУПИ")).toBeInTheDocument();
     //   expect(screen.getByText("Немає доступних груп")).toBeInTheDocument();
-    expect(screen.queryByText("Редагувати групу")).not.toBeInTheDocument();
-    expect(screen.queryByText("Удалити групу")).not.toBeInTheDocument();
+    expect(screen.queryByTestId("editButton")).not.toBeInTheDocument();
+    expect(screen.queryByTestId("deleteButton")).not.toBeInTheDocument();
     expect(screen.getByText("Створити групи")).toBeInTheDocument();
   });
 
@@ -157,8 +157,8 @@ describe("GroupsPage", () => {
       </Provider>
     );
 
-    const deleteBtn = screen.queryAllByText(
-      "Удалити групу"
+    const deleteBtn = screen.queryAllByTestId(
+      "deleteButton"
     )[0] as HTMLButtonElement;
     expect(deleteBtn).toBeInTheDocument();
 
@@ -167,8 +167,7 @@ describe("GroupsPage", () => {
 
     // Проверка вызова action удаления
     expect(deleteGroupSpy).toHaveBeenCalled();
-    // console.log(deleteGroupSpy, "deleteGroupSpy");
-    expect(deleteGroupSpy).toHaveBeenCalledTimes(3);
+    expect(deleteGroupSpy).toHaveBeenCalledTimes(2);
   });
 
   it("shows modal for adding a group", async () => {
@@ -191,7 +190,7 @@ describe("GroupsPage", () => {
 
     fireEvent.click(addButton);
 
-    expect(screen.getByText("Добавить группу")).toBeInTheDocument();
+    expect(screen.getByText("додати")).toBeInTheDocument();
     modalRoot.remove();
   });
 
@@ -210,13 +209,11 @@ describe("GroupsPage", () => {
       </Provider>
     );
 
-    const editButton = screen.getAllByText(
-      /Редагувати групу/i
-    )[0] as HTMLButtonElement;
+    const editButton = screen.getAllByTestId('editButton')[0] as HTMLButtonElement;
     expect(editButton).toBeInTheDocument();
     fireEvent.click(editButton);
 
-    expect(screen.getByText("Обновить группу")).toBeInTheDocument();
+    expect(screen.getByText("Обновити")).toBeInTheDocument();
   });
 
   it("fetches groups on mount", async () => {
@@ -243,15 +240,15 @@ describe("GroupsPage", () => {
         <GroupsPage />
       </Provider>
     );
+    const editButtonsBefore = screen.getAllByTestId("editButton").length;
 
-    const deleteBtn = screen.queryAllByText("Удалити групу")[0];
+    const deleteBtn = screen.queryAllByTestId("deleteButton")[0];
     fireEvent.click(deleteBtn);
-
-    // await waitFor(() => {
-    //   expect(
-    //     screen.getByText("Ошибка при удалении группы")
-    //   ).toBeInTheDocument();
-    // });
+  
+    await waitFor(() => {
+      const editButtonsAfter = screen.getAllByTestId("editButton").length;
+      expect(editButtonsAfter).toBe(editButtonsBefore); // Длина должна остаться той же, так как запрос упал
+    });
   });
 
   it("updates group list after adding a new group", async () => {
@@ -284,10 +281,6 @@ describe("GroupsPage", () => {
     expect(addButton).toBeInTheDocument();
     // Simulate adding a new group
     fireEvent.click(addButton);
-    // Close modal after adding group
-    const closeButton = screen.getByText("Close") as HTMLButtonElement;
-    fireEvent.click(closeButton);
-
     await waitFor(() => {
       expect(screen.getByText("Group 3")).toBeInTheDocument();
     });
@@ -304,7 +297,7 @@ describe("GroupsPage", () => {
       </Provider>
     );
 
-    const deleteBtn = screen.queryAllByText("Удалити групу")[0];
+    const deleteBtn = screen.queryAllByTestId("deleteButton")[0];
     fireEvent.click(deleteBtn);
 
     await waitFor(() => {

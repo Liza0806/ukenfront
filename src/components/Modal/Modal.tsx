@@ -21,7 +21,10 @@ export const Modal: React.FC<ModalProps> = ({ open, onClose, children }) => {
       <CloseIcon sx={{ color: "#ff9900",  cursor: "pointer", marginLeft: 'auto', transition: "transform 0.3s ease",
               ":hover": {
                 transform: "scale(1.2)", 
-              },}} onClick={onClose}>Close</CloseIcon>
+              },}} 
+              onClick={onClose}
+              data-testid='closeModal'
+              >Close</CloseIcon>
         {children}
        
       </div>

@@ -61,37 +61,7 @@ export const testGroupForHandleSubmit = (
     toast.error("не верный формат расписания");
     return;
   }
-  const groupForTh = {
-    title: groupFormState.title,
-    coachId: "Kostya",
-    dailyPayment: groupFormState.dailyPayment,
-    monthlyPayment: groupFormState.monthlyPayment,
-    schedule: [...groupFormState.schedule],
-    participants: [...groupFormState.participants],
-  };
   return groupFormState;
-  // try {
-
-  //   if (isEditMode && _id) {
-
-  // await appDispatch(
-  //       updateGroupTh({ group: groupForTh, _id: _id })
-  //     ).unwrap(); // Разворачиваем результат, чтобы проверить ошибки
-
-  //     toast.success("Группа успешно обновлена");
-  //     closeModal();
-  //   } else {
-  //     //    ;
-  //     console.log(groupForTh, "groupForTh");
-  //   await appDispatch(addGroupTh(groupForTh)).unwrap(); // Разворачиваем результат
-  //     toast.success("Группа успешно добавлена");
-  //     closeModal();
-  //   }
-
-  // } catch (error) {
-  //   //   ;
-  //   toast.error("Ошибка при сохранении группы");
-  // }
 };
 
 export const GroupFormModal: React.FC<GroupFormProps> = ({
@@ -99,9 +69,7 @@ export const GroupFormModal: React.FC<GroupFormProps> = ({
   isEditMode,
   closeModal,
 }) => {
-  const appDispatch = useAppDispatch();
   const dispatch = useAppDispatch();
-
   const usersInBase = useAppSelector(selectUsers);
   const currentGroup = useAppSelector(selectCurrentGroup);
 
@@ -110,7 +78,6 @@ export const GroupFormModal: React.FC<GroupFormProps> = ({
     dispatch(setCurrentGroup([]));
   }
 
-  const [groupId, setGroupId] = useState(initialGroupData?._id);
   const [schedule, setSchedule] = useState<ScheduleType[]>(
     currentGroup?.schedule || []
   );

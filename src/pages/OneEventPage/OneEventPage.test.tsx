@@ -306,6 +306,7 @@ describe("OneEventPage", () => {
   });
 
   it("должен отобразить дополнительных пользователей при нажатии на кнопку", async () => {
+    // Set up the event data and users in the store
     const event3: EventTypeDB = {
       _id: "123",
       groupTitle: "groupTitle 2",
@@ -348,7 +349,8 @@ describe("OneEventPage", () => {
     );
   
     // Дожидаемся появления кнопки
-    const button = await screen.findByTestId("updateIcon");
+    const button = await screen.findByTestId("ShowAdditionalUsers");
+    expect(button).toBeInTheDocument();
   
     // Кликаем по кнопке
     act(() => {
@@ -358,13 +360,10 @@ describe("OneEventPage", () => {
     // Дожидаемся, когда пользователи отобразятся
     await waitFor(() => {
       const users = screen.queryAllByTestId("userInList");
-      // Убедимся, что хотя бы один пользователь появился
-      expect(users.length).toBeGreaterThan(0);
+      expect(users.length).toBeGreaterThan(0);  // Ensure users are displayed
     });
   });
   
-  
-
   it("должен вызвать clearCurrentEvent при размонтировании", async () => {
     jest.spyOn(store, "dispatch");
 
