@@ -1,33 +1,77 @@
+$black: #000;
+$white: #fff;
+$gray: #808080;
+$orange: #ff9900;
+$dark-gray: #1a1a1a;
 
+
+.container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  height: calc(100vh - 80px);
+  background: linear-gradient(
+      180deg,
+      rgba(0, 0, 1, 0.91) 10%,
+      rgba(0, 0, 0, 0.2275) 47.5%,
+      rgba(0, 0, 0, 0) 73.5%
+    ),
+    url("../../assets/PhoneForPagIvent.jpg");
+  background-size: cover;
+  background-repeat: no-repeat;
+
+
+}
+
+
+.navContainer {
+  background-color: rgba(0, 0, 0, 0.8); /* Прозрачный черный фон */
+  padding-left: 10vh;
+  padding-right: 10vh;
+  padding-top: 5vh;
+  padding-bottom: 5vh;
+  border-radius: 10px; /* Закругленные углы */
+  box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.2); /* Тень для красоты */
+  max-width: 600px;
+  width: auto;
+  height: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 4vh;
+  margin-top: 10vh;
+
+
+  @media (max-width: 738px) {
+    padding-left: 8vh;
+    padding-right: 8vh;
+    max-width: auto;
+    gap: 1vh;
+    margin: none;
+   
+  }
+}
   
-    h1 {
-      text-align: center;
-      color: white;
-    }
-  
-    ul {
-      list-style-type: none;  // Убираем стандартные маркеры списка
-      margin: 0;
-      padding: 0;
-      position: absolute;
-      right: 0;  // Располагаем элементы справа
-      top: 0;    // Располагаем элементы сверху
-      display: flex;
-      flex-direction: column;  // Вертикальное расположение элементов
-      align-items: flex-end;   // Выравнивание элементов по правому краю
-  
-      li {
-        margin-bottom: 10px;
-        color: white;
-  
-        a {
-          color: white;  // Цвет текста ссылок
-          text-decoration: none;
-  
-          &:hover {
-            text-decoration: underline;  // Подчеркивание при наведении
-          }
-        }
-      }
-    }
-  
+.itemOfNav{
+
+  display: flex;
+  flex-direction: column;
+  color: #f1f1f1;
+  font-size: 1.4rem; /* уменьшено на 30% */
+  font-weight: 600; /* Чуть тоньше, но стильный */
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+  font-family: "Poppins", sans-serif; /* Красивый современный шрифт */
+  padding: 0;
+  position: relative;
+  gap: 3vh;
+}
+
+.titleOfAdminPage{
+  font-weight: bold; /* Жирный шрифт для выделения */
+  text-transform: uppercase; /* Заглавные буквы для акцента */
+  letter-spacing: 1px; /* Межбуквенное расстояние */
+  color: #ff6600; /* Оранжевый цвет проекта */
+  margin-bottom: 10px; /* Отступ между текстом и датой */
+  display: block; /* Размещаем текст на отдельной строке */
+}

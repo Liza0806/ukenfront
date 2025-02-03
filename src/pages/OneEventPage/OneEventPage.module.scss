@@ -4,252 +4,272 @@ $gray: #808080;
 $orange: #ff9900;
 $dark-gray: #1a1a1a;
 
+.container {
+  display: flex;
+  align-items: center;
+  text-align: center;
+  width: 100%;
+  height: calc(100vh - 80px);
+  background: linear-gradient(
+      180deg,
+      rgba(0, 0, 1, 0.91) 10%,
+      rgba(0, 0, 0, 0.2275) 47.5%,
+      rgba(0, 0, 0, 0) 73.5%
+    ),
+    url("../../assets/PhoneForPagIvent.jpg");
+  background-size: cover;
+  background-repeat: no-repeat;
+
+
+}
+
 .trainingContainer {
   background-color: rgba(0, 0, 0, 0.8); /* Прозрачный черный фон */
-  padding: 20px;
+  padding-left: 10vh;
+  padding-right: 10vh;
+  padding-top: 5vh;
+  padding-bottom: 5vh;
   border-radius: 10px; /* Закругленные углы */
   box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.2); /* Тень для красоты */
   border: 1px solid $gray;
-  margin: 100px auto; 
-  max-width: 1000px; 
-  
+  margin: auto;
+  max-width: 600px;
   width: auto;
-  height: 100%;
+  height: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 4vh;
+
+
+  @media (max-width: 738px) {
+    padding-left: 8vh;
+    padding-right: 8vh;
+    max-width: auto;
+    gap: 1vh;
+    margin: none;
+   
+  }
+
 
   .header {
     display: flex;
-    justify-content: center; 
-    text-align: center; 
-    position: relative; 
-    gap: 4vh;
-    padding-left: 10vh;
-    padding-right: 10vh;
-    padding-bottom: 7vh;
-
-     @media(max-width: 738){
-      flex-direction: column;
-     }
-    
-
-   
-  
-    
-
-    .title {
-      color: #f1f1f1;
-      font-size: 2rem;
-      font-weight: bold;
-      text-transform: uppercase;
-      letter-spacing: 2px;
-      padding:  0;
-      position: relative;
-  }
-
-  @media screen and (max-width: 768px) {
-      .title {
-          font-size: 1.5rem;
-      }
-  }
-
-      /* Декоративная линия */
-      &::after {
-        content: '';
-        position: absolute;
-        left: 50%;
-        transform: translateX(-50%);
-        bottom: -10px;
-        width: 50px; /* Ширина линии */
-        height: 3px; /* Толщина линии */
-        background-color: #ff6600; /* Оранжевый цвет проекта */
-      }
-
-      /* Легкая тень для текста */
-      text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.6); /* Чёрная тень для глубины */
-    }
-  }
-
-  .date {
-    margin-top: 20px;
-    text-align: center; /* Выравниваем текст по центру */
-    font-size: 1.2rem; /* Размер шрифта */
-    color: #f1f1f1; /* Цвет текста */
-    padding: 10px 0; /* Отступы сверху и снизу */
-  }
-
-  .date p {
-    display: inline-block; /* Делаем элементы в одну строку */
-    margin: 0 10px; /* Отступ между датой и временем */
-    cursor: pointer; /* Изменение курсора при наведении */
-    transition: color 0.3s ease; /* Плавный переход цвета */
-    font-weight: bold; /* Жирный текст для акцента */
-  }
-
-  .date p:hover {
-    color: #ff6600; /* Оранжевый цвет текста при наведении */
-  }
-
-  .date .text {
-    font-weight: bold; /* Жирный шрифт для выделения */
-    text-transform: uppercase; /* Заглавные буквы для акцента */
-    letter-spacing: 1px; /* Межбуквенное расстояние */
-    color: #ff6600; /* Оранжевый цвет проекта */
-    margin-bottom: 10px; /* Отступ между текстом и датой */
-    display: block; /* Размещаем текст на отдельной строке */
-  }
-
-  .participants {
-    display: flex;
-    flex-wrap: wrap; 
-    flex-direction: row; 
-    align-items: center; 
-    font-family: 'Arial', sans-serif;
-    color: #f3f3f3;
-    margin-top: 3vw;
-    justify-content: center; 
-    gap: 1vh;
-    
-
-    @media screen and (max-width: 768px) {
-      margin-right: -2vw;
-      flex-direction: column;
-    }
-    
-    .titleElement {
-      height: auto;
-      max-width: inherit; /* Ширина заголовка */
-      margin-left: 4vw; /* Отступ слева */
-      margin-right: 0.9vw; /* Отступ справа */
-      margin-top: 0vh; /* Отступ сверху */
-      font-size: 1.25rem;
-      font-weight: bold;
-      color: white;
-      margin-bottom: 1.5vh;
-      text-align: left;
-      text-transform: uppercase;
-      
-    }
-
-    ul {
-      list-style: none;
-      padding: 0;
-      margin: 0; /* Убираем дефолтные отступы */
-      display: flex; 
-      flex-direction: column; 
-      width: 400px;
-      align-items: center;
-    
-
-
-      li {
-        display: flex; 
-        justify-content: center;
-        padding: 12px 16px;
-        margin: auto;
-        margin-bottom: 5px;
-        border-radius: 5px;
-        color: white;
-        font-size: inherit;
-        transition: background-color 0.3s;
-        width: 100%;
-         @media(max-width: 738px){
-          justify-content: center;
-         }
-   
-
-        &:hover {
-          background-color: rgb(15, 14, 14);
-        }
-
-        .participantName {
-          flex-grow: 1;
-          padding-right: 10px;
-          color: inherit;
-         
-        }
-      }
-    }
-}
-  .modalOverlay {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-color: rgba(0, 0, 0, 0.75); // Притемненный фон
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    z-index: 999;
-  }
-
-  .modalContent {
-    background-color: $dark-gray; // Черный фон модального окна
-    padding: 20px;
-    border-radius: 10px;
-    width: 350px; // Увеличенная ширина для календаря и таймера
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
-    display: flex; // Используем flexbox для выравнивания содержимого
-    justify-content: center; // Центрируем содержимое по горизонтали
-    align-items: center; // Центрируем содержимое по вертикали
-  }
-
-  .buttonOpen {
-    background-color: #ff6600; /* Основной оранжевый цвет проекта */
-    color: white;
-    border: none;
-    border-radius: 5px; /* Легкое закругление */
-    padding: 10px 20px;
-    font-size: 16px;
-    cursor: pointer;
-    transition: background-color 0.3s, transform 0.2s;
-  }
-
-  .buttonOpen:hover {
-    background-color: #cc5200; /* Более темный оттенок при наведении */
-    transform: scale(1.05); /* Легкое увеличение при наведении */
-  }
-
-  .buttonOpen:active {
-    background-color: #b34700; /* Цвет при нажатии */
-    transform: scale(0.98); /* Легкое уменьшение при клике */
-  }
-
-  .buttonOpen:focus {
-    outline: none;
-    box-shadow: 0px 0px 5px 2px rgba(255, 102, 0, 0.7); /* Подсветка при фокусе */
-  }
-
-  .participantsTitle {
-    margin-left: 130px;
-    margin-right: 35px;
-    font-size: 1.25rem; // Увеличиваем размер шрифта
-    font-weight: bold;   // Жирный шрифт
-    color: white;        // Цвет текста белый
-    margin-bottom: 15px; // Отступ снизу
-    text-align: left;    // Выравнивание текста влево
-    text-transform: uppercase; // Преобразуем текст в верхний регистр
-  }
-
-
-  .usersInTrain{
-    display: flex;
+    justify-content: space-between;
     align-items: center;
     text-align: center;
-    margin: auto;
+    gap: 1vh;
+    padding-left: 10vh;
+    padding-right: 10vh;
+    padding-bottom: 3vh;
+
+    @media (max-width: 738px) {
+      padding-left: 1vh;
+      padding-right: 1vh;
+      flex-wrap: wrap;
+    }
+
+    @media screen and (max-width: 768px) {
+      .title {
+        font-size: 1.5rem;
+      }
+    }
+
+    /* Декоративная линия */
+
+    /* Легкая тень для текста */
+    text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.6); /* Чёрная тень для глубины */
+  }
+}
+
+.date {
+  text-align: center; /* Выравниваем текст по центру */
+  font-size: 1.2rem; /* Размер шрифта */
+  color: #f1f1f1; /* Цвет текста */
+}
+
+.date p {
+  display: inline-block; /* Делаем элементы в одну строку */
+  margin: 0 10px; /* Отступ между датой и временем */
+  cursor: pointer; /* Изменение курсора при наведении */
+  transition: color 0.3s ease; /* Плавный переход цвета */
+  font-weight: bold; /* Жирный текст для акцента */
+}
+
+.date p:hover {
+  color: #ff6600; /* Оранжевый цвет текста при наведении */
+}
+
+.date .text {
+  font-weight: bold; /* Жирный шрифт для выделения */
+  text-transform: uppercase; /* Заглавные буквы для акцента */
+  letter-spacing: 1px; /* Межбуквенное расстояние */
+  color: #ff6600; /* Оранжевый цвет проекта */
+  margin-bottom: 10px; /* Отступ между текстом и датой */
+  display: block; /* Размещаем текст на отдельной строке */
+}
+
+.participants {
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: row;
+  align-items: center;
+  font-family: "Arial", sans-serif;
+  color: #f3f3f3;
+  margin-top: 1vh;
+  justify-content: center;
+  gap: 1vh;
+
+  @media screen and (max-width: 768px) {
+    margin-right: -2vw;
     flex-direction: column;
-    gap: 3vh;
   }
 
-  .oneUser{
+  .titleElement {
+    height: auto;
+    max-width: inherit; /* Ширина заголовка */
+    margin-left: 4vw; /* Отступ слева */
+    margin-right: 0.9vw; /* Отступ справа */
+    margin-top: 0vh; /* Отступ сверху */
+    font-size: 1.25rem;
+    font-weight: bold;
     color: white;
-        font-size: inherit;
-        align-items: center;
-        display: flex;
-        gap: 1vh;
+    margin-bottom: 1.5vh;
+    text-align: left;
+    text-transform: uppercase;
   }
-  .deleteIcon{
-    cursor: pointer;
-    :hover{
-      color: red;
+
+  ul {
+    list-style: none;
+    padding: 0;
+    margin: 0; /* Убираем дефолтные отступы */
+    display: flex;
+    flex-direction: column;
+    width: auto;
+    align-items: center;
+
+    li {
+      display: flex;
+      justify-content: center;
+      padding: 12px 16px;
+      margin: auto;
+      margin-bottom: 5px;
+      border-radius: 5px;
+      color: white;
+      font-size: inherit;
+      transition: background-color 0.3s;
+      width: 100%;
+      @media (max-width: 738px) {
+        justify-content: center;
+        width: auto;
+        height: auto;
+      }
+
+      &:hover {
+        background-color: rgb(15, 14, 14);
+      }
+
+      .participantName {
+        flex-grow: 1;
+        padding-right: 10px;
+        color: inherit;
+      }
     }
   }
+}
+.modalOverlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.75); // Притемненный фон
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 999;
+}
+
+.modalContent {
+  background-color: $dark-gray; // Черный фон модального окна
+  padding: 20px;
+  border-radius: 10px;
+  width: 350px; // Увеличенная ширина для календаря и таймера
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+  display: flex; // Используем flexbox для выравнивания содержимого
+  justify-content: center; // Центрируем содержимое по горизонтали
+  align-items: center; // Центрируем содержимое по вертикали
+}
+
+.buttonOpen {
+  background-color: #ff6600; /* Основной оранжевый цвет проекта */
+  color: white;
+  border: none;
+  border-radius: 5px; /* Легкое закругление */
+  padding: 10px 20px;
+  font-size: 16px;
+  cursor: pointer;
+  transition: background-color 0.3s, transform 0.2s;
+}
+
+.buttonOpen:hover {
+  background-color: #cc5200; /* Более темный оттенок при наведении */
+  transform: scale(1.05); /* Легкое увеличение при наведении */
+}
+
+.buttonOpen:active {
+  background-color: #b34700; /* Цвет при нажатии */
+  transform: scale(0.98); /* Легкое уменьшение при клике */
+}
+
+.buttonOpen:focus {
+  outline: none;
+  box-shadow: 0px 0px 5px 2px rgba(255, 102, 0, 0.7); /* Подсветка при фокусе */
+}
+
+.participantsTitle {
+  margin-left: 130px;
+  margin-right: 35px;
+  font-size: 1.25rem; // Увеличиваем размер шрифта
+  font-weight: bold; // Жирный шрифт
+  color: white; // Цвет текста белый
+  margin-bottom: 15px; // Отступ снизу
+  text-align: left; // Выравнивание текста влево
+  text-transform: uppercase; // Преобразуем текст в верхний регистр
+}
+
+.usersInTrain {
+  display: flex;
+  align-items: center;
+  text-align: center;
+  margin: auto;
+  flex-direction: column;
+  gap: 3vh;
+}
+
+.oneUser {
+  color: white;
+  font-size: inherit;
+  align-items: center;
+  display: flex;
+  gap: 1vh;
+}
+.deleteIcon {
+  cursor: pointer;
+  :hover {
+    color: red;
+  }
+}
+
+.title {
+  color: #f1f1f1;
+  font-size: 1.4rem; /* уменьшено на 30% */
+  font-weight: 600; /* Чуть тоньше, но стильный */
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+  font-family: "Poppins", sans-serif; /* Красивый современный шрифт */
+  padding: 0;
+  position: relative;
+}
+
+.upIcon{
+  margin: auto;
+}

@@ -32,7 +32,7 @@ const dispatch = useDispatch();
     <div>
       <label className={cls.label}>
         {usersInComponent ? (
-          <p className={cls.title}>Учасники:</p>
+          <p className={cls.title}>Можливі Учасники:</p>
         ) : (
           <p className={cls.title}>Можливі Учасники:</p>
         )}
