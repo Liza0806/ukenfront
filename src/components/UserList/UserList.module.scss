@@ -71,6 +71,8 @@
   .label{
     display: flex;
     align-items: center;
+    text-align: center;
+   gap: 4vh;
 
     @media(max-width: 738px){
       flex-direction: column;

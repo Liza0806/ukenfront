@@ -3,6 +3,7 @@ import { NavLink } from "react-router-dom";
 import { Outlet } from "react-router-dom";
 import { useAppDispatch } from "../../redux/hooks/hooks";
 import { fetchAllEvents, fetchAllUsers } from "../../redux/thunks/thunks";
+import cls from './AdminPage.module.scss'
 
 const AdminPage: React.FC = () => {
   const dispatch = useAppDispatch()
@@ -11,9 +12,11 @@ dispatch(fetchAllUsers());
 //dispatch(fetchAllEvents())
 },[dispatch])
   return (
-    <div >
-      СТОРІНКА АДМІНІСТРАЦІЇ
-      <ul>
+    <div className={cls.container} >
+
+    <div className={cls.navContainer}>
+    <p className={cls.titleOfAdminPage}> СТОРІНКА АДМІНІСТРАЦІЇ</p>
+      <ul className={cls.itemOfNav}>
         <li>
           <NavLink to="groups">ГРУПИ</NavLink>
         </li>
@@ -25,6 +28,7 @@ dispatch(fetchAllUsers());
         </li>
       </ul>
       <Outlet />
+    </div>
     </div>
   );
 };

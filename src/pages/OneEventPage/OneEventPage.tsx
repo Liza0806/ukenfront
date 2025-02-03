@@ -93,11 +93,7 @@ const OneEventPage: React.FC = () => {
   };
 
   return (
-    <Container
-      ref={containerRef}
-      isCentre={true}
-      containerImage={containerImage}
-    >
+ <div className={cls.container}>
       {!currentEvent || isLoading? (
         <p>Loading...</p> // 
       ) : (
@@ -209,7 +205,7 @@ const OneEventPage: React.FC = () => {
                 ))}
               </ul>
             ) : (
-              <p  className={cls.title} >На тренування ніхто не записався</p>
+              <p  className={cls.oneUser} >На тренування ніхто не записався</p>
             )}
           </div>
           {/* возможные участники: */}
@@ -233,12 +229,12 @@ const OneEventPage: React.FC = () => {
               className={cls.buttonOpen}
               onClick={() => setShowAdditionalUsers(true)}
             >
-              показать дополнительных юзеров
+              показати можливих учасників
             </button>
           )}
         </div>
       )}
-    </Container>
+ </div>
   );
 };
 

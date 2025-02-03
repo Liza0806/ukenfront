@@ -35,15 +35,25 @@
         margin-left: auto;
     }
 
-    
+    .headerTitle::before {
+        content: '';
+        position: absolute;
+        top: 25px;
+        right: -38%;
+        transform: translateX(-50%) rotate(-0.16deg);
+        width: 1070px;
+        height: 1px;
+        background: #f7f7f7;
+
+        @media (max-width: 1024px){
+            display: none;
+          }
+    }
 }
 
-.gridDay{
-   
+.gridDay{  
     display: grid;
-    grid-template-columns: repeat(10, 117px);
-    gap: 4px;
-
+    grid-template-columns: repeat(10, calc(100% / 10));
 }
 
 .oneDay{
@@ -62,7 +72,7 @@
     border: 1px #FF6600 solid;
     background-color:rgba($color: #212121, $alpha: 0.6) ;
     display: grid;
-    grid-template-columns: repeat(10, 120px);
+    grid-template-columns: repeat(10, calc(100% / 10 ));
 
 }
 .oneTime{
