@@ -7,15 +7,24 @@ import "@testing-library/jest-dom";
 import { GroupType } from "../../redux/types/types";
 import { addGroupTh } from "../../redux/thunks/thunks";
 import { addGroup, deleteGroup, getAllGroups } from "../../redux/api/groupsApi";
-import { configureStore } from "@reduxjs/toolkit";
-import groupsReducer from "../../redux/slices/groupsSlice";
-import usersReducer from "../../redux/slices/userSlice";
+import { Action, configureStore, ThunkDispatch } from "@reduxjs/toolkit";
+import groupReducer from "../../redux/slices/groupsSlice";
+import userReducer from "../../redux/slices/userSlice";
+import { getAllUsers } from "../../redux/api/usersApi";
 
-///const mockStore = configureStore([]);
-// Мокаем функцию API
 jest.mock("../../redux/api/groupsApi");
 jest.mock("../../redux/api/eventsApi");
 jest.mock("../../redux/api/usersApi");
+
+const mockedGetAllGroups = getAllGroups as jest.MockedFunction<
+  typeof getAllGroups
+>;
+const mockedDeleteGroup = deleteGroup as jest.MockedFunction<
+  typeof deleteGroup
+>;
+const mockedGetAllUsers = getAllUsers as jest.MockedFunction<
+  typeof getAllUsers
+>;
 jest.mock("react-toastify", () => ({
   toast: {
     success: jest.fn(),
@@ -59,40 +68,38 @@ const initialGroupData: GroupType = {
   ],
 };
 
-jest.mock("../../redux/api/groupsApi", () => ({
-  addGroup: jest.fn() as jest.MockedFunction<typeof addGroup>,
-}));
-jest.mock("../../redux/api/groupsApi", () => ({
-  fetchAllGroups: jest.fn(() => Promise.resolve([{ _id: "1", title: "Group 1" }])),
-}));
-
-jest.mock("../../redux/thunks/thunks", () => ({
-  addGroupTh: jest.fn(),
+jest.mock('../../redux/hooks/hooks', () => ({
+  useAppSelector: jest.fn(),
+  useAppDispatch: jest.fn(),
 }));
 
 describe("GroupFormModal", () => {
-  let store: any;
+
+  const store = configureStore({
+    reducer: {
+      groups: groupReducer,
+      users: userReducer,
+    },
+  });
+
 
   beforeEach(() => {
     jest.clearAllMocks(); // Очищаем моки перед каждым тестом
-    const store = configureStore({
-      reducer: {
-        groups: groupsReducer,
-        users: usersReducer,
-      },
-    });
   });
-
+ type AppDispatch = ThunkDispatch<
+    ReturnType<typeof store.getState>,
+    void,
+    Action
+  >;
   it("renders without crashing", () => {
-  
-    const store = configureStore({
-      reducer: {
-        groups: groupsReducer, 
-        users: usersReducer
-      },
-    });
+
+  const dispatch: AppDispatch = jest.fn();
+
+
+
     // Рендеринг компонента с минимально необходимыми пропсами
     render(
+
       <Provider store={store}>
         <GroupFormModal isEditMode={false} closeModal={mockCloseModal} />
       </Provider>
@@ -291,12 +298,7 @@ describe("GroupFormModalw", () => {
     //     { id: "2", name: "User2" },
     //   ],
     // });
-    const store = configureStore({
-      reducer: {
-        groups: groupsReducer, 
-        users: usersReducer
-      },
-    });
+
   });
 
   it("renders GroupFormModal with initial data in edit mode", () => {
@@ -331,12 +333,7 @@ describe("GroupFormModalw", () => {
     //     { id: "2", name: "User2" },
     //   ],
     // });
-    const store = configureStore({
-      reducer: {
-        groups: groupsReducer, 
-        users: usersReducer
-      },
-    });
+   
 
     render(
       <Provider store={store}>

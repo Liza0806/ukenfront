@@ -92,9 +92,7 @@ describe("GroupsPage", () => {
     Action
   >;
 
-  beforeEach(() => {
-    jest.clearAllMocks();
-  });
+
 
   it("renders GroupsPage component", async () => {
     mockedGetAllGroups.mockResolvedValue(groups);

@@ -14,3 +14,4 @@ export const selectEventsIsLoading = (state: RootState): boolean => state.events
 export const selectCurrentEvent = (state: RootState): EventTypeDB | undefined => state.events.currentEvent;
 
 //"proxy": "https://ukenback.vercel.app",
+// "proxy": "http://localhost:3001",

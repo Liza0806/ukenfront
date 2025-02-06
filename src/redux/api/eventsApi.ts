@@ -5,7 +5,8 @@ import { group } from "console";
 export const getAllEvents = async () => {
    
     try {
-       
+     // const response = await axios.get(`/events/`);
+
       const response = await axios.get(`https://ukenback.vercel.app/events/`);
    // const response = await axios.get(`/events/`);
        
@@ -20,6 +21,8 @@ export const getAllEvents = async () => {
 
   export const getEventById = async (id:string) => {
     try {
+   //   const response = await axios.get(`/events/${id}`);    
+
       const response = await axios.get(`https://ukenback.vercel.app/events/${id}`);    
    // const response = await axios.get(`/events/${id}`); 
     // //  console.log(response.data, "response.data");
@@ -32,6 +35,7 @@ export const getAllEvents = async () => {
   export const updateEventAPi = async (event: EventTypeDB)=>{
     try {
       console.log(event, 'event in updateEventAPi')
+     // const response = await axios.put(`/events/${event._id}`, {_id: event._id, date: event.date, groupId: event.groupId, groupTitle: event.groupTitle, isCancelled: event.isCancelled, participants: event.participants});
       const response = await axios.put(`https://ukenback.vercel.app/events/${event._id}`, {_id: event._id, date: event.date, groupId: event.groupId, groupTitle: event.groupTitle, isCancelled: event.isCancelled, participants: event.participants});
      // const response = await axios.put(`/events/${event._id}`, {_id: event._id, date: event.date, groupId: event.groupId, groupTitle: event.groupTitle, isCancelled: event.isCancelled, participants: event.participants});
 
@@ -40,4 +44,4 @@ export const getAllEvents = async () => {
       throw error;
     }
   }
-  
+ 

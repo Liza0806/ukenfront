@@ -90,7 +90,6 @@ describe("UserList Component", () => {
     await waitFor(() => {
       expect(screen.getByDisplayValue("userName1")).toBeInTheDocument();
     });
-
     expect(screen.queryByText("John Doe")).not.toBeInTheDocument();
   });  
 });

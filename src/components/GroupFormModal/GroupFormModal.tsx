@@ -17,7 +17,6 @@ import { GroupType } from "../../redux/types/types";
 import { useAppDispatch } from "../../redux/hooks/hooks";
 import { toast } from "react-toastify";
 import { addGroupTh, updateGroupTh } from "../../redux/thunks/thunks";
-import { AppDispatch } from "../../redux/store/store";
 import AddIcon from "@mui/icons-material/Add";
 import DeleteIcon from "@mui/icons-material/Delete";
 import {
@@ -282,11 +281,35 @@ export const GroupFormModal: React.FC<GroupFormProps> = ({
               [],
           });
           if (isEditMode && isGroupSuitable && currentGroup?._id) {
-            dispatch(updateGroupTh({ group: currentGroup, _id: currentGroup?._id }));
+            dispatch(updateGroupTh({ group: {  
+              title: currentGroup?.title ||"",
+              dailyPayment:
+                currentGroup?.dailyPayment|| 0,
+              monthlyPayment:
+                currentGroup?.monthlyPayment ||
+                0,
+              schedule,
+              participants:
+                currentGroup?.participants ||
+                [],
+              coachId: currentGroup?.coachId || 'Костя',
+          }, _id: currentGroup?._id }));
             closeModal();
           }
           if (!isEditMode && isGroupSuitable && currentGroup) {
-            dispatch(addGroupTh(currentGroup));
+            dispatch(addGroupTh({  
+              title: currentGroup?.title ||"",
+              dailyPayment:
+                currentGroup?.dailyPayment|| 0,
+              monthlyPayment:
+                currentGroup?.monthlyPayment ||
+                0,
+              schedule,
+              participants:
+                currentGroup?.participants ||
+                [],
+              coachId: currentGroup?.coachId || 'Костя',
+          }));
             closeModal();
           }
         }}

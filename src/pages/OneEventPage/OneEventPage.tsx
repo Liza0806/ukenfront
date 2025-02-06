@@ -22,6 +22,7 @@ import {
   clearCurrentEvent,
   updateCurrentEvent,
 } from "../../redux/slices/eventsSlice";
+import { current } from "@reduxjs/toolkit";
 
 const OneEventPage: React.FC = () => {
   const { id } = useParams<string>();
@@ -91,7 +92,8 @@ const OneEventPage: React.FC = () => {
 
     dispatch(updateCurrentEvent({ participants: updatedParticipants }));
   };
-
+console.log(currentEvent?.date, 'currentEvent?.date in oneEventPage')
+console.log((currentEvent?.date), 'currentEvent?.date in oneEventPage')
   return (
  <div className={cls.container}>
       {!currentEvent || isLoading? (
@@ -148,9 +150,11 @@ const OneEventPage: React.FC = () => {
                 onClick={(e) => e.stopPropagation()}
               >
                 <DatePicker
-                  selected={
-                    currentEvent.date ? new Date(currentEvent.date) : null
-                  }
+                 selected={
+                  currentEvent.date
+                    ? new Date(new Date(currentEvent.date).toISOString().slice(0, -1))
+                    : null
+                }
                   onChange={handleDateChange}
                   dateFormat="Pp"
                   inline
@@ -170,9 +174,11 @@ const OneEventPage: React.FC = () => {
                 onClick={(e) => e.stopPropagation()}
               >
                 <DatePicker
-                  selected={
-                    currentEvent.date ? new Date(currentEvent.date) : null
-                  }
+                selected={
+                  currentEvent.date
+                    ? new Date(new Date(currentEvent.date).toISOString().slice(0, -1))
+                    : null
+                }
                   onChange={handleDateChange}
                   showTimeSelect
                   showTimeSelectOnly
