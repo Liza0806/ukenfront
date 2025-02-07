@@ -45,7 +45,7 @@ export const getUsersByUserId = async (userId: string) => {
      const response = await axios.get(`https://ukenback.vercel.app/users/${userId}`);
   //  const response = await axios.get(`/users/${userId}`);
     //  console.log(response.data, "response.data");
-    localStorage.setItem("user", JSON.stringify(response.data));
+  //  localStorage.setItem("user", JSON.stringify(response.data));
 
     return response.data;
   } catch (error) {
