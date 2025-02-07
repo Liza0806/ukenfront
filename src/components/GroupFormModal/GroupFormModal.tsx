@@ -105,26 +105,6 @@ export const GroupFormModal: React.FC<GroupFormProps> = ({
     field: keyof ScheduleType,
     value: string
   ) => {
-   if (field === 'time') {
-  const [hours, minutes] = value.split(":").map(Number);
-  const timezoneOffset = new Date().getTimezoneOffset(); // Разница в минутах
-  const offsetHours = -timezoneOffset / 60;
-
-console.log(hours, minutes, 'hours, minutes')
-  // Создаем новый объект Date, устанавливаем время в UTC
-  const date = new Date();
-  date.setUTCHours(hours-offsetHours);
-  date.setUTCMinutes(minutes);
-  date.setUTCSeconds(0);
-  date.setUTCMilliseconds(0);  
-  console.log(date.toISOString()); // Выведет в формате UTC
-  setSchedule((prevSchedule) =>
-         prevSchedule.map((sched, i) =>
-           i === index ? { ...sched, 'time': date.toISOString() } : sched
-         )
-       );
-}
-
     setSchedule((prevSchedule) =>
       prevSchedule.map((sched, i) =>
         i === index ? { ...sched, [field]: value } : sched

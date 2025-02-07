@@ -156,13 +156,19 @@ export const updateGroupTh = createAsyncThunk<
   { group: AddGroupType; _id: string }, // Тип аргумента
   { rejectValue: string } // Тип для rejected value
 >("groups/updateGroupTh", async ({ group, _id }, thunkAPI) => {
+  debugger
+  const utcSchedule = group.schedule.map((s) => {
+    const [hours, minutes] = s.time.split(":").map(Number);
+    return { ...s, time: `${hours - 2}:${minutes}` }; // Вычитаете 2 часа (GMT+2)
+  });
+  debugger
   const response = await updateGroup(
     {
       title: group.title,
       coachId: group.coachId,
       dailyPayment: group.dailyPayment,
       monthlyPayment: group.monthlyPayment,
-      schedule: group.schedule,
+      schedule: utcSchedule,
       participants: group.participants,
     },
     _id

@@ -24,6 +24,14 @@ const GroupsPage = () => {
   const [groupData, setGroupData] = useState<GroupType | undefined>();
   const [showModalForAdd, setShowModalForAdd] = useState(false);
   const groups = useAppSelector(selectGroups);
+  const groupWithCurrentTime = groups.map(g => ({
+    ...g,
+    schedule: g.schedule.map(s => {
+      const [hours, minutes] = s.time.split(":").map(Number);
+      return { ...s, time: `${hours + 2}:${minutes===0? '00': minutes}` }; 
+    })
+  }));
+  
   const dispatch = useAppDispatch();
 
   useEffect(() => {
@@ -72,7 +80,7 @@ const GroupsPage = () => {
         </Modal>
 
         <ul className={cls.containerGroups}>
-          {groups.map((group) => (
+          {groupWithCurrentTime.map((group) => (
             <div className={cls.oneGroupContainer} key={group._id}>
               <div className={cls.edit}>
                 <p className={cls.title}>{group.title}</p>

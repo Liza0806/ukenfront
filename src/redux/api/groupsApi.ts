@@ -49,7 +49,8 @@ export const deleteGroup = async (_id: string) => {
   }
 };
 export const updateGroup = async (group: AddGroupType, _id: string) => {
-  
+  debugger
+  console.log(group, 'updateGroup')
   try {
   //  const response = await axios.put(`/groups/${_id}`,group);
 
