@@ -244,8 +244,6 @@ export const GroupFormModal: React.FC<GroupFormProps> = ({
                   className={cls.deleteIcon}
                 />
                 {participant.name || "Не вказано"}
-
-                
               </li>
             ))}
           </ul>
@@ -269,47 +267,39 @@ export const GroupFormModal: React.FC<GroupFormProps> = ({
         className={cls.buttonOperation}
         onClick={() => {
           const isGroupSuitable = testGroupForHandleSubmit({
-            title: currentGroup?.title ||"",
-            dailyPayment:
-              currentGroup?.dailyPayment|| 0,
-            monthlyPayment:
-              currentGroup?.monthlyPayment ||
-              0,
+            title: currentGroup?.title || "",
+            dailyPayment: currentGroup?.dailyPayment || 0,
+            monthlyPayment: currentGroup?.monthlyPayment || 0,
             schedule,
-            participants:
-              currentGroup?.participants ||
-              [],
+            participants: currentGroup?.participants || [],
           });
           if (isEditMode && isGroupSuitable && currentGroup?._id) {
-            dispatch(updateGroupTh({ group: {  
-              title: currentGroup?.title ||"",
-              dailyPayment:
-                currentGroup?.dailyPayment|| 0,
-              monthlyPayment:
-                currentGroup?.monthlyPayment ||
-                0,
-              schedule,
-              participants:
-                currentGroup?.participants ||
-                [],
-              coachId: currentGroup?.coachId || 'Костя',
-          }, _id: currentGroup?._id }));
+            dispatch(
+              updateGroupTh({
+                group: {
+                  title: currentGroup?.title || "",
+                  dailyPayment: currentGroup?.dailyPayment || 0,
+                  monthlyPayment: currentGroup?.monthlyPayment || 0,
+                  schedule,
+                  participants: currentGroup?.participants || [],
+                  coachId: currentGroup?.coachId || "Костя",
+                },
+                _id: currentGroup?._id,
+              })
+            );
             closeModal();
           }
           if (!isEditMode && isGroupSuitable && currentGroup) {
-            dispatch(addGroupTh({  
-              title: currentGroup?.title ||"",
-              dailyPayment:
-                currentGroup?.dailyPayment|| 0,
-              monthlyPayment:
-                currentGroup?.monthlyPayment ||
-                0,
-              schedule,
-              participants:
-                currentGroup?.participants ||
-                [],
-              coachId: currentGroup?.coachId || 'Костя',
-          }));
+            dispatch(
+              addGroupTh({
+                title: currentGroup?.title || "",
+                dailyPayment: currentGroup?.dailyPayment || 0,
+                monthlyPayment: currentGroup?.monthlyPayment || 0,
+                schedule,
+                participants: currentGroup?.participants || [],
+                coachId: currentGroup?.coachId || "Костя",
+              })
+            );
             closeModal();
           }
         }}

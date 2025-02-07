@@ -1,4 +1,4 @@
-import cls from './Calendar.module.scss'
+import cls from "./Calendar.module.scss";
 import React, { useEffect, useState } from "react";
 import {
   startOfMonth,
@@ -14,11 +14,10 @@ import { EventTypeDB } from "../../redux/types/types";
 import { useAppDispatch, useAppSelector } from "../../redux/hooks/hooks";
 import { fetchAllEvents } from "../../redux/thunks/thunks";
 import { uk } from "date-fns/locale";
-import ArrowCircleLeftIcon from '@mui/icons-material/ArrowCircleLeft';
-import ArrowCircleRightIcon from '@mui/icons-material/ArrowCircleRight';
+import ArrowCircleLeftIcon from "@mui/icons-material/ArrowCircleLeft";
+import ArrowCircleRightIcon from "@mui/icons-material/ArrowCircleRight";
 
-
- const MyCalendar: React.FC = () => {
+const MyCalendar: React.FC = () => {
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
   const [dif, setDif] = useState(0);
@@ -33,7 +32,6 @@ import ArrowCircleRightIcon from '@mui/icons-material/ArrowCircleRight';
   // Фетчим ивенты при первом рендере
   useEffect(() => {
     dispatch(fetchAllEvents());
-    
   }, [dispatch]);
 
   useEffect(() => {
@@ -49,7 +47,15 @@ import ArrowCircleRightIcon from '@mui/icons-material/ArrowCircleRight';
   }, [dif]);
 
   const getEventsForDay = (day: Date) => {
-    return events.filter((event) => isSameDay(new Date(event.date), day));
+    const filteredEvents = events.filter((event) =>
+      isSameDay(new Date(event.date), day)
+    );
+
+    const sortedEvents = filteredEvents.sort(
+      (a, b) => new Date(a.date).getTime() - new Date(b.date).getTime()
+    );
+
+    return sortedEvents;
   };
   // const getEventsForWeek = (day: Date) => {
   //   return events.filter((event) => isSameWeek(new Date(event.date), day));
@@ -68,8 +74,7 @@ import ArrowCircleRightIcon from '@mui/icons-material/ArrowCircleRight';
   };
 
   return (
-   
-      <div className={cls.calendar}>
+    <div className={cls.calendar}>
       {isLoading && <div>Завантаження тренувань... </div>}
       {error && <div>Ошибка при загрузке событий </div>}
       {events.length === 0 && <div>Немає тренувань... </div>}
@@ -77,11 +82,19 @@ import ArrowCircleRightIcon from '@mui/icons-material/ArrowCircleRight';
       {events.length > 0 && (
         <div className={cls.joincalendar}>
           <div className={cls.calendarHeader}>
-            
-            
-             <ArrowCircleLeftIcon  onClick={lastMonth} style={{ color: 'black',   fontSize: '36px', cursor: 'pointer'}} fontSize="inherit"   data-testid="last-month-button" />
-             <h2>{month}</h2>
-             <ArrowCircleRightIcon onClick={nextMonth} style={{ color: 'black',   fontSize: '36px', cursor: 'pointer'}} fontSize="inherit" data-testid="next-month-button" />
+            <ArrowCircleLeftIcon
+              onClick={lastMonth}
+              style={{ color: "black", fontSize: "36px", cursor: "pointer" }}
+              fontSize="inherit"
+              data-testid="last-month-button"
+            />
+            <h2>{month}</h2>
+            <ArrowCircleRightIcon
+              onClick={nextMonth}
+              style={{ color: "black", fontSize: "36px", cursor: "pointer" }}
+              fontSize="inherit"
+              data-testid="next-month-button"
+            />
           </div>
           <div className={cls.calendarGrid}>
             {daysOfMonth.map((day) => {
@@ -94,12 +107,18 @@ import ArrowCircleRightIcon from '@mui/icons-material/ArrowCircleRight';
                   <div className={cls.events}>
                     {eventsForDay.length > 0 ? (
                       eventsForDay.map((event) => (
-                        <div 
+                        <div
                           key={event._id}
                           className={cls.event}
                           onClick={() => handleSelectEvent(event)}
                         >
-                          <strong>{event.groupTitle}</strong>
+                          <strong>
+                            {new Date(event.date).toLocaleString("uk-UA", {
+                              hour: "2-digit",
+                              minute: "2-digit",
+                            })}
+                            , {event.groupTitle}
+                          </strong>
                           {/* <p> {event.participants.length}</p> */}
                         </div>
                       ))
@@ -114,7 +133,6 @@ import ArrowCircleRightIcon from '@mui/icons-material/ArrowCircleRight';
         </div>
       )}
     </div>
-
   );
 };
 
