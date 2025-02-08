@@ -161,8 +161,8 @@ beforeEach(() => {
       </Provider>
     );
 
-    const arrowBtnNext = await screen.findByTestId("next-month-button");
-    expect(screen.getByTestId("next-month-button")).toBeInTheDocument();
+    const arrowBtnNext = await screen.findByTestId("ArrowCircleRightIcon");
+    expect(screen.getByTestId("ArrowCircleRightIcon")).toBeInTheDocument();
 
     // Имитируем клик по событию
     fireEvent.click(arrowBtnNext);
@@ -174,8 +174,8 @@ beforeEach(() => {
       expect(screen.getByText(nextMonth)).toBeInTheDocument()
  
 
-    const arrowBtnLast = await screen.findByTestId("last-month-button");
-    expect(screen.getByTestId("last-month-button")).toBeInTheDocument();
+    const arrowBtnLast = await screen.findByTestId("ArrowCircleLeftIcon");
+    expect(screen.getByTestId("ArrowCircleLeftIcon")).toBeInTheDocument();
 
     // Имитируем клик по событию
     fireEvent.click(arrowBtnLast);
@@ -194,7 +194,6 @@ beforeEach(() => {
      
     const result = await dispatch(fetchAllEvents());
  
- 
     render(
       <Provider store={store}>
         <Router>
@@ -203,14 +202,14 @@ beforeEach(() => {
       </Provider>
     );
 
-    const eventElement =  screen.getByText(mockEvents[0].groupTitle);
+    const eventElement = screen.getByText(/groupTitle 1/i);
     expect(eventElement).toBeInTheDocument();
 
     // Имитируем клик по событию
     fireEvent.click(eventElement);
 
     // Проверяем, что выбранное событие теперь отображается
-    expect(screen.getByText(mockEvents[0].groupTitle)).toBeInTheDocument(); // Если оно должно отображаться где-то
+    expect(screen.getByText(/groupTitle 1/i)).toBeInTheDocument(); 
   });
 
 });
