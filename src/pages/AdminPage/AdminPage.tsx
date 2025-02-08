@@ -2,14 +2,15 @@ import React, { useEffect } from "react";
 import { NavLink } from "react-router-dom";
 import { Outlet } from "react-router-dom";
 import { useAppDispatch } from "../../redux/hooks/hooks";
-import { fetchAllEvents, fetchAllUsers } from "../../redux/thunks/thunks";
+import { fetchAllEvents, fetchAllGroups, fetchAllUsers } from "../../redux/thunks/thunks";
 import cls from './AdminPage.module.scss'
 
 const AdminPage: React.FC = () => {
   const dispatch = useAppDispatch()
 useEffect(()=> {
 dispatch(fetchAllUsers());
-//dispatch(fetchAllEvents())
+dispatch(fetchAllEvents());
+dispatch(fetchAllGroups());
 },[dispatch])
   return (
     <div className={cls.container} >

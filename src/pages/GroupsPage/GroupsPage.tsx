@@ -9,8 +9,13 @@ import {
   selectGroups,
   selectGroupsError,
   selectGroupsIsLoading,
+  selectUsers,
 } from "../../redux/selectors/selectors";
-import { deleteGroupTh, fetchAllGroups } from "../../redux/thunks/thunks";
+import {
+  deleteGroupTh,
+  fetchAllGroups,
+  fetchAllUsers,
+} from "../../redux/thunks/thunks";
 import { Modal } from "../../components/Modal/Modal";
 import { GroupFormModal } from "../../components/GroupFormModal/GroupFormModal";
 import EditIcon from "@mui/icons-material/Edit";
@@ -20,16 +25,14 @@ import {
   clearCurrentGroup,
   setCurrentGroup,
 } from "../../redux/slices/groupsSlice";
-import { useSelector } from "react-redux";
-import { Loader } from "../../components/Loader/Loader";
 
 const GroupsPage = () => {
-  const isLoading = useSelector(selectGroupsIsLoading);
   const [showModalForUpdate, setShowModalForUpdate] = useState(false);
   const _id = useRef("");
   const [groupData, setGroupData] = useState<GroupType | undefined>();
   const [showModalForAdd, setShowModalForAdd] = useState(false);
   const groups = useAppSelector(selectGroups);
+  const users = useAppSelector(selectUsers);
   const groupWithCurrentTime = groups.map((g) => ({
     ...g,
     schedule: g.schedule.map((s) => {
@@ -42,6 +45,9 @@ const GroupsPage = () => {
 
   useEffect(() => {
     dispatch(fetchAllGroups());
+    if (users.length === 0 || !users) {
+      dispatch(fetchAllUsers());
+    }
   }, [dispatch]);
 
   const handleDeleteGroup = async (groupId: string) => {
@@ -51,12 +57,7 @@ const GroupsPage = () => {
       console.error("Ошибка при удалении группы:", error);
     }
   };
-  console.log("render GroupsPage", groupData);
 
-  // useEffect(() => {
-  //   throw new Error("Ошибка на LandingPage!");  //// раскомментируй для тестов ошибки
-  // }, []);
-  
   return (
     <Container containerImage={containerImage} isCentre={false}>
       <div className={cls.containerGradient}>

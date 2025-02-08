@@ -39,10 +39,6 @@ const MyCalendar: React.FC = () => {
   }, []);
 
   useEffect(() => {
- dispatch(fetchAllEvents())
-  }, [dispatch]);
- 
-  useEffect(() => {
     const newStartDate = startOfMonth(subMonths(new Date(), dif));
     const newEndDate = endOfMonth(newStartDate);
     const newDaysOfMonth = eachDayOfInterval({
@@ -86,6 +82,8 @@ const MyCalendar: React.FC = () => {
 
   return (
     <div className={cls.calendar}>
+      {isLoading && <div>     <div className={cls.joincalendar}>
+      <div className={cls.calendarHeader}></div> </div></div>}
       {error && <div>Помилка при завантаженні подій</div>}
       {events.length === 0 && <div>Немає тренувань...</div>}
 

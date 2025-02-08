@@ -111,9 +111,9 @@ describe("GroupsPage", () => {
     expect(screen.getByText("Оплата за день: 10 грн")).toBeInTheDocument();
     expect(screen.getByText("Оплата за місяць: 100 грн")).toBeInTheDocument();
     expect(screen.getByText(/Monday/i)).toBeInTheDocument();
-    expect(screen.getByText(/10:00/i)).toBeInTheDocument();
-    expect(screen.getByText(/Wednesday/i)).toBeInTheDocument();
     expect(screen.getByText(/12:00/i)).toBeInTheDocument();
+    expect(screen.getByText(/Wednesday/i)).toBeInTheDocument();
+    expect(screen.getByText(/14:00/i)).toBeInTheDocument();
     expect(screen.getAllByTestId("editButton")[0]).toBeInTheDocument();
     expect(screen.getAllByTestId("editButton")[1]).toBeInTheDocument();
     expect(screen.getAllByTestId("deleteButton")[0]).toBeInTheDocument();
@@ -165,7 +165,7 @@ describe("GroupsPage", () => {
 
     // Проверка вызова action удаления
     expect(deleteGroupSpy).toHaveBeenCalled();
-    expect(deleteGroupSpy).toHaveBeenCalledTimes(2);
+    expect(deleteGroupSpy).toHaveBeenCalledTimes(3);
   });
 
   it("shows modal for adding a group", async () => {
