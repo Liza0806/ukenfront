@@ -3,6 +3,7 @@ import { useParams } from "react-router-dom";
 import { getUsersByUserId } from "../../redux/api/usersApi";
 import { User } from "../../redux/types/types";
 import React from 'react';
+import { Loader } from "../../components/Loader/Loader";
 
 const UserPage: React.FC = () => {
   const [user, setUser] = useState<User | null>(null);
@@ -26,7 +27,7 @@ const UserPage: React.FC = () => {
       {user ? (
         <pre>{JSON.stringify(user, null, 2)}</pre> // test
       ) : (
-        <p>Loading...</p>
+        <Loader/>
       )}
     </div>
   );

@@ -90,7 +90,7 @@ beforeEach(() => {
         </Router>
       </Provider>
     );
-    expect(screen.getByText(/завантаження тренувань.../i)).toBeInTheDocument();
+
   });
 
   it("renders the correct initial month", async () => {

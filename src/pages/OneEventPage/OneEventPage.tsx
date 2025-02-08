@@ -23,6 +23,7 @@ import {
   updateCurrentEvent,
 } from "../../redux/slices/eventsSlice";
 import { current } from "@reduxjs/toolkit";
+import { Loader } from "../../components/Loader/Loader";
 
 const OneEventPage: React.FC = () => {
   const { id } = useParams<string>();
@@ -97,7 +98,7 @@ console.log((currentEvent?.date), 'currentEvent?.date in oneEventPage')
   return (
  <div className={cls.container}>
       {!currentEvent || isLoading? (
-        <p>Loading...</p> // 
+        <Loader/> // 
       ) : (
         <div className={cls.trainingContainer}>
           <div className={cls.header}>

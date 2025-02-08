@@ -4,6 +4,8 @@ import { Route, Routes, BrowserRouter } from "react-router-dom";
 import { Layout } from "./components/Layout/Layout";
 import "react-toastify/dist/ReactToastify.css";
 import { ToastContainer } from "react-toastify";
+import { Loader } from "./components/Loader/Loader";
+import { ErrorBoundary } from "./components/ErrorBoundary/ErrorBoundary";
 
 // Динамическая загрузка компонентов
 const LandingPage = lazy(() => import("./pages/LandingPage/LandingPage"));
@@ -57,25 +59,26 @@ const App: React.FC = () => {
         Установить приложение
       </button>
       <BrowserRouter>
-        <Suspense fallback={<h1>Loading!</h1>}>
-        <Routes>
-  <Route path="/" element={<Layout />}>
-    <Route index element={<LandingPage />} />
-    
-    {/* Админ-панель и её дочерние маршруты */}
-    <Route path="admin">
-      <Route index element={<AdminPage />} />
-      <Route path="events">
-        <Route index element={<EventsPage />} />
-        <Route path=":id" element={<OneEventPage />} />
-      </Route>
-      <Route path="payment" element={<PaymentPage />} />
-      <Route path="groups" element={<GroupsPage />} />
-      <Route path="users/:id" element={<UserPage />} />
-    </Route>
-  </Route>
-</Routes>
+        <Suspense fallback={<Loader />}>
+          <ErrorBoundary>
+            <Routes>
+              <Route path="/" element={<Layout />}>
+                <Route index element={<LandingPage />} />
 
+                {/* Админ-панель и её дочерние маршруты */}
+                <Route path="admin">
+                  <Route index element={<AdminPage />} />
+                  <Route path="events">
+                    <Route index element={<EventsPage />} />
+                    <Route path=":id" element={<OneEventPage />} />
+                  </Route>
+                  <Route path="payment" element={<PaymentPage />} />
+                  <Route path="groups" element={<GroupsPage />} />
+                  <Route path="users/:id" element={<UserPage />} />
+                </Route>
+              </Route>
+            </Routes>
+          </ErrorBoundary>
         </Suspense>
       </BrowserRouter>
       <ToastContainer />

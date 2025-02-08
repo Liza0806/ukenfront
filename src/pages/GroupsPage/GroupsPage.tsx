@@ -8,6 +8,7 @@ import containerImage from "../../assets/gymForGruops.jpg";
 import {
   selectGroups,
   selectGroupsError,
+  selectGroupsIsLoading,
 } from "../../redux/selectors/selectors";
 import { deleteGroupTh, fetchAllGroups } from "../../redux/thunks/thunks";
 import { Modal } from "../../components/Modal/Modal";
@@ -15,23 +16,28 @@ import { GroupFormModal } from "../../components/GroupFormModal/GroupFormModal";
 import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
 import { GroupType } from "../../redux/types/types";
-import { clearCurrentGroup, setCurrentGroup } from "../../redux/slices/groupsSlice";
+import {
+  clearCurrentGroup,
+  setCurrentGroup,
+} from "../../redux/slices/groupsSlice";
+import { useSelector } from "react-redux";
+import { Loader } from "../../components/Loader/Loader";
 
 const GroupsPage = () => {
-
+  const isLoading = useSelector(selectGroupsIsLoading);
   const [showModalForUpdate, setShowModalForUpdate] = useState(false);
   const _id = useRef("");
   const [groupData, setGroupData] = useState<GroupType | undefined>();
   const [showModalForAdd, setShowModalForAdd] = useState(false);
   const groups = useAppSelector(selectGroups);
-  const groupWithCurrentTime = groups.map(g => ({
+  const groupWithCurrentTime = groups.map((g) => ({
     ...g,
-    schedule: g.schedule.map(s => {
+    schedule: g.schedule.map((s) => {
       const [hours, minutes] = s.time.split(":").map(Number);
-      return { ...s, time: `${hours + 2}:${minutes===0? '00': minutes}` }; 
-    })
+      return { ...s, time: `${hours + 2}:${minutes === 0 ? "00" : minutes}` };
+    }),
   }));
-  
+
   const dispatch = useAppDispatch();
 
   useEffect(() => {
@@ -47,6 +53,10 @@ const GroupsPage = () => {
   };
   console.log("render GroupsPage", groupData);
 
+  // useEffect(() => {
+  //   throw new Error("Ошибка на LandingPage!");  //// раскомментируй для тестов ошибки
+  // }, []);
+  
   return (
     <Container containerImage={containerImage} isCentre={false}>
       <div className={cls.containerGradient}>
@@ -58,8 +68,9 @@ const GroupsPage = () => {
         <Modal open={showModalForAdd} onClose={() => setShowModalForAdd(false)}>
           <GroupFormModal
             isEditMode={false}
-            closeModal={() => {setShowModalForAdd(false)
-              dispatch(clearCurrentGroup())
+            closeModal={() => {
+              setShowModalForAdd(false);
+              dispatch(clearCurrentGroup());
             }}
           />
         </Modal>
@@ -74,7 +85,7 @@ const GroupsPage = () => {
             isEditMode={true}
             closeModal={() => {
               setShowModalForUpdate(false);
-              dispatch(clearCurrentGroup())
+              dispatch(clearCurrentGroup());
             }}
           />
         </Modal>
@@ -85,19 +96,19 @@ const GroupsPage = () => {
               <div className={cls.edit}>
                 <p className={cls.title}>{group.title}</p>
                 <button
-                 data-testid='editButton'
+                  data-testid="editButton"
                   className={cls.changeButton}
                   onClick={() => {
                     setShowModalForUpdate(true);
                     _id.current = group._id;
                     setGroupData(group);
-                    dispatch(setCurrentGroup(group))
+                    dispatch(setCurrentGroup(group));
                   }}
                 >
                   <EditIcon sx={{ color: "white" }} />
                 </button>
                 <button
-              data-testid='deleteButton'
+                  data-testid="deleteButton"
                   className={cls.deleteButton}
                   onClick={() => handleDeleteGroup(group._id)}
                 >

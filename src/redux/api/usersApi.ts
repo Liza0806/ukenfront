@@ -40,9 +40,9 @@ export const getUsersByUserId = async (userId: string) => {
   //console.log('getUsersByUserId');
   try {
     // console.log('getUsersByUserId try');
-//    const response = await axios.get(`/users/${userId}`);
+    const response = await axios.get(`/users/${userId}`);
 
-     const response = await axios.get(`https://ukenback.vercel.app/users/${userId}`);
+  //   const response = await axios.get(`https://ukenback.vercel.app/users/${userId}`);
   //  const response = await axios.get(`/users/${userId}`);
     //  console.log(response.data, "response.data");
   //  localStorage.setItem("user", JSON.stringify(response.data));
@@ -58,9 +58,9 @@ export const addParticipant = async (username: string, id: string) => {
 //  console.log("addParticipant");
   try {
  //   console.log("addParticipant try");
- // const response = await axios.put(`/event/`, {params: { name: username, id: id },});
+  const response = await axios.put(`/event/`, {params: { name: username, id: id },});
 
-   const response = await axios.put(`https://ukenback.vercel.app/event/`, {params: { name: username, id: id },});
+  // const response = await axios.put(`https://ukenback.vercel.app/event/`, {params: { name: username, id: id },});
  //  const response = await axios.put(`/event/`, {params: { name: username, id: id },});
   //  console.log(
   //    response.data,

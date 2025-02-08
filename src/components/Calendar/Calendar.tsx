@@ -86,7 +86,6 @@ const MyCalendar: React.FC = () => {
 
   return (
     <div className={cls.calendar}>
-      {isLoading && <div>Завантаження тренувань... </div>}
       {error && <div>Помилка при завантаженні подій</div>}
       {events.length === 0 && <div>Немає тренувань...</div>}
 
