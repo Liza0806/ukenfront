@@ -13,7 +13,7 @@ import {
   getAllGroups,
   updateGroup,
 } from "../api/groupsApi";
-import { getAllEvents, getEventById, updateEventAPi } from "../api/eventsApi";
+import { addEventAPi, getAllEvents, getEventById, updateEventAPi } from "../api/eventsApi";
 import { getAllUsers, getUsersByName } from "../api/usersApi";
 import axios from "axios";
 import { toast } from "react-toastify";
@@ -89,7 +89,7 @@ export const fetchUsersByName = createAsyncThunk<
 
 export const updateEvent = createAsyncThunk<
   EventTypeDB, // Тип возвращаемого значения
-  AddEventTypeDB, // Тип аргументов
+  EventTypeDB, // Тип аргументов
   { rejectValue: string } // Тип значения для reject
 >(
   "events/updateEvent",
@@ -111,6 +111,33 @@ export const updateEvent = createAsyncThunk<
       return thunkAPI.rejectWithValue("error");
     }
     toast.success("Тренування успішно оновлено");
+    return response;
+  }
+);
+
+export const addEvent = createAsyncThunk<
+  EventTypeDB, // Тип возвращаемого значения
+  AddEventTypeDB, // Тип аргументов
+  { rejectValue: string } // Тип значения для reject
+>(
+  "events/addEvent",
+  async (
+    { date, groupId, groupTitle, isCancelled, participants },
+    thunkAPI
+  ) => {
+    console.log("updateEventTH");
+    const response = await addEventAPi({
+      date,
+      groupId,
+      groupTitle,
+      isCancelled,
+      participants,
+    });
+    if (!response) {
+      toast.error("При додаванні тренування виникла помилка");
+      return thunkAPI.rejectWithValue("error");
+    }
+    toast.success("Тренування успішно додано");
     return response;
   }
 );

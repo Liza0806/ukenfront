@@ -248,7 +248,7 @@ export const GroupFormModal: React.FC<GroupFormProps> = ({
             ))}
           </ul>
         ) : (
-          <p>пока нет участников</p>
+          <p>пока нет участників</p>
         )}
 
         <div>

@@ -71,7 +71,6 @@ export type EventTypeDB = {
   participants: ParticipantType[] //| Set<ParticipantType>;
 };
 export type AddEventTypeDB = {
-  _id: string;
   date: string;
   groupTitle: string;
   groupId: string;
