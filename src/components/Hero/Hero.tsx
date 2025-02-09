@@ -1,5 +1,5 @@
 import cls from './Hero.module.scss'
-import heroImage from '../../assets/ufc-sport-mix-fight-draki-boi-bez-pravil-594108.jpg'; 
+import heroImage from '../../assets/ufc-sport-mix-fight-draki-boi-bez-pravil.webp'; 
 
 import { Container } from '../Container/Container';
 

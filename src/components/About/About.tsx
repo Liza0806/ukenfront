@@ -3,8 +3,8 @@ import { Title } from "../Title/Title";
 import cls from "./About.module.scss";
 import { Container } from "../Container/Container";
 import box from "../../assets/boxNew.webp";
-import kickboxing from "../../assets/kickboxing.jpg";
-import wrestling from "../../assets/wrestling.jpg";
+import kickboxing from "../../assets/kickboxing.webp";
+import wrestling from "../../assets/wrestling.webp";
 import { useState } from "react";
 import { Box } from "@mui/material";
 

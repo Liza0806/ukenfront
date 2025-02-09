@@ -11,7 +11,7 @@ import { EventTypeDB } from "../../redux/types/types";
 import UserList from "../../components/UserList/UserList";
 import { uk } from "date-fns/locale";
 import { Container } from "../../components/Container/Container";
-import containerImage from "../../assets/PhoneForPagIvent.jpg";
+import containerImage from "../../assets/PhoneForPagIvent.webp";
 import UpdateIcon from "@mui/icons-material/Update";
 import { useRef } from "react";
 import {

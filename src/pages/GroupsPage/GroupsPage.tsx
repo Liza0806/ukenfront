@@ -4,7 +4,7 @@ import { toast } from "react-toastify";
 import { OneGroupInformation } from "../../components/OneGroupInformation/OneGroupInformation";
 import cls from "./GroupsPage.module.scss";
 import { Container } from "../../components/Container/Container";
-import containerImage from "../../assets/gymForGruops.jpg";
+import containerImage from "../../assets/gymForGruops.webp";
 import {
   selectGroups,
   selectGroupsError,

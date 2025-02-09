@@ -1,6 +1,6 @@
 import cls from "./Schedule.module.scss";
 import { Container } from "../Container/Container";
-import bg from "../../assets/fon-oktagona-ufc.jpg";
+import bg from "../../assets/fon-oktagona-ufc.webp";
 import { useState, useEffect } from "react";
 import { Modal } from "../../components/Modal/Modal";
 import { ScheduleFormModal } from "../ScheduleFormModal/ScheduleFormModal";

@@ -1,8 +1,8 @@
 import { useState, MouseEvent } from "react";
 import cls from "./Gallery.module.scss";
-import box from "../../assets/kik2.jpg";
-import kickboxing from "../../assets/kik3.jpg";
-import wrestling from "../../assets/kik4.jpg";
+import box from "../../assets/kik2.webp";
+import kickboxing from "../../assets/kik3.webp";
+import wrestling from "../../assets/kik4.webp";
 import ArrowForwardIosIcon from "@mui/icons-material/ArrowForwardIos";
 import ArrowBackIosIcon from "@mui/icons-material/ArrowBackIos";
 import { useEffect } from "react";
