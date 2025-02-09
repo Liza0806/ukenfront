@@ -22,10 +22,12 @@ const Container = forwardRef<HTMLDivElement, ContainerProps & CalendarTypeProps>
                 className={isCentre ? cls.container : cls.containerForCalendar} 
                 style={{ 
                     backgroundImage: `url(${containerImage})`, 
-                    backgroundColor: 'rgba(255, 255, 255, 0.2)', // Полупрозрачный белый цвет
-                    backgroundBlendMode: 'overlay', // Смешиваем цвет с изображением
-                    backgroundSize: 'cover', // Масштабируем изображение
-                    backgroundPosition: 'center', // Центрируем изображение
+                    backgroundColor: 'rgba(255, 255, 255, 0.2)', 
+                    backgroundBlendMode: 'overlay', 
+                    backgroundSize: 'contain', 
+                    backgroundPosition: 'center', 
+                    backgroundRepeat: 'no-repeat', 
+                    height: '100%' 
                 }}
             >
                 {children} {/* Здесь отображаются дочерние элементы */}

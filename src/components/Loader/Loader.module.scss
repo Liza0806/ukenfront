@@ -14,8 +14,8 @@
   
   .loader {
     animation: rotate 2.5s linear infinite; 
-    width: 25%;
-    height: 25%; 
+    max-width: 25%;
+    max-height: 25%; 
   }
   
   @keyframes rotate {
