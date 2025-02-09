@@ -3,9 +3,9 @@ import { User } from "../types/types";
 
 export const getAllUsers = async () => {
   try {
-   // const response = await axios.get(`/users/`);
+    const response = await axios.get(`/users/`);
 
-     const response = await axios.get(`https://ukenback.vercel.app/users/`);
+   //  const response = await axios.get(`https://ukenback.vercel.app/users/`);
   //  const response = await axios.get(`/users/`);
 
  //   console.log(response.data, "response.data in getAllUsers");
@@ -20,9 +20,9 @@ export const getUsersByName = async (username: string) => {
  // console.log("getUsersByName1");
   try {
   //  console.log("getUsersByName try");
-  //const response = await axios.get(`/users/search`,{ params: { name: username } });
+  const response = await axios.get(`/users/search`,{ params: { name: username } });
 
-   const response = await axios.get(`https://ukenback.vercel.app/users/search`,{ params: { name: username } });
+   //const response = await axios.get(`https://ukenback.vercel.app/users/search`,{ params: { name: username } });
   //  const response = await axios.get(`/users/search`,{ params: { name: username } });
   //  console.log(
   //    response.data,
@@ -40,9 +40,9 @@ export const getUsersByUserId = async (userId: string) => {
   //console.log('getUsersByUserId');
   try {
     // console.log('getUsersByUserId try');
-//    const response = await axios.get(`/users/${userId}`);
+   const response = await axios.get(`/users/${userId}`);
 
-     const response = await axios.get(`https://ukenback.vercel.app/users/${userId}`);
+ //    const response = await axios.get(`https://ukenback.vercel.app/users/${userId}`);
   //  const response = await axios.get(`/users/${userId}`);
     //  console.log(response.data, "response.data");
   //  localStorage.setItem("user", JSON.stringify(response.data));
