@@ -6,7 +6,7 @@ import { Provider } from "react-redux";
 import "@testing-library/jest-dom";
 import { GroupType } from "../../redux/types/types";
 import { addGroupTh } from "../../redux/thunks/thunks";
-import { addGroup, deleteGroup, getAllGroups } from "../../redux/api/groupsApi";
+import { deleteGroup, getAllGroups } from "../../redux/api/groupsApi";
 import { Action, configureStore, ThunkDispatch } from "@reduxjs/toolkit";
 import groupReducer from "../../redux/slices/groupsSlice";
 import userReducer from "../../redux/slices/userSlice";
@@ -81,7 +81,6 @@ describe("GroupFormModal", () => {
       users: userReducer,
     },
   });
-
 
   beforeEach(() => {
     jest.clearAllMocks(); // Очищаем моки перед каждым тестом

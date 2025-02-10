@@ -1,4 +1,4 @@
-import React, { act } from "react";
+import React from "react";
 import { render, screen, fireEvent, waitFor } from "@testing-library/react";
 import "@testing-library/jest-dom";
 import UserList from "./UserList";
@@ -68,7 +68,7 @@ describe("UserList Component", () => {
       </Provider>
     );
 
-    expect(screen.getByText("Учасники:")).toBeInTheDocument();
+    expect(screen.getByText("Можливі Учасники:")).toBeInTheDocument();
     expect(screen.getByRole("textbox")).toBeInTheDocument();
     expect(screen.getAllByTestId("userInList")).toHaveLength(mockUsers.length);
   });

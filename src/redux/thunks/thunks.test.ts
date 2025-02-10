@@ -21,8 +21,6 @@ import { ThunkDispatch } from "@reduxjs/toolkit";
 import { addGroup, deleteGroup, getAllGroups } from "../api/groupsApi";
 import { getAllEvents } from "../api/eventsApi";
 import { getAllUsers, getUsersByName } from "../api/usersApi";
-import { group } from "console";
-import { AxiosResponse } from "axios";
 
 // Мокаем функцию API
 jest.mock("../api/groupsApi");
@@ -95,10 +93,9 @@ describe("fetchAllGroups thunk", () => {
     ];
     mockedGetAllGroups.mockResolvedValueOnce(groups);
 
-    // Выполняем санк и ждем результата
+
     const result = await dispatch(fetchAllGroups());
 
-    // Проверяем тип и данные результата
     expect(result.type).toBe("groups/fetchAllGroups/fulfilled");
     expect(result.payload).toEqual(groups);
   });
@@ -108,7 +105,7 @@ describe("fetchAllGroups thunk", () => {
 
     const result = await dispatch(fetchAllGroups());
 
-    // Проверяем тип и данные результата
+
     expect(result.type).toBe("groups/fetchAllGroups/rejected");
     expect(result.payload).toBe("error");
   });
@@ -118,7 +115,7 @@ describe("fetchAllEvents thunk", () => {
   // Создаем временный Redux store для тестов
   const store = configureStore({
     reducer: {
-      events: eventsReducer, // заменить на соответствующий редюсер для группы
+      events: eventsReducer, 
     },
   });
 
@@ -154,10 +151,8 @@ describe("fetchAllEvents thunk", () => {
     ];
     mockedGetAllEvents.mockResolvedValueOnce(events);
 
-    // Выполняем санк и ждем результата
     const result = await dispatch(fetchAllEvents());
 
-    // Проверяем тип и данные результата
     expect(result.type).toBe("events/fetchAllEvents/fulfilled");
     expect(result.payload).toEqual(events);
   });
@@ -167,17 +162,16 @@ describe("fetchAllEvents thunk", () => {
 
     const result = await dispatch(fetchAllEvents());
 
-    // Проверяем тип и данные результата
     expect(result.type).toBe("events/fetchAllEvents/rejected");
     expect(result.payload).toBe("error");
   });
 });
 
 describe("fetchEventById thunk", () => {
-  // Создаем временный Redux store для тестов
+
   const store = configureStore({
     reducer: {
-      events: eventsReducer, // заменить на соответствующий редюсер для группы
+      events: eventsReducer, 
     },
   });
 
@@ -204,10 +198,8 @@ describe("fetchEventById thunk", () => {
 
     mockedgetEventById.mockResolvedValueOnce(event);
 
-    // Выполняем санк и ждем результата
     const result = await dispatch(fetchEventById("2"));
 
-    // Проверяем тип и данные результата
     expect(result.type).toBe("events/fetchEventById/fulfilled");
     expect(result.payload).toEqual(event);
   });
@@ -217,14 +209,13 @@ describe("fetchEventById thunk", () => {
 
     const result = await dispatch(fetchEventById("2"));
 
-    // Проверяем тип и данные результата
     expect(result.type).toBe("events/fetchEventById/rejected");
     expect(result.payload).toBe("error");
   });
 });
 
 describe("fetchAllUsers thunk", () => {
-  // Создаем временный Redux store для тестов
+
   const store = configureStore({
     reducer: {
       users: usersReducer, // заменить на соответствующий редюсер для группы
@@ -271,10 +262,8 @@ describe("fetchAllUsers thunk", () => {
     ];
     mockedgetAllUsers.mockResolvedValueOnce(users);
 
-    // Выполняем санк и ждем результата
     const result = await dispatch(fetchAllUsers());
 
-    // Проверяем тип и данные результата
     expect(result.type).toBe("users/fetchAllUsers/fulfilled");
     expect(result.payload).toEqual(users);
   });
@@ -284,17 +273,16 @@ describe("fetchAllUsers thunk", () => {
 
     const result = await dispatch(fetchAllUsers());
 
-    // Проверяем тип и данные результата
     expect(result.type).toBe("users/fetchAllUsers/rejected");
     expect(result.payload).toBe("error");
   });
 });
 
 describe("fetchUsersByName thunk", () => {
-  // Создаем временный Redux store для тестов
+
   const store = configureStore({
     reducer: {
-      users: usersReducer, // заменить на соответствующий редюсер для группы
+      users: usersReducer, 
     },
   });
 
@@ -325,10 +313,8 @@ describe("fetchUsersByName thunk", () => {
 
     mockedgetUserByName.mockResolvedValueOnce(user);
 
-    // Выполняем санк и ждем результата
     const result = await dispatch(fetchUsersByName("userName"));
 
-    // Проверяем тип и данные результата
     expect(result.type).toBe("users/fetchUsersByName/fulfilled");
     expect(result.payload).toEqual(user);
   });

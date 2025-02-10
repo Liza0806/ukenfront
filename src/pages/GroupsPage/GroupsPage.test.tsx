@@ -1,9 +1,7 @@
 import { Action, configureStore, ThunkDispatch } from "@reduxjs/toolkit";
 import { deleteGroup, getAllGroups } from "../../redux/api/groupsApi";
 import {
-  deleteGroupTh,
   fetchAllGroups,
-  fetchAllUsers,
 } from "../../redux/thunks/thunks";
 import groupReducer from "../../redux/slices/groupsSlice";
 import userReducer from "../../redux/slices/userSlice";

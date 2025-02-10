@@ -1,6 +1,6 @@
 import axios from "axios";
 import MockAdapter from "axios-mock-adapter";
-import { getAllEvents, getEventById, updateEventAPi } from "./eventsApi"; // Замените на правильный путь
+import { getAllEvents, getEventById, updateEventAPi } from "./eventsApi"; 
 import { EventTypeDB } from "../types/types";
 
 describe("getAllEvents", () => {
@@ -10,11 +10,11 @@ describe("getAllEvents", () => {
   });
 
   afterEach(() => {
-    mock.reset(); // Сбрасываем моки после каждого теста
+    mock.reset();
   });
 
   afterAll(() => {
-    mock.restore(); // Восстанавливаем axios после завершения всех тестов
+    mock.restore(); 
   });
 
   it("should fetch all events and store them in localStorage", async () => {

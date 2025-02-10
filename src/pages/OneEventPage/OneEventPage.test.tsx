@@ -125,7 +125,6 @@ describe("OneEventPage", () => {
   beforeEach(() => {
     jest.clearAllMocks();
     mockUseParams.mockReturnValue({ id: "123" });
-
     // mockedGetUsers.mockReturnValue({
     //   users: users,
     //   getUsers: jest.fn(),
@@ -134,7 +133,6 @@ describe("OneEventPage", () => {
     //   handleAddUser: jest.fn(),
     //   handleDeleteUser: jest.fn(),
     // });
-
     mockedGetEventById.mockResolvedValueOnce(event);
   });
 
