@@ -156,7 +156,6 @@ const AdminStatPage = () => {
             <Bar dataKey="monthlyAmount" fill="#FF7F00" barSize={50} />
           </BarChart>
         </ResponsiveContainer>
-        <div>Платежі по місяцях</div>
       </div>
 
       {/* Нові клієнти (Стовпчиковий графік) */}
