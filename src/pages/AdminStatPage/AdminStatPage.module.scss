@@ -1,0 +1,109 @@
+.statNumbers {
+    display: flex;
+    gap: 20px;
+    padding: 20px;
+    margin-top: 20px;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-around;
+  }
+  
+  .statNumbers > div {
+    background-color: #1e1e1e;
+    border-radius: 10px;
+    padding: 15px;
+    font-size: 16px;
+    text-align: center;
+    color: #fff;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+    width: 30%;
+  }
+  
+  .statNumbers > div:hover {
+    background-color: #333;
+  }
+  
+  .statNumbers .statTitle {
+    font-size: 18px;
+    margin-bottom: 10px;
+    font-weight: bold;
+    color: #ff7f00;
+  }
+  
+  @media (max-width: 768px) {
+    .statNumbers {
+      grid-template-columns: 1fr 1fr;
+    }
+    
+    .statNumbers > div {
+      font-size: 14px;
+      padding: 10px;
+      min-width: 45%;
+    }
+  
+    .statNumbers .statTitle {
+      font-size: 16px;
+    }
+  }
+  
+  @media (max-width: 480px) {
+    .statNumbers {
+      grid-template-columns: 1fr;
+      padding: 10px;
+    }
+  
+    .statNumbers > div {
+      font-size: 12px;
+      padding: 8px;
+      min-width: 85%;
+    }
+  
+    .statNumbers .statTitle {
+      font-size: 14px;
+    }
+  }
+  
+  /* Для контейнера графиков */
+  .chartContainer {
+    margin-top: 30px;
+    background-color: #121212;
+    padding: 20px;
+    border-radius: 10px;
+  }
+  
+  .chartContainer div {
+    margin-bottom: 20px;
+    color: #fff;
+  }
+  
+  @media (max-width: 768px) {
+    .chartContainer {
+      padding: 15px;
+    }
+  }
+  
+  @media (max-width: 480px) {
+    .chartContainer {
+      padding: 10px;
+    }
+  }
+  
+  /* Для графиков внутри контейнера */
+  .chartWrapper {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  @media (max-width: 768px) {
+    .chartWrapper {
+      padding: 10px;
+    }
+  }
+  
+  @media (max-width: 480px) {
+    .chartWrapper {
+      padding: 5px;
+    }
+  }
+  

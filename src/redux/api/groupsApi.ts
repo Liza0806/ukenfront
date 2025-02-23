@@ -4,13 +4,13 @@ import axios from "axios";
 export const getAllGroups = async () => {
    
   try {
-  //  const response = await axios.get(`/groups/`);
+   // const response = await axios.get(`/groups/`);
 
-const response = await axios.get(`https://ukenback.vercel.app/groups/`);
+ const response = await axios.get(`https://ukenback.vercel.app/groups/`);
   //  const response = await axios.get(`/groups/`);
      
       console.log(response.data, "response.data in getAllGroups");
-    localStorage.setItem("groups", JSON.stringify(response.data));
+    // localStorage.setItem("groups", JSON.stringify(response.data));
     return response.data;
   } catch (error) {
     throw error;
@@ -19,7 +19,7 @@ const response = await axios.get(`https://ukenback.vercel.app/groups/`);
 
 export const addGroup = async (group: AddGroupType) => {
   try {
-  //  const response = await axios.post(`/groups/`, group);
+   // const response = await axios.post(`/groups/`, group);
 
      const response = await axios.post(`https://ukenback.vercel.app/groups/`, group);
     // const response = await axios.post(`/groups/`, group);
@@ -35,7 +35,7 @@ export const addGroup = async (group: AddGroupType) => {
 export const deleteGroup = async (_id: string) => {
   try {
     //  console.log('апи 1')
-   // const response = await axios.delete(`/groups/${_id}`);
+  //  const response = await axios.delete(`/groups/${_id}`);
 
     const response = await axios.delete(`https://ukenback.vercel.app/groups/${_id}`);
     // const response = await axios.delete(`/groups/${_id}`);

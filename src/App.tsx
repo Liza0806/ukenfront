@@ -15,6 +15,7 @@ const OneEventPage = lazy(() => import("./pages/OneEventPage/OneEventPage"));
 const PaymentPage = lazy(() => import("./pages/PaymentPage/PaymentPage"));
 const UserPage = lazy(() => import("./pages/UserPage/UserPage"));
 const GroupsPage = lazy(() => import("./pages/GroupsPage/GroupsPage"));
+const AdminStatPage = lazy(() => import("./pages/AdminStatPage/AdminStatPage"));
 
 const App: React.FC = () => {
   useEffect(() => {
@@ -74,6 +75,7 @@ const App: React.FC = () => {
                   </Route>
                   <Route path="payment" element={<PaymentPage />} />
                   <Route path="groups" element={<GroupsPage />} />
+                  <Route path="admStat" element={<AdminStatPage />} />
                   <Route path="users/:id" element={<UserPage />} />
                 </Route>
               </Route>

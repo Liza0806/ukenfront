@@ -1,13 +1,17 @@
-import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { PaymentState } from '../types/types';
+import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { PaymentState } from "../types/types";
+
+import { fetchAllPayments } from "../thunks/thunks";
 
 const initialState: PaymentState = {
-  paymentStatus: '',
+  paymentStatus: "",
   error: undefined,
+  payments: [],
+  isLoading: false,
 };
 
 const paymentSlice = createSlice({
-  name: 'payment',
+  name: "payments",
   initialState,
   reducers: {
     setPaymentStatus(state, action: PayloadAction<string>) {
@@ -16,6 +20,20 @@ const paymentSlice = createSlice({
     setError(state, action: PayloadAction<string | undefined>) {
       state.error = action.payload;
     },
+  },
+  extraReducers: (builder) => {
+    builder
+      .addCase(fetchAllPayments.pending, (state) => {
+        state.isLoading = true;
+      })
+      .addCase(fetchAllPayments.fulfilled, (state, action) => {
+        state.isLoading = false;
+        state.payments = action.payload;
+      })
+      .addCase(fetchAllPayments.rejected, (state, action) => {
+        state.isLoading = false;
+        state.error = action.payload;
+      });
   },
 });
 

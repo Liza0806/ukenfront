@@ -16,7 +16,7 @@ const persistedState = localStorage.getItem('reduxState')
     groups: groupReducer,
     events: eventReducer,
     users: userReducer,
-    payment: paymertReducer,
+    payments: paymertReducer,
   });
   
 const store = configureStore({

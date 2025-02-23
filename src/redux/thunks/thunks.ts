@@ -4,6 +4,7 @@ import {
   ApiResponse,
   EventTypeDB,
   GroupType,
+  Payment,
   User,
 } from "./../types/types";
 import { createAsyncThunk } from "@reduxjs/toolkit";
@@ -15,8 +16,8 @@ import {
 } from "../api/groupsApi";
 import { getAllEvents, getEventById, updateEventAPi } from "../api/eventsApi";
 import { getAllUsers, getUsersByName } from "../api/usersApi";
-import axios from "axios";
 import { toast } from "react-toastify";
+import { getAllPayments } from "../api/paymentsApi";
 
 export const fetchAllGroups = createAsyncThunk<
   GroupType[], // Тип возвращаемого значения
@@ -181,5 +182,17 @@ export const updateGroupTh = createAsyncThunk<
     return thunkAPI.rejectWithValue("error");
   }
 
+  return response;
+});
+export const fetchAllPayments = createAsyncThunk<
+  Payment[], // Тип возвращаемого значения
+  void, // Тип аргументов (в данном случае ничего не передается)
+  { rejectValue: string } // Тип значения для reject
+>("payments/getAllPayments", async (_, thunkAPI) => {
+  const response = await getAllPayments();
+  console.log(response, "response in getAllPayments");
+  if (!response) {
+    return thunkAPI.rejectWithValue("error");
+  }
   return response;
 });

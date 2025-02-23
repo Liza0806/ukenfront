@@ -11,8 +11,8 @@ interface LiqPayWidgetProps {
 
 export const LiqPayWidget: React.FC<LiqPayWidgetProps> = ({ amount, currency, description, orderId }) => {
   const dispatch = useDispatch();
-  const paymentStatus = useAppSelector((state) => state.payment.paymentStatus);
-  const error = useAppSelector((state) => state.payment.error);
+  const paymentStatus = useAppSelector((state) => state.payments.paymentStatus);
+  const error = useAppSelector((state) => state.payments.error);
 
   const initiatePayment = async () => {
     try {
