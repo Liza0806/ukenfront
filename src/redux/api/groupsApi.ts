@@ -4,7 +4,7 @@ import axios from "axios";
 export const getAllGroups = async () => {
    
   try {
-   // const response = await axios.get(`/groups/`);
+  //  const response = await axios.get(`/groups/`);
 
  const response = await axios.get(`https://ukenback.vercel.app/groups/`);
   //  const response = await axios.get(`/groups/`);
@@ -19,7 +19,7 @@ export const getAllGroups = async () => {
 
 export const addGroup = async (group: AddGroupType) => {
   try {
-   // const response = await axios.post(`/groups/`, group);
+  //  const response = await axios.post(`/groups/`, group);
 
      const response = await axios.post(`https://ukenback.vercel.app/groups/`, group);
     // const response = await axios.post(`/groups/`, group);

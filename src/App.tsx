@@ -6,6 +6,7 @@ import "react-toastify/dist/ReactToastify.css";
 import { ToastContainer } from "react-toastify";
 import { Loader } from "./components/Loader/Loader";
 import { ErrorBoundary } from "./components/ErrorBoundary/ErrorBoundary";
+import ResultPayment from "./pages/PaymentResult/PaymentResult";
 
 // Динамическая загрузка компонентов
 const LandingPage = lazy(() => import("./pages/LandingPage/LandingPage"));
@@ -65,7 +66,7 @@ const App: React.FC = () => {
             <Routes>
               <Route path="/" element={<Layout />}>
                 <Route index element={<LandingPage />} />
-
+                <Route path="/result_url" element={<ResultPayment />} />
                 {/* Админ-панель и её дочерние маршруты */}
                 <Route path="admin">
                   <Route index element={<AdminPage />} />
