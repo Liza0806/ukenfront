@@ -70,7 +70,9 @@ export const selectEventsThisMonth = createSelector(
   );
   export const selectActiveUsers = createSelector(
     [selectUsers],
-    (users: User[]) => users?.filter(user => user.isActive === true)
+    (users: User[]) => {
+      return  users?.filter(user => user.isActive === true) || []
+    }
   );
   
 
